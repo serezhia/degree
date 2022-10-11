@@ -16,7 +16,7 @@ Flutter/Dart - cross-platform frontend
 
 Hive - frontend kv db
 
-Shelf/Dart - webserver
+Shelf/Dart - webservers
 
 PostgreSQL - backend db
 
