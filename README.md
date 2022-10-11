@@ -23,16 +23,9 @@ PostgreSQL - backend db
 # Init run
 
 ```
-flutter create .
+soon
 ```
 
-```
-flutter pub get
-```
-
-```
-flutter run
-```
 # Design
 
 <p align="center">
