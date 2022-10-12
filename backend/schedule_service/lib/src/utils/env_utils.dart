@@ -1,12 +1,12 @@
-import 'package:auth_service/auth_service.dart';
+import 'package:schedule_service/schedule_service.dart';
 
 final env = DotEnv(includePlatformEnvironment: true)..load(['../../.env']);
 
-final String nameService = 'AUTH';
+final String nameService = 'SCHEDULE';
 int servicePort() {
   if (env['${nameService}_SERVICE_PORT'] == null) {
     return int.parse(
-        Platform.environment['${nameService}_SERVICE_PORT'] ?? '2000');
+        Platform.environment['${nameService}_SERVICE_PORT'] ?? '2010');
   } else {
     return int.parse(env['${nameService}_SERVICE_PORT']!);
   }
@@ -22,7 +22,7 @@ String serviceHost() {
 
 int dbPort() {
   if (env['${nameService}_DATABASE_PORT'] == null) {
-    return int.parse(Platform.environment['SCHEDULE_DATABASE_PORT'] ?? '2001');
+    return int.parse(Platform.environment['SCHEDULE_DATABASE_PORT'] ?? '2011');
   } else {
     return int.parse(env['${nameService}_DATABASE_PORT']!);
   }
@@ -30,7 +30,7 @@ int dbPort() {
 
 String dbHost() {
   if (env['${nameService}_DATABASE_HOST'] == null) {
-    return Platform.environment['${nameService}_DATABASE_HOST'] ?? '0.0.0.0';
+    return Platform.environment['${nameService}_DATABASE_HOST'] ?? 'localhost';
   } else {
     return env['${nameService}_DATABASE_HOST']!;
   }

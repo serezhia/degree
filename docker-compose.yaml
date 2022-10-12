@@ -39,8 +39,25 @@ services:
     networks:
       - degree_network
 
+  degree_schedule_db:
+    container_name: schedule_db
+    image: postgres:14.5-alpine
+    ports:
+      - "${SCHEDULE_DATABASE_PORT}:${SCHEDULE_DATABASE_PORT}"
+    environment:
+      POSTGRES_USER: ${SCHEDULE_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${SCHEDULE_DATABASE_PASSWORD}
+      POSTGRES_DB: ${SCHEDULE_DATABASE_NAME}
+    command: -p ${SCHEDULE_DATABASE_PORT}
+    volumes:
+      - degree_schedule_db:/var/lib/postgresql/data
+      - ./backend/schedule_db/:/docker-entrypoint-initdb.d
+    networks:
+      - degree_network
+
 volumes:
   degree_auth_db: {}
+  degree_schedule_db: {}
 
 networks:
   degree_network:
