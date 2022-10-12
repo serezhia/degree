@@ -1,6 +1,6 @@
 import 'package:auth_service/auth_service.dart';
 
-final env = DotEnv(includePlatformEnvironment: true)..load(['../.env']);
+final env = DotEnv(includePlatformEnvironment: true)..load(['../../.env']);
 
 int servicePort() {
   if (env['AUTH_SERVICE_PORT'] == null) {
