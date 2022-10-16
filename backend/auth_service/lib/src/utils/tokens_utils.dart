@@ -1,5 +1,4 @@
 import 'package:auth_service/auth_service.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 String generateAccessToken(int subjectId) {
   final jwt = JWT(
@@ -10,7 +9,7 @@ String generateAccessToken(int subjectId) {
     subject: subjectId.toString(),
   );
   return jwt.sign(SecretKey(env['SECRET_KEY'] ?? 'secret'),
-      expiresIn: Duration(days: 30));
+      expiresIn: Duration(minutes: 15));
 }
 
 String generateRefreshToken(int subjectId) {
@@ -22,7 +21,7 @@ String generateRefreshToken(int subjectId) {
     subject: subjectId.toString(),
   );
   return jwt.sign(SecretKey(env['SECRET_KEY'] ?? 'secret'),
-      expiresIn: Duration(minutes: 15));
+      expiresIn: Duration(days: 30));
 }
 
 dynamic verifyToken(String token, {bool isRefreshToken = false}) {

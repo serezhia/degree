@@ -42,6 +42,8 @@ class RegisterRoute {
         ///////// Generating tokens
         accessToken = generateAccessToken(userId);
         refreshToken = generateRefreshToken(userId);
+        await qTokenInsert(
+            ctx, userId, refreshToken, DateTime.now().add(Duration(days: 30)));
       });
 
       return Response.ok(

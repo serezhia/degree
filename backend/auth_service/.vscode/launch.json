@@ -9,6 +9,7 @@
             "request": "launch",
             "type": "dart",
             "program": "bin/auth_service.dart",
+            
         }
     ]
 }

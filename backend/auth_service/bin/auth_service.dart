@@ -14,6 +14,9 @@ void main(List<String> arguments) async {
   app.mount('/register', RegisterRoute(db: dbConection).router);
   app.mount('/login', LoginRoute(db: dbConection).router);
   app.mount('/refresh', RefreshRoute(db: dbConection).router);
+  app.mount('/logout', LogoutRoute(db: dbConection).router);
+
+  /// ДОДЕЛАТЬ ЛОГАУТ
 
   final handler = Pipeline().addMiddleware((logRequests())).addHandler(app);
 

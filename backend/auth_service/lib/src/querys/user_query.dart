@@ -15,7 +15,7 @@ Future<PostgreSQLResult> qInsertUser(
   required String salt,
 }) async {
   return await ctx.query(
-      "INSERT INTO users (username,hashedpassword,salt) VALUES (@username,@hashedpassword,@salt)",
+      "INSERT INTO users (username,hashed_password,salt) VALUES (@username,@hashedpassword,@salt)",
       substitutionValues: {
         'username': uname,
         'hashedpassword': hashPass,
@@ -36,11 +36,11 @@ Future<Map<String, String>> qUserFindHashPasswordAndSaltByUsername(
     PostgreSQLConnection db,
     {required String uname}) async {
   final qFindUser = await db.mappedResultsQuery(
-      "SELECT hashedpassword,salt FROM users WHERE username = @username",
+      "SELECT hashed_password,salt FROM users WHERE username = @username",
       substitutionValues: {"username": uname});
 
   return {
-    'hashedPassword': qFindUser.first['users']!['hashedpassword'],
+    'hashedPassword': qFindUser.first['users']!['hashed_password'],
     'salt': qFindUser.first['users']!['salt'],
   };
 }

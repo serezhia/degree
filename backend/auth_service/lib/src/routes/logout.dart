@@ -1,9 +1,9 @@
 import 'package:auth_service/auth_service.dart';
 
-class RefreshRoute {
+class LogoutRoute {
   final PostgreSQLConnection db;
 
-  RefreshRoute({required this.db});
+  LogoutRoute({required this.db});
 
   Router get router {
     final router = Router();
@@ -12,6 +12,7 @@ class RefreshRoute {
       ////////// Requesting parameters
       final params = req.url.queryParameters;
       final refreshToken = params['refreshToken'];
+      final fromAllDevices = params['fromAllDevices'] == 'true';
       ////////// Checking parameters
       if (refreshToken == null) {
         return Response.badRequest(body: 'refreshToken is required');
@@ -23,28 +24,17 @@ class RefreshRoute {
       } catch (_) {
         return Response.unauthorized('Invalid refresh token: $_');
       }
-
       final userId = int.parse(token.subject!);
-      ////////// Checking if the refresh token is expired
       if (!(await qExistsToken(db, userId, refreshToken))) {
         return Response.unauthorized('Refresh token is not found');
       }
-      final newAccessToken = generateAccessToken(userId);
-      final newRefreshToken = generateRefreshToken(userId);
-      await db.transaction((ctx) async {
-        await qTokenDelete(ctx, refreshToken);
-        await qTokenInsert(ctx, userId, newRefreshToken,
-            DateTime.now().add(Duration(days: 30)));
-      });
-      return Response.ok(
-          jsonEncode({
-            'id': userId,
-            'accessToken': newAccessToken,
-            'refreshToken': newRefreshToken
-          }),
-          headers: {HttpHeaders.contentTypeHeader: ContentType.json.mimeType});
+      if (fromAllDevices) {
+        await qTokenDeleteAll(db, userId);
+      } else {
+        await qTokenDelete(db, refreshToken);
+      }
+      return Response.ok('Logout is successful');
     });
-
     return router;
   }
 }

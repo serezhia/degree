@@ -1,6 +1,6 @@
 import 'package:schedule_service/schedule_service.dart';
 
-final env = DotEnv(includePlatformEnvironment: true)..load(['../../.env']);
+final env = DotEnv(includePlatformEnvironment: true)..load(['../.env']);
 
 final String nameService = 'SCHEDULE';
 int servicePort() {

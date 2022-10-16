@@ -21,7 +21,7 @@ class LoginRoute {
       if (!await qUserExists(db: db, username: username)) {
         return Response.badRequest(body: 'A user is not founded.');
       }
-
+      ////////// Проверяем пароль
       final findUser =
           await qUserFindHashPasswordAndSaltByUsername(db, uname: username);
       final findUserSalt = findUser['salt']!;
@@ -37,8 +37,10 @@ class LoginRoute {
           userId = await qUserFindIdByUsername(ctx, uname: username);
           accessToken = generateAccessToken(userId);
           refreshToken = generateRefreshToken(userId);
+          await qTokenInsert(ctx, userId, refreshToken,
+              DateTime.now().add(Duration(days: 30)));
         });
-
+        /////////// Возвращаем токены
         return Response.ok(
             jsonEncode({
               'id': userId,
@@ -49,6 +51,7 @@ class LoginRoute {
               HttpHeaders.contentTypeHeader: ContentType.json.mimeType
             });
       } else {
+        ///////// Возвращаем ошибку
         return Response.unauthorized('Incorrect password');
       }
     });

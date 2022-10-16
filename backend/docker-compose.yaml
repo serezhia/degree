@@ -4,7 +4,7 @@ services:
 
   degree_auth_service:
     container_name: auth_service
-    build: ./backend/auth_service
+    build: ./auth_service
     expose:
       - ${AUTH_SERVICE_PORT}
     ports:
@@ -35,7 +35,7 @@ services:
     command: -p ${AUTH_DATABASE_PORT}
     volumes:
       - degree_auth_db:/var/lib/postgresql/data
-      - ./backend/auth_db/:/docker-entrypoint-initdb.d
+      - ./auth_db/:/docker-entrypoint-initdb.d
     networks:
       - degree_network
 
@@ -51,7 +51,7 @@ services:
     command: -p ${SCHEDULE_DATABASE_PORT}
     volumes:
       - degree_schedule_db:/var/lib/postgresql/data
-      - ./backend/schedule_db/:/docker-entrypoint-initdb.d
+      - ./schedule_db/:/docker-entrypoint-initdb.d
     networks:
       - degree_network
 

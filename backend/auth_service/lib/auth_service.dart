@@ -7,6 +7,7 @@ export 'package:auth_service/src/utils/tokens_utils.dart';
 export 'package:auth_service/src/routes/register.dart';
 export 'package:auth_service/src/routes/login.dart';
 export 'package:auth_service/src/routes/refresh.dart';
+export 'package:auth_service/src/routes/logout.dart';
 
 //Librarys
 export 'package:dotenv/dotenv.dart';
@@ -20,3 +21,4 @@ export 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 
 //Querys
 export 'package:auth_service/src/querys/user_query.dart';
+export 'package:auth_service/src/querys/token_query.dart';
