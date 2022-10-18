@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS public.teacher_subjects
     subject_with_teacher_id serial NOT NULL,
     subject_id serial NOT NULL,
     teacher_id serial NOT NULL,
-    CONSTRAINT pk_subject_with_teacher PRIMARY KEY (subject_with_teacher_id)
+    CONSTRAINT pk_subject_with_teacher PRIMARY KEY (subject_with_teacher_id),
+    CONSTRAINT un_subject_teacher_id UNIQUE (subject_id, teacher_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.specialties

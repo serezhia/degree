@@ -1,10 +1,15 @@
+import 'package:schedule_service/schedule_service.dart';
 import 'package:schedule_service/src/models/teacher_model.dart';
 
 abstract class TeacherRepository {
-  Future<bool> existsTeacher(int idTeacher);
+  Future<bool> existsTeacher(
+      {int? idTeacher,
+      String? firstName,
+      String? secondName,
+      String? middleName});
 
   Future<Teacher> insertTeacher(
-      String firstName, String secondName, String middleName, int userId);
+      String firstName, String secondName, String? middleName, int userId);
 
   Future<Teacher> updateTeacher(Teacher teacher);
 
@@ -13,4 +18,14 @@ abstract class TeacherRepository {
   Future<List<Teacher>> getAllTeachers();
 
   Future<void> deleteTeacher(int idTeacher);
+
+  Future<List<Teacher>> getTeachersBySubject(int idSubject);
+
+  Future<Subject> addSubjectToTeacher(int idTeacher, int idSubject);
+
+  Future<void> deleteSubjectFromTeacher(int idTeacher, int idSubject);
+
+  Future<bool> existsTeachersSubject(int idTeacher, int idSubject);
+
+  Future<List<Subject>> getSubjectsByTeacher(int idTeacher);
 }

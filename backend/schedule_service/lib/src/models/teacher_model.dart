@@ -5,7 +5,7 @@ class Teacher {
   final int userId;
   final String firstName;
   final String secondName;
-  final String middleName;
+  final String? middleName;
   final List<Subject>? subjects;
 
   Teacher(
