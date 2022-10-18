@@ -18,6 +18,7 @@ services:
       - AUTH_DATABASE_NAME=${AUTH_DATABASE_NAME}
       - AUTH_DATABASE_USERNAME=${AUTH_DATABASE_USERNAME}
       - AUTH_DATABASE_PASSWORD=${AUTH_DATABASE_PASSWORD}
+    restart: always
     depends_on:
       - degree_auth_db
     networks:

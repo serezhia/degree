@@ -16,6 +16,5 @@ COPY --from=builder /runtime/ /
 COPY --from=builder /app/bin/build /app/bin/
 
 
-EXPOSE 2000
 
 ENTRYPOINT [ "/app/bin/build" ]

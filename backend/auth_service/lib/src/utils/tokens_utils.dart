@@ -8,8 +8,7 @@ String generateAccessToken(int subjectId) {
     issuer: 'degree_auth',
     subject: subjectId.toString(),
   );
-  return jwt.sign(SecretKey(env['SECRET_KEY'] ?? 'secret'),
-      expiresIn: Duration(minutes: 15));
+  return jwt.sign(SecretKey(secretKey()), expiresIn: Duration(minutes: 15));
 }
 
 String generateRefreshToken(int subjectId) {
@@ -20,8 +19,7 @@ String generateRefreshToken(int subjectId) {
     issuer: 'degree_auth_refresh',
     subject: subjectId.toString(),
   );
-  return jwt.sign(SecretKey(env['SECRET_KEY'] ?? 'secret'),
-      expiresIn: Duration(days: 30));
+  return jwt.sign(SecretKey(secretKey()), expiresIn: Duration(days: 30));
 }
 
 dynamic verifyToken(String token, {bool isRefreshToken = false}) {
@@ -29,7 +27,7 @@ dynamic verifyToken(String token, {bool isRefreshToken = false}) {
     try {
       return JWT.verify(
         token,
-        SecretKey(env['SECRET_KEY'] ?? 'secret'),
+        SecretKey(secretKey()),
       );
     } on JWTExpiredError {
       return false;
@@ -38,7 +36,7 @@ dynamic verifyToken(String token, {bool isRefreshToken = false}) {
       return false;
     }
   } else {
-    return JWT.verify(token, SecretKey(env['SECRET_KEY'] ?? 'secret'),
+    return JWT.verify(token, SecretKey(secretKey()),
         issuer: 'degree_auth_refresh');
   }
 }

@@ -3,6 +3,15 @@ import 'package:auth_service/auth_service.dart';
 final env = DotEnv(includePlatformEnvironment: true)..load(['../.env']);
 
 final String nameService = 'AUTH';
+
+String secretKey() {
+  if (env['SECRET_KEY'] == null) {
+    return Platform.environment['SECRET_KEY'] ?? 'secret';
+  } else {
+    return env['SECRET_KEY']!;
+  }
+}
+
 int servicePort() {
   if (env['${nameService}_SERVICE_PORT'] == null) {
     return int.parse(
