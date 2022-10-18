@@ -8,6 +8,8 @@ abstract class SubjectRepository {
 
   Future<Subject> insertSubject(String nameSubject);
 
+  Future<Subject> updateSubject(Subject subject);
+
   Future<Subject> getSubject(int idSubject);
 
   Future<List<Subject>> getAllSubjects();

@@ -76,4 +76,23 @@ class PostgreSubjectDataSource implements SubjectRepository {
       name: newSubject.first[1] as String,
     );
   }
+
+  @override
+  Future<Subject> updateSubject(Subject subject) async {
+    await connection.query('''
+    UPDATE subjects SET name = @name WHERE subject_id = @id;
+  ''', substitutionValues: {
+      'name': subject.name,
+      'id': subject.id,
+    });
+    final newSubject = await connection.query('''
+    SELECT * FROM subjects WHERE subject_id = @id;
+  ''', substitutionValues: {
+      'id': subject.id,
+    });
+    return Subject(
+      id: newSubject.first[0] as int,
+      name: newSubject.first[1] as String,
+    );
+  }
 }
