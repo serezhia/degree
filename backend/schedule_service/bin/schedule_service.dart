@@ -11,6 +11,7 @@ void main(List<String> arguments) async {
   final subjectDataSource = PostgreSubjectDataSource(dbConection);
   final teacherDataSource = PostgreTeacherDataSource(dbConection);
   final cabinetDataSource = PostgreCabinetDataSource(dbConection);
+  final subgroupDataSource = PostgreSubgroupDataSource(dbConection);
 
   final app = Router();
 
@@ -31,6 +32,12 @@ void main(List<String> arguments) async {
         cabinetRepository: cabinetDataSource,
         subjectRepository: subjectDataSource,
       ).router);
+  app.mount(
+      '/subgroups',
+      SubgroupsRoute(
+        subgroupRepository: subgroupDataSource,
+        subjectRepository: subjectDataSource,
+      ).router);
 
   final handler = Pipeline()
       .addMiddleware((logRequests()))
@@ -38,5 +45,5 @@ void main(List<String> arguments) async {
       .addHandler(app);
 
   await serve(handler, serviceHost(), servicePort());
-  print('Auth service started on ${serviceHost()}:${servicePort()}');
+  print('Schedule service started on ${serviceHost()}:${servicePort()}');
 }
