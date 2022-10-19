@@ -1,6 +1,4 @@
 import 'package:schedule_service/schedule_service.dart';
-import 'package:schedule_service/src/models/teacher_model.dart';
-import 'package:schedule_service/src/repository/teacher_repository.dart';
 
 class PostgreTeacherDataSource extends TeacherRepository {
   final PostgreSQLConnection connection;
@@ -142,9 +140,9 @@ class PostgreTeacherDataSource extends TeacherRepository {
         'subject_id': idSubject,
       });
       return await ctx.query('''
-      SELECT * FROM subjects WHERE subject_id IN (SELECT subject_id FROM teacher_subjects WHERE teacher_id = @id);
+      SELECT * FROM subjects WHERE subject_id = @id;
     ''', substitutionValues: {
-        'id': idTeacher,
+        'id': idSubject,
       }).then((value) => Subject(
             id: value.first[0] as int,
             name: value.first[1] as String,

@@ -1,6 +1,4 @@
 import 'package:schedule_service/schedule_service.dart';
-import 'package:schedule_service/src/data_source/postgresql/teacher_data_source.dart';
-import 'package:schedule_service/src/routes/teachers_route.dart';
 
 void main(List<String> arguments) async {
   final dbConection = PostgreSQLConnection(dbHost(), dbPort(), dbName(),
@@ -12,6 +10,7 @@ void main(List<String> arguments) async {
   }
   final subjectDataSource = PostgreSubjectDataSource(dbConection);
   final teacherDataSource = PostgreTeacherDataSource(dbConection);
+  final cabinetDataSource = PostgreCabinetDataSource(dbConection);
 
   final app = Router();
 
@@ -26,6 +25,12 @@ void main(List<String> arguments) async {
               teacherRepository: teacherDataSource,
               subjectRepository: subjectDataSource)
           .router);
+  app.mount(
+      '/cabinets',
+      CabinetsRoute(
+        cabinetRepository: cabinetDataSource,
+        subjectRepository: subjectDataSource,
+      ).router);
 
   final handler = Pipeline()
       .addMiddleware((logRequests()))

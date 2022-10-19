@@ -1,5 +1,4 @@
 import 'package:schedule_service/schedule_service.dart';
-import 'package:schedule_service/src/models/teacher_model.dart';
 
 abstract class TeacherRepository {
   Future<bool> existsTeacher(

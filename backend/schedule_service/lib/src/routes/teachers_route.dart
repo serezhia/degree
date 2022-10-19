@@ -1,6 +1,4 @@
 import 'package:schedule_service/schedule_service.dart';
-import 'package:schedule_service/src/models/teacher_model.dart';
-import 'package:schedule_service/src/repository/teacher_repository.dart';
 
 class TeachersRoute {
   final TeacherRepository teacherRepository;
