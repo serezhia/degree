@@ -1,8 +1,8 @@
 import 'package:schedule_service/schedule_service.dart';
 
-class SubjectsRoute {
-  final SubjectRepository repository;
-  SubjectsRoute({required this.repository});
+class SpecialitysRoute {
+  final SpecialityRepository repository;
+  SpecialitysRoute({required this.repository});
 
   Handler get router {
     final router = Router();
@@ -14,7 +14,7 @@ class SubjectsRoute {
       final role = req.context['role'];
       ////////// Проверяем параметры
       if (name == null) {
-        return Response.badRequest(body: 'Name subject is required.');
+        return Response.badRequest(body: 'name is required.');
       }
       if (role != 'admin') {
         return Response.unauthorized("Haven't access");
@@ -22,63 +22,63 @@ class SubjectsRoute {
 
       ////////// Проверяем есть ли такой предмет
 
-      if (await repository.existsSubject(nameSubject: name)) {
-        return Response.badRequest(body: 'Subject already exists.');
+      if (await repository.existsSpeciality(nameSpeciality: name)) {
+        return Response.badRequest(body: 'Speciality already exists.');
       }
-      final Subject subject;
+      final Speciality speciality;
       ////////// Добавляем предмет
       try {
-        subject = await repository.insertSubject(name);
+        speciality = await repository.insertSpeciality(name);
       } catch (e) {
         return Response.internalServerError(body: e.toString());
       }
 
       return Response.ok(jsonEncode({
         'status': 'success',
-        'message': 'subject added',
-        'subject': {
-          'id': subject.id,
+        'message': 'Speciality added',
+        'Speciality': {
+          'id': speciality.id,
           'name': name,
         }
       }));
     });
 
-    ///GET subject By id
+    ///GET Speciality By id
 
     router.get('/<id>', (Request req, String id) async {
       ////////// Проверяем есть ли такой предмет
 
-      if (!(await repository.existsSubject(idSubject: int.parse(id)))) {
-        return Response.badRequest(body: 'subject not found.');
+      if (!(await repository.existsSpeciality(idSpeciality: int.parse(id)))) {
+        return Response.badRequest(body: 'Speciality not found.');
       }
       ////////// Получаем предмет
-      final subject = await repository.getSubject(int.parse(id));
+      final speciality = await repository.getSpeciality(int.parse(id));
 
       return Response.ok(jsonEncode({
         'status': 'success',
-        'message': 'subject found',
-        'subject': {
-          'id': subject.id,
-          'name': subject.name,
+        'message': 'Speciality found',
+        'Speciality': {
+          'id': speciality.id,
+          'name': speciality.name,
         }
       }));
     });
 
-    ///GET all subjects
+    ///GET all Specialitys
 
     router.get('/', (Request req) async {
-      final subjects = await repository.getAllSubjects();
-      if (subjects.isEmpty) {
+      final specialitys = await repository.getAllSpecialitys();
+      if (specialitys.isEmpty) {
         return Response.ok(jsonEncode({
           'status': 'success',
-          'message': 'subjects not found',
-          'subjects': [],
+          'message': 'Specialitys not found',
+          'specialitys': [],
         }));
       }
       return Response.ok(jsonEncode({
         'status': 'success',
-        'message': 'subjects found',
-        'subjects': subjects
+        'message': 'specialitys found',
+        'specialitys': specialitys
             .map((e) => {
                   'id': e.id,
                   'name': e.name,
@@ -87,7 +87,7 @@ class SubjectsRoute {
       }));
     });
 
-    ///DELETE subject By id
+    ///DELETE Speciality By id
 
     router.delete('/<id>', (Request req, String id) async {
       final role = req.context['role'];
@@ -97,17 +97,17 @@ class SubjectsRoute {
       }
 
       ////////// Проверяем есть ли такой предмет
-      if (!(await repository.existsSubject(idSubject: int.parse(id)))) {
-        return Response.badRequest(body: 'subject not found.');
+      if (!(await repository.existsSpeciality(idSpeciality: int.parse(id)))) {
+        return Response.badRequest(body: 'speciality not found.');
       }
 
       ////////// Удаляем предмет
       try {
-        await repository.deleteSubject(int.parse(id));
+        await repository.deleteSpeciality(int.parse(id));
       } catch (e) {
         return Response.internalServerError(body: e.toString());
       }
-      return Response.ok('Delete subject');
+      return Response.ok('Delete speciality');
     });
 
     final handler =

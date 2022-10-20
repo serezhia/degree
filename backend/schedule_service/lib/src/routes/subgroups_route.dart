@@ -44,7 +44,7 @@ class SubgroupsRoute {
         'status': 'success',
         'message': 'subgroup added',
         'subgroup': {
-          'id': '${subgroup.id}',
+          'id': subgroup.id,
           'name': subgroup.name,
         }
       }));
@@ -190,7 +190,7 @@ class SubgroupsRoute {
         'status': 'success',
         'message': 'subject added',
         'subject': {
-          'id': '${subject.id}',
+          'id': subject.id,
           'name': subject.name,
         }
       }));

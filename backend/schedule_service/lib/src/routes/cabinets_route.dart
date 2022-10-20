@@ -50,7 +50,7 @@ class CabinetsRoute {
         'status': 'success',
         'message': 'cabinet added',
         'cabinet': {
-          'id': '${cabinet.id}',
+          'id': cabinet.id,
           'adress': cabinet.adress,
           'floor': cabinet.floor,
           'number': cabinet.number,
@@ -101,7 +101,7 @@ class CabinetsRoute {
         'status': 'success',
         'message': 'cabinet updated',
         'cabinet': {
-          'id': '${cabinet.id}',
+          'id': cabinet.id,
           'adress': cabinet.adress,
           'floor': cabinet.floor,
           'number': cabinet.number,

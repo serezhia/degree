@@ -47,7 +47,7 @@ class TeachersRoute {
         'status': 'success',
         'message': 'teacher added',
         'teacher': {
-          'id': '${teacher.id}',
+          'id': teacher.id,
           'first_name': firstName,
           'second_name': secondName,
           'middle_name': middleName,
@@ -96,7 +96,7 @@ class TeachersRoute {
         'status': 'success',
         'message': 'teacher updated',
         'teacher': {
-          'id': '${teacher.id}',
+          'id': teacher.id,
           'first_name': firstName,
           'second_name': secondName,
           'middle_name': middleName,
@@ -123,7 +123,7 @@ class TeachersRoute {
         'status': 'success',
         'message': 'teacher getted',
         'teacher': {
-          'id': '${teacher.id}',
+          'id': teacher.id,
           'first_name': teacher.firstName,
           'second_name': teacher.secondName,
           'middle_name': teacher.middleName,
@@ -141,13 +141,13 @@ class TeachersRoute {
         'message': 'teachers getted',
         'teachers': teachers
             .map((teacher) => {
-                  'id': '${teacher.id}',
+                  'id': teacher.id,
                   'first_name': teacher.firstName,
                   'second_name': teacher.secondName,
                   'middle_name': teacher.middleName,
                   'subjects': teacher.subjects
                       ?.map((subject) => {
-                            'id': '${subject.id}',
+                            'id': subject.id,
                             'name': subject.name,
                           })
                       .toList(),
@@ -219,7 +219,7 @@ class TeachersRoute {
         'status': 'success',
         'message': 'subject added to teacher',
         'subject': {
-          'id': '${subject.id}',
+          'id': subject.id,
           'name': subject.name,
         }
       }));
@@ -286,7 +286,7 @@ class TeachersRoute {
         'message': 'subjects getted',
         'subjects': subjects
             .map((subject) => {
-                  'id': '${subject.id}',
+                  'id': subject.id,
                   'name': subject.name,
                 })
             .toList()

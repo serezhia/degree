@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS public.specialties
 (
     speciality_id serial NOT NULL,
     name character varying(64),
-    PRIMARY KEY (speciality_id)
+    PRIMARY KEY (speciality_id),
+    UNIQUE (name)
 );
 
 CREATE TABLE IF NOT EXISTS public.groups
