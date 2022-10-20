@@ -44,13 +44,14 @@ CREATE TABLE IF NOT EXISTS public.groups
     speciality_id serial,
     name character varying(64),
     course serial,
-    CONSTRAINT pk_group_id PRIMARY KEY (group_id)
+    PRIMARY KEY (group_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.group_subjects
 (
-    groups_id serial NOT NULL,
-    subject_id serial NOT NULL
+    group_id serial NOT NULL,
+    subject_id serial NOT NULL,
+    PRIMARY KEY (group_id, subject_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.cabinets
@@ -81,7 +82,8 @@ CREATE TABLE IF NOT EXISTS public.subgroups
 CREATE TABLE IF NOT EXISTS public.subgroup_subjects
 (
     subgroup_id serial,
-    subject_id serial
+    subject_id serial,
+    PRIMARY KEY (subgroup_id, subject_id)
 );
 
 CREATE TABLE IF NOT EXISTS public.students
@@ -137,13 +139,13 @@ ALTER TABLE IF EXISTS public.teacher_subjects
 ALTER TABLE IF EXISTS public.groups
     ADD FOREIGN KEY (speciality_id)
     REFERENCES public.specialties (speciality_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.group_subjects
-    ADD FOREIGN KEY (groups_id)
+    ADD FOREIGN KEY (group_id)
     REFERENCES public.groups (group_id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE
@@ -161,80 +163,80 @@ ALTER TABLE IF EXISTS public.group_subjects
 ALTER TABLE IF EXISTS public.cabinet_subjects
     ADD CONSTRAINT fk_subject_cabinet_subjects FOREIGN KEY (subject_id)
     REFERENCES public.subjects (subject_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.cabinet_subjects
     ADD CONSTRAINT fk_cabinet_cabinet_subjects FOREIGN KEY (cabinet_id)
     REFERENCES public.cabinets (cabinet_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.subgroup_subjects
     ADD FOREIGN KEY (subgroup_id)
     REFERENCES public.subgroups (subgroup_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.subgroup_subjects
     ADD FOREIGN KEY (subject_id)
     REFERENCES public.subjects (subject_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.students
     ADD CONSTRAINT fk_group_id FOREIGN KEY (group_id)
     REFERENCES public.groups (group_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.students
     ADD CONSTRAINT fk_subgroup_id FOREIGN KEY (subgroup_id)
     REFERENCES public.subgroups (subgroup_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.lessons
     ADD FOREIGN KEY (group_id)
     REFERENCES public.groups (group_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.lessons
     ADD FOREIGN KEY (subgroup_id)
     REFERENCES public.subgroups (subgroup_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.lessons
     ADD FOREIGN KEY (cabinet_id)
     REFERENCES public.cabinets (cabinet_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 
 ALTER TABLE IF EXISTS public.lessons
     ADD FOREIGN KEY (type_lesson_id)
     REFERENCES public.lesson_types (lesson_type_id) MATCH SIMPLE
-    ON UPDATE NO ACTION
-    ON DELETE NO ACTION
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
     NOT VALID;
 
 END;
