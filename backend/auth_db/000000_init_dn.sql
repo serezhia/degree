@@ -15,8 +15,7 @@ CREATE TABLE IF NOT EXISTS public.users
     role character varying,
     register_code character varying,
     CONSTRAINT pk_user_id PRIMARY KEY (user_id),
-    UNIQUE (register_code),
-    UNIQUE (username)
+    UNIQUE (register_code)
 );
 
 CREATE TABLE IF NOT EXISTS public.tokens
@@ -29,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public.tokens
 );
 
 ALTER TABLE IF EXISTS public.tokens
-    ADD FOREIGN KEY (user_id)
+    ADD CONSTRAINT fk_user_id FOREIGN KEY (user_id)
     REFERENCES public.users (user_id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE

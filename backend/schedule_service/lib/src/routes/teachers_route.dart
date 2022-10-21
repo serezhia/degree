@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' as dio;
 import 'package:schedule_service/schedule_service.dart';
 
 class TeachersRoute {
@@ -39,15 +40,21 @@ class TeachersRoute {
         return Response.badRequest(body: 'Teacher already exists.');
       }
 
+      final user = await dio.Dio().post(
+        'http://${authServiceHost()}:${authServicePort()}/users/?firstName=$firstName&secondName=$secondName&middleName=$middleName&role=teacher',
+      );
+      final userDecod = jsonDecode(user.data) as Map<String, dynamic>;
+
       ////////// Добавляем преподавателя
       final teacher = await teacherRepository.insertTeacher(
-          firstName, secondName, middleName, 0);
+          firstName, secondName, middleName, userDecod['id']);
 
       return Response.ok(jsonEncode({
         'status': 'success',
         'message': 'teacher added',
         'teacher': {
           'id': teacher.id,
+          'user_id': teacher.userId,
           'first_name': firstName,
           'second_name': secondName,
           'middle_name': middleName,
@@ -56,7 +63,7 @@ class TeachersRoute {
     });
 
     /// UPDATE teacher
-
+    ///   TODO: Доделать обновление профиля на authDb
     router.post('/<id>', (Request req, String id) async {
       ////////// Запрашиваем параметры
       final params = req.url.queryParameters;
@@ -160,6 +167,7 @@ class TeachersRoute {
 
     router.delete('/<id>', (Request req, String id) async {
       final role = req.context['role'];
+      final accessToken = req.context['access_token'];
 
       if (role != 'admin') {
         return Response.unauthorized("Haven't access");
@@ -169,7 +177,18 @@ class TeachersRoute {
         return Response.badRequest(body: 'Teacher not exists.');
       }
 
+      final teacher = await teacherRepository.getTeacher(int.parse(id));
+
       await teacherRepository.deleteTeacher(int.parse(id));
+
+      try {
+        await dio.Dio().delete(
+          'http://${authServiceHost()}:${authServicePort()}/users/${teacher.userId}?access_token=$accessToken',
+        );
+      } catch (e) {
+        return Response.internalServerError(
+            body: ' Not deleted user from auth_db $e');
+      }
 
       return Response.ok(jsonEncode({
         'status': 'success',

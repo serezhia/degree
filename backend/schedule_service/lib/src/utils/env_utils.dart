@@ -68,3 +68,19 @@ String dbPassword() {
     return env['${nameService}_DATABASE_PASSWORD']!;
   }
 }
+
+String authServiceHost() {
+  if (env['AUTH_SERVICE_HOST'] == null) {
+    return Platform.environment['AUTH_SERVICE_HOST'] ?? '0.0.0.0';
+  } else {
+    return env['AUTH_SERVICE_HOST']!;
+  }
+}
+
+int authServicePort() {
+  if (env['AUTH_SERVICE_PORT'] == null) {
+    return int.parse(Platform.environment['AUTH_SERVICE_PORT'] ?? '2000');
+  } else {
+    return int.parse(env['AUTH_SERVICE_PORT']!);
+  }
+}

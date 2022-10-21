@@ -11,12 +11,13 @@ void main(List<String> arguments) async {
     Future.delayed(Duration(seconds: 10), () => exit(1));
   }
 
+  final userRepository = PostgresUserDataSource(dbConection);
+  final tokenRepository = PostgresTokenDataSource(dbConection);
+
   final app = Router();
 
-  app.mount('/register', RegisterRoute(db: dbConection).router);
-  app.mount('/login', LoginRoute(db: dbConection).router);
-  app.mount('/refresh', RefreshRoute(db: dbConection).router);
-  app.mount('/logout', LogoutRoute(db: dbConection).router);
+  app.mount('/tokens', TokenRoute(userRepository, tokenRepository).router);
+  app.mount('/users', UsersRoute(userRepository, tokenRepository).router);
 
   final handler = Pipeline().addMiddleware((logRequests())).addHandler(app);
 

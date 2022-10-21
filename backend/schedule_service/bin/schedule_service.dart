@@ -14,6 +14,7 @@ void main(List<String> arguments) async {
   final subgroupDataSource = PostgreSubgroupDataSource(dbConection);
   final spetialityDataSource = PostgreSpecialityDataSource(dbConection);
   final groupDataSource = PostgreGroupDataSource(dbConection);
+  final studentDataSource = PostgreStudentDataSource(dbConection);
 
   final app = Router();
 
@@ -51,6 +52,13 @@ void main(List<String> arguments) async {
         groupRepository: groupDataSource,
         specialityRepository: spetialityDataSource,
         subjectRepository: subjectDataSource,
+      ).router);
+  app.mount(
+      '/students',
+      StudentRoute(
+        studentRepository: studentDataSource,
+        groupRepository: groupDataSource,
+        subgroupRepository: subgroupDataSource,
       ).router);
 
   final handler = Pipeline()

@@ -67,8 +67,9 @@ class PostgreTeacherDataSource extends TeacherRepository {
   Future<Teacher> insertTeacher(String firstName, String secondName,
       String? middleName, int userId) async {
     return await connection.query('''
-    INSERT INTO teachers (firstname, secondname, middlename) VALUES ( @first_name, @second_name, @middle_name) RETURNING *;
+    INSERT INTO teachers (user_id, firstname, secondname, middlename) VALUES ( @userId, @first_name, @second_name, @middle_name) RETURNING *;
   ''', substitutionValues: {
+      'userId': userId,
       'first_name': firstName,
       'second_name': secondName,
       'middle_name': middleName,

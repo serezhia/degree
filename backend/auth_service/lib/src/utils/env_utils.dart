@@ -69,3 +69,20 @@ String dbPassword() {
     return env['${nameService}_DATABASE_PASSWORD']!;
   }
 }
+
+int expiredTimeRefreshToken() {
+  if (env['REFRESH_TOKEN_EXPIRATION'] == null) {
+    return int.tryParse(Platform.environment['REFRESH_TOKEN_EXPIRATION']!) ??
+        43200;
+  } else {
+    return int.parse(env['REFRESH_TOKEN_EXPIRATION']!);
+  }
+}
+
+int expiredTimeAccessToken() {
+  if (env['ACCESS_TOKEN_EXPIRATION'] == null) {
+    return int.tryParse(Platform.environment['ACCESS_TOKEN_EXPIRATION']!) ?? 15;
+  } else {
+    return int.parse(env['ACCESS_TOKEN_EXPIRATION']!);
+  }
+}

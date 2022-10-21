@@ -8,7 +8,7 @@ class PostgreGroupDataSource extends GroupRepository {
   @override
   Future<Subject> addSubjectToGroup(int idGroup, int idSubject) async {
     return await connection.transaction((ctx) async {
-      final result = await ctx.query('''
+      await ctx.query('''
       INSERT INTO group_subjects (group_id, subject_id) VALUES (@group_id, @subject_id);
     ''', substitutionValues: {
         'group_id': idGroup,
@@ -32,11 +32,11 @@ class PostgreGroupDataSource extends GroupRepository {
   }
 
   @override
-  Future<void> deleteSubjectFromGroup(int idCabinet, int idSubject) async {
+  Future<void> deleteSubjectFromGroup(int idGroup, int idSubject) async {
     await connection.query(
-        'DELETE FROM group_subjects WHERE group_id = @idCabinet AND subject_id = @idSubject',
+        'DELETE FROM group_subjects WHERE group_id = @idGroup AND subject_id = @idSubject',
         substitutionValues: {
-          'idCabinet': idCabinet,
+          'idGroup': idGroup,
           'idSubject': idSubject,
         });
   }
@@ -100,11 +100,11 @@ class PostgreGroupDataSource extends GroupRepository {
   }
 
   @override
-  Future<List<Subject>> getSubjectsByGroup(int idCabinet) {
+  Future<List<Subject>> getSubjectsByGroup(int idGroup) {
     return connection.mappedResultsQuery('''
-      SELECT * FROM subjects WHERE subject_id IN (SELECT subject_id FROM group_subjects WHERE group_id = @idCabinet);
+      SELECT * FROM subjects WHERE subject_id IN (SELECT subject_id FROM group_subjects WHERE group_id = @idGroup);
     ''', substitutionValues: {
-      'idCabinet': idCabinet,
+      'idGroup': idGroup,
     }).then((value) {
       return value
           .map((e) => Subject(

@@ -1,10 +1,8 @@
 import 'package:auth_service/auth_service.dart';
 
-String generateAccessToken(int subjectId) {
+String generateAccessToken(int subjectId, Role role) {
   final jwt = JWT(
-    {
-      'iat': DateTime.now(),
-    },
+    {'iat': DateTime.now(), 'role': role.toString()},
     issuer: 'degree_auth',
     subject: subjectId.toString(),
   );
@@ -19,7 +17,8 @@ String generateRefreshToken(int subjectId) {
     issuer: 'degree_auth_refresh',
     subject: subjectId.toString(),
   );
-  return jwt.sign(SecretKey(secretKey()), expiresIn: Duration(days: 30));
+  return jwt.sign(SecretKey(secretKey()),
+      expiresIn: Duration(minutes: expiredTimeRefreshToken()));
 }
 
 dynamic verifyToken(String token, {bool isRefreshToken = false}) {
