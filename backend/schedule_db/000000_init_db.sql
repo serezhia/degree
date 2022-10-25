@@ -108,15 +108,14 @@ CREATE TABLE IF NOT EXISTS public.lesson_types
 
 CREATE TABLE IF NOT EXISTS public.lessons
 (
-    lesson_id serial NOT NULL,
-    group_id serial NOT NULL,
-    subgroup_id serial NOT NULL,
+    lesson_id bigserial NOT NULL,
+    group_id serial,
+    subgroup_id serial,
     day date NOT NULL,
-    lesson_time_start time without time zone NOT NULL,
-    lesson_time_end time without time zone NOT NULL,
-    recess boolean NOT NULL,
     type_lesson_id serial NOT NULL,
     cabinet_id serial NOT NULL,
+    number_lesson smallserial NOT NULL,
+    subject_id serial NOT NULL,
     CONSTRAINT pk_lesson_id PRIMARY KEY (lesson_id)
 );
 
@@ -237,6 +236,14 @@ ALTER TABLE IF EXISTS public.lessons
     REFERENCES public.lesson_types (lesson_type_id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public.lessons
+    ADD FOREIGN KEY (subject_id)
+    REFERENCES public.subjects (subject_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
     NOT VALID;
 
 END;
