@@ -70,6 +70,14 @@ String dbPassword() {
   }
 }
 
+String adminRegisterCode() {
+  if (env['ADMIN_REGISTERCODE'] == null) {
+    return Platform.environment['ADMIN_REGISTERCODE'] ?? '000000000';
+  } else {
+    return env['ADMIN_REGISTERCODE']!;
+  }
+}
+
 int expiredTimeRefreshToken() {
   if (env['REFRESH_TOKEN_EXPIRATION'] == null) {
     return int.tryParse(Platform.environment['REFRESH_TOKEN_EXPIRATION']!) ??

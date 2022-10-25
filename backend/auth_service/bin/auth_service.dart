@@ -14,6 +14,15 @@ void main(List<String> arguments) async {
   final userRepository = PostgresUserDataSource(dbConection);
   final tokenRepository = PostgresTokenDataSource(dbConection);
 
+  ////ADD ADMIN
+
+  if (await userRepository
+      .getAllUsersByRole(Role.admin)
+      .then((value) => value.isEmpty)) {
+    userRepository.insertUser('change me(fn)', 'change me(sn)',
+        'change me (md)', adminRegisterCode(), Role.admin);
+  }
+
   final app = Router();
 
   app.mount('/tokens', TokenRoute(userRepository, tokenRepository).router);
