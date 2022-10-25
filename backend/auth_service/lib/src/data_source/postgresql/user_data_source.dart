@@ -57,13 +57,14 @@ class PostgresUserDataSource implements UserRepository {
       substitutionValues: {'role': role.toString()},
     ).then((value) => value
         .map((e) => User(
-              id: e['user_id'] as int,
-              role: Role.values[e['role'] as int],
-              firstName: e['first_name'] as String,
-              secondName: e['second_name'] as String,
-              middleName: e['middle_name'] as String,
-              username: e['username'] as String,
-              registerCode: e['register_code'] as String,
+              id: e['users']!['user_id'] as int,
+              role: Role.values.firstWhere(
+                  (el) => el.toString() == '${e['users']!['role']!}'),
+              firstName: e['users']!['first_name'] as String,
+              secondName: e['users']!['second_name'] as String,
+              middleName: e['users']!['middle_name'] as String?,
+              username: e['users']!['username'] as String?,
+              registerCode: e['users']!['register_code'] as String?,
             ))
         .toList());
   }

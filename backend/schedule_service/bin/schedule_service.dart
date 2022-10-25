@@ -7,6 +7,8 @@ void main(List<String> arguments) async {
     await dbConection.open();
   } catch (e) {
     print(e);
+    print('Error connecting to database');
+    Future.delayed(Duration(seconds: 10), () => exit(1));
   }
   final subjectDataSource = PostgreSubjectDataSource(dbConection);
   final teacherDataSource = PostgreTeacherDataSource(dbConection);

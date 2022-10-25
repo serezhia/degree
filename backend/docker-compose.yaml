@@ -27,6 +27,32 @@ services:
     networks:
       - degree_network
 
+  degree_schedule_service:
+    container_name: shedule_service
+    build: ./schedule_service
+    expose:
+      - ${SCHEDULE_SERVICE_PORT}
+    ports:
+      - "${SCHEDULE_SERVICE_PORT}:${SCHEDULE_SERVICE_PORT}"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - SCHEDULE_SERVICE_PORT=${SCHEDULE_SERVICE_PORT}
+      - SCHEDULE_SERVICE_HOST=${SCHEDULE_SERVICE_HOST}
+      - SCHEDULE_DATABASE_HOST=${SCHEDULE_DATABASE_HOST}
+      - SCHEDULE_DATABASE_PORT=${SCHEDULE_DATABASE_PORT}
+      - SCHEDULE_DATABASE_NAME=${SCHEDULE_DATABASE_NAME}
+      - SCHEDULE_DATABASE_USERNAME=${SCHEDULE_DATABASE_USERNAME}
+      - SCHEDULE_DATABASE_PASSWORD=${SCHEDULE_DATABASE_PASSWORD}
+      - AUTH_SERVICE_HOST=${AUTH_SERVICE_HOST}
+      - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
+    restart: always
+    depends_on:
+      - degree_auth_db
+      - degree_auth_service
+      - degree_schedule_db
+    networks:
+      - degree_network
+
   degree_auth_db:
     container_name: auth_db
     image: postgres:14.5-alpine
