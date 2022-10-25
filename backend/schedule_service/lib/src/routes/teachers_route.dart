@@ -115,13 +115,7 @@ class TeachersRoute {
 
     router.get('/<id>', (Request req, String id) async {
       if (!await teacherRepository.existsTeacher(idTeacher: int.parse(id))) {
-        return Response.ok(jsonEncode({
-          'status': 'error',
-          'message': 'teacher exists',
-          'teacher': {
-            'id': id,
-          }
-        }));
+        return Response.badRequest(body: 'Teacher not exists.');
       }
 
       final teacher = await teacherRepository.getTeacher(int.parse(id));

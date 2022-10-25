@@ -94,12 +94,6 @@ class PostgreGroupDataSource extends GroupRepository {
   }
 
   @override
-  Future<List<Group>> getGroupsBySubject(int idSubject) {
-    // TODO: implement getGroupsBySubject
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<Subject>> getSubjectsByGroup(int idGroup) {
     return connection.mappedResultsQuery('''
       SELECT * FROM subjects WHERE subject_id IN (SELECT subject_id FROM group_subjects WHERE group_id = @idGroup);
@@ -142,7 +136,7 @@ class PostgreGroupDataSource extends GroupRepository {
   Future<Group> updateGroup(Group group) async {
     return await connection.transaction((ctx) async {
       final result = await ctx.query('''
-      UPDATE groups SET idSpetiality = @spetiality_id, name = @name, course = @course WHERE group_id = @id RETURNING speciality_id, name, course;
+      UPDATE groups SET speciality_id = @speciality_id, name = @name, course = @course WHERE group_id = @id RETURNING speciality_id, name, course;
     ''', substitutionValues: {
         'id': group.id,
         'speciality_id': group.idSpeciality,

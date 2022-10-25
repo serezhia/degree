@@ -24,8 +24,6 @@ abstract class GroupRepository {
 
   Future<bool> existsGroupsSubject(int idGroup, int idSubject);
 
-  Future<List<Group>> getGroupsBySubject(int idSubject);
-
   Future<void> deleteSubjectFromGroup(int idGroup, int idSubject);
 
   Future<List<Subject>> getSubjectsByGroup(int idGroup);

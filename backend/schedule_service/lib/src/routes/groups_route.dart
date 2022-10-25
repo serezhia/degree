@@ -89,6 +89,12 @@ class GroupsRoute {
       if (!await groupRepository.existsGroup(idGroup: int.parse(id))) {
         return Response.badRequest(body: 'Group not exists.');
       }
+
+      ////////// Проверяем существование специальности
+      if (!await specialityRepository.existsSpeciality(
+          idSpeciality: int.parse(idSpeciality))) {
+        return Response.badRequest(body: 'Speciality not found');
+      }
       final Group group;
       ////////// Добавляем группу
       try {
