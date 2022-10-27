@@ -52,6 +52,35 @@ services:
       - degree_schedule_db
     networks:
       - degree_network
+  degree_task_service:
+    container_name: task_service
+    build: ./task_service
+    expose:
+      - ${TASK_SERVICE_PORT}
+    ports:
+      - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - TASK_SERVICE_PORT=${TASK_SERVICE_PORT}
+      - TASK_SERVICE_HOST=${TASK_SERVICE_HOST}
+      - TASK_DATABASE_HOST=${TASK_DATABASE_HOST}
+      - TASK_DATABASE_PORT=${TASK_DATABASE_PORT}
+      - TASK_DATABASE_NAME=${TASK_DATABASE_NAME}
+      - TASK_DATABASE_USERNAME=${TASK_DATABASE_USERNAME}
+      - TASK_DATABASE_PASSWORD=${TASK_DATABASE_PASSWORD}
+      - SCHEDULE_DATABASE_HOST=${SCHEDULE_DATABASE_HOST}
+      - SCHEDULE_DATABASE_PORT=${SCHEDULE_DATABASE_PORT}
+      - SCHEDULE_DATABASE_NAME=${SCHEDULE_DATABASE_NAME}
+      - SCHEDULE_DATABASE_USERNAME=${SCHEDULE_DATABASE_USERNAME}
+      - SCHEDULE_DATABASE_PASSWORD=${SCHEDULE_DATABASE_PASSWORD}
+    restart: always
+    depends_on:
+      - degree_auth_db
+      - degree_auth_service
+      - degree_schedule_db
+      - degree_task_db
+    networks:
+      - degree_network
 
   degree_auth_db:
     container_name: auth_db
