@@ -85,9 +85,26 @@ services:
     networks:
       - degree_network
 
+  degree_task_db:
+    container_name: task_db
+    image: postgres:14.5-alpine
+    ports:
+      - "${TASK_DATABASE_PORT}:${TASK_DATABASE_PORT}"
+    environment:
+      POSTGRES_USER: ${TASK_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${TASK_DATABASE_PASSWORD}
+      POSTGRES_DB: ${TASK_DATABASE_NAME}
+    command: -p ${TASK_DATABASE_PORT}
+    volumes:
+      - degree_task_db:/var/lib/postgresql/data
+      - ./task_db/:/docker-entrypoint-initdb.d
+    networks:
+      - degree_network
+
 volumes:
   degree_auth_db: {}
   degree_schedule_db: {}
+  degree_task_db: {}
 
 networks:
   degree_network:
