@@ -7,8 +7,6 @@ services:
     build: ./auth_service
     expose:
       - ${AUTH_SERVICE_PORT}
-    ports:
-      - "${AUTH_SERVICE_PORT}:${AUTH_SERVICE_PORT}"
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - AUTH_SERVICE_PORT=${AUTH_SERVICE_PORT}
@@ -32,8 +30,6 @@ services:
     build: ./schedule_service
     expose:
       - ${SCHEDULE_SERVICE_PORT}
-    ports:
-      - "${SCHEDULE_SERVICE_PORT}:${SCHEDULE_SERVICE_PORT}"
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - SCHEDULE_SERVICE_PORT=${SCHEDULE_SERVICE_PORT}
@@ -57,8 +53,6 @@ services:
     build: ./task_service
     expose:
       - ${TASK_SERVICE_PORT}
-    ports:
-      - "${TASK_SERVICE_PORT}:${TASK_SERVICE_PORT}"
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - TASK_SERVICE_PORT=${TASK_SERVICE_PORT}
@@ -129,7 +123,22 @@ services:
       - ./task_db/:/docker-entrypoint-initdb.d
     networks:
       - degree_network
-
+  nginx:
+    container_name: nginx
+    image: nginx:1.23.1-alpine
+    networks:
+      - degree_network
+    ports:
+      - 80:80
+    depends_on:
+      - degree_auth_db
+      - degree_auth_service
+      - degree_schedule_db
+      - degree_task_db
+      - degree_schedule_service
+      - degree_task_service
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
 volumes:
   degree_auth_db: {}
   degree_schedule_db: {}
