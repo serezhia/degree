@@ -16,13 +16,15 @@ dependencies:
   dio: ^4.0.6
   hive: ^2.2.3
   flutter_bloc: ^8.1.1
-  freezed: ^2.2.1
+  freezed: ^2.1.0
   freezed_annotation: ^2.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  injectable_generator: ^1.5.4
+  json_serializable: ^6.5.4
   build_runner: ^2.3.2
   flutter_lints: ^2.0.0
 

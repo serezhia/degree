@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:degree_app/app/ui/main_app_builder.dart';
+import 'package:degree_app/app/ui/main_app_runner.dart';
 
 void main() {
-  runApp(const Test());
-}
-
-class Test extends StatelessWidget {
-  const Test({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+  const env = String.fromEnvironment('env', defaultValue: 'test');
+  const runner = MainAppRunner(env);
+  final builder = MainAppBuilder();
+  runner.run(builder);
 }
