@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.7 (swiftlang-5.7.0.127.4 clang-1400.0.29.50)"
+options: "e0ae552e25c6a4c3afba0023bbf5bd1a23df4d345dfe0d7d0206e1f5ae6aa964"
+build_start_time: [1667332745, 16289949]
+build_end_time: [1667332746, 689808845]
+inputs:
+  "/Users/serezhia/Develop/degree_app/macos/Flutter/GeneratedPluginRegistrant.swift": [1667332739, 67321777]
+  "/Users/serezhia/Develop/degree_app/macos/Runner/AppDelegate.swift": [1664987375, 0]
+  "/Users/serezhia/Develop/degree_app/macos/Runner/MainFlutterWindow.swift": [1664987375, 0]
