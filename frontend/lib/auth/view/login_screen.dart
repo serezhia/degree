@@ -2,7 +2,7 @@ import 'package:degree_app/auth/auth.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

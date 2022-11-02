@@ -1,9 +1,12 @@
 part of 'auth_cubit.dart';
 
 @immutable
-abstract class AuthState {}
+abstract class AuthState extends Equatable {}
 
-class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
 
 class AuthNotAutorized extends AuthState {
   AuthNotAutorized({
@@ -11,6 +14,9 @@ class AuthNotAutorized extends AuthState {
   });
 
   final String url;
+
+  @override
+  List<Object?> get props => [url];
 }
 
 class AuthAutorized extends AuthState {
@@ -21,10 +27,22 @@ class AuthAutorized extends AuthState {
 
   final String url;
   final UserEntity user;
+
+  @override
+  List<Object?> get props => [user, url];
 }
 
-class AuthWaiting extends AuthState {}
+class AuthWaiting extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
 
-class AuthGetUrl extends AuthState {}
+class AuthGetUrl extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
 
-class AuthError extends AuthState {}
+class AuthError extends AuthState {
+  @override
+  List<Object?> get props => [];
+}

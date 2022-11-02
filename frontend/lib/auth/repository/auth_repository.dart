@@ -12,7 +12,7 @@ abstract class AuthRepository {
     required String password,
   });
 
-  Future<dynamic> getProfile();
+  Future<UserEntity> getProfile();
 
   Future<dynamic> refreshToken({required String refreshToken});
 

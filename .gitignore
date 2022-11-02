@@ -1,3 +1,8 @@
 # Mac
 .DS_Store
 degree.code-workspace
+frontend/build/
+
+frontend/macos/
+
+frontend/.dart_tool/

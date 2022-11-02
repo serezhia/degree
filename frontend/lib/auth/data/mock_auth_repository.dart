@@ -1,17 +1,27 @@
+import 'dart:developer';
+
 import 'package:degree_app/auth/auth.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {
   @override
-  Future getProfile() {
-    // TODO: implement getProfile
-    throw UnimplementedError();
+  Future<UserEntity> getProfile() {
+    return Future.delayed(
+      const Duration(seconds: 1),
+      () => const UserEntity(
+        id: 1,
+        username: 'test',
+        role: 'admin',
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken',
+      ),
+    );
   }
 
   @override
   Future<String> getUrl({required String url}) {
     return Future.delayed(
       const Duration(seconds: 2),
-      () => 'https://degree.serezhia.ru',
+      () => url,
     );
   }
 
@@ -32,9 +42,12 @@ class MockAuthRepository extends Mock implements AuthRepository {
   }
 
   @override
-  Future signOut({required String refreshToken}) {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> signOut({required String refreshToken}) async {
+    log('signOut');
+    await Future.delayed(
+      const Duration(seconds: 2),
+      () => refreshToken,
+    );
   }
 
   @override

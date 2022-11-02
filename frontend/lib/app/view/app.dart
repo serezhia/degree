@@ -13,11 +13,11 @@ class App extends StatelessWidget {
   const App({
     super.key,
     required this.authRepository,
-    required this.url,
+    this.url,
   });
 
   final AuthRepository authRepository;
-  final String url;
+  final String? url;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +43,11 @@ class _GlobalProvider extends StatelessWidget {
   const _GlobalProvider({
     required this.authRepository,
     required this.child,
-    required this.url,
+    this.url,
   });
   final Widget child;
   final AuthRepository authRepository;
-  final String url;
+  final String? url;
 
   @override
   Widget build(BuildContext context) {

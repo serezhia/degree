@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 
 ThemeData lightTheme = ThemeData(
+  progressIndicatorTheme: const ProgressIndicatorThemeData(
+    color: Colors.black,
+  ),
   scaffoldBackgroundColor: Colors.white,
   primarySwatch: Colors.grey,
   fontFamily: 'Gilroy',
