@@ -25,4 +25,6 @@ class AuthAutorized extends AuthState {
 
 class AuthWaiting extends AuthState {}
 
-class AuthGetUri extends AuthState {}
+class AuthGetUrl extends AuthState {}
+
+class AuthError extends AuthState {}

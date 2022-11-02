@@ -3,9 +3,11 @@ import 'package:degree_app/auth/data/mock_auth_repository.dart';
 import 'package:degree_app/bootstrap.dart';
 
 void main() {
+  const host = 'https://degree.serezhia.ru';
   bootstrap(
     () => App(
       authRepository: MockAuthRepository(),
+      url: host,
     ),
   );
 }

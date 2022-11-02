@@ -1,3 +1,5 @@
+import 'package:degree_app/auth/auth.dart';
+
 abstract class AuthRepository {
   Future<dynamic> signUp({
     required String username,
@@ -5,7 +7,7 @@ abstract class AuthRepository {
     required String registerCode,
   });
 
-  Future<dynamic> signIn({
+  Future<UserEntity> signIn({
     required String username,
     required String password,
   });
@@ -18,5 +20,5 @@ abstract class AuthRepository {
     required String refreshToken,
   });
 
-  Future<dynamic> getUrl({required String url});
+  Future<String> getUrl({required String url});
 }
