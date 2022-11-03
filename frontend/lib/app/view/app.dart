@@ -8,6 +8,7 @@
 import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/l10n/l10n.dart';
 import 'package:degree_app/main/main_screen.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -24,16 +25,20 @@ class App extends StatelessWidget {
     return _GlobalProvider(
       authRepository: authRepository,
       url: url,
-      child: MaterialApp(
-        theme: lightTheme,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: AuthBuilder(
-          isGetUri: (context) => const GetUrl(),
-          isWaiting: (context) => const LoadingScreen(),
-          isUnAuthenticated: (context, value, child) => const LoginScreen(),
-          isAuthenticated: (context, value, child) => const MainScreen(),
-        ),
+      child: ResponsiveSizer(
+        builder: (p0, p1, p2) {
+          return MaterialApp(
+            theme: lightTheme,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: AuthBuilder(
+              isGetUri: (context) => const GetUrl(),
+              isWaiting: (context) => const LoadingScreen(),
+              isUnAuthenticated: (context, value, child) => const LoginScreen(),
+              isAuthenticated: (context, value, child) => const MainScreen(),
+            ),
+          );
+        },
       ),
     );
   }

@@ -20,10 +20,10 @@ class OutlinedButtonDegree extends StatelessWidget {
           child: Center(
             child: Text(
               buttonText,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1
+                  ?.copyWith(color: Colors.black),
             ),
           ),
         ),

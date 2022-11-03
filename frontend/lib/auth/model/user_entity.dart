@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
+import 'package:degree_app/auth/auth.dart';
 
 part 'user_entity.g.dart';
 

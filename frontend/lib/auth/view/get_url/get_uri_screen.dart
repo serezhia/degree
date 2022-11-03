@@ -1,6 +1,4 @@
 import 'package:degree_app/auth/auth.dart';
-import 'package:degree_app/l10n/l10n.dart';
-import 'package:provider/provider.dart';
 
 class GetUrl extends StatelessWidget {
   const GetUrl({super.key});
@@ -44,7 +42,7 @@ class DesktopGetUrlScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       'assets/logo/logo.svg',
-                      height: 200,
+                      height: 30.h,
                     ),
                     const SizedBox(
                       height: 20,
@@ -134,7 +132,7 @@ class MobileGetUrlScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             'assets/logo/logo.svg',
-                            height: 200,
+                            height: 30.h,
                           ),
                           const SizedBox(
                             height: 20,

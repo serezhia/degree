@@ -19,11 +19,10 @@ class ElevatedButtonDegree extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             buttonText,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                ?.copyWith(color: Colors.white),
           ),
         ),
       ),

@@ -1,6 +1,4 @@
 import 'package:degree_app/auth/auth.dart';
-import 'package:equatable/equatable.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'auth_state.dart';
 

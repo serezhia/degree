@@ -8,3 +8,5 @@ frontend/macos/
 frontend/.dart_tool/
 
 frontend/ios/
+
+frontend/pubspec.lock

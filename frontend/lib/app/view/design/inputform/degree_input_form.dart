@@ -52,6 +52,10 @@ class TextFieldDegree extends StatelessWidget {
             textInputAction: TextInputAction.next,
             maxLines: maxlines,
             decoration: InputDecoration(
+              errorStyle: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  ?.copyWith(color: Colors.red),
               contentPadding: const EdgeInsets.all(10),
               filled: true,
               fillColor: const Color(0xFFFAFAFA),

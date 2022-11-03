@@ -1,4 +1,5 @@
 import 'package:degree_app/auth/auth.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -26,8 +27,14 @@ class MainScreen extends StatelessWidget {
             if (snapshot.hasData) {
               return Column(
                 children: [
-                  Text('Hello, ${snapshot.data?.username}'),
-                  Text('Your role is ${snapshot.data?.role}'),
+                  Text(
+                    'Hello, ${snapshot.data?.username}',
+                    style: TextStyle(fontSize: 16.sp),
+                  ),
+                  Text(
+                    'Your role is ${snapshot.data?.role}',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
                 ],
               );
             } else {

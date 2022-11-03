@@ -1,6 +1,4 @@
 import 'package:degree_app/auth/auth.dart';
-import 'package:degree_app/l10n/l10n.dart';
-import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -46,7 +44,7 @@ class DesktopLoginScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       'assets/logo/logo.svg',
-                      height: 200,
+                      height: 30.h,
                     ),
                     const SizedBox(
                       height: 20,
@@ -122,7 +120,7 @@ class MobileLoginScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             'assets/logo/logo.svg',
-                            height: 200,
+                            height: 30.h,
                           ),
                           const SizedBox(
                             height: 20,
