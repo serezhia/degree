@@ -15,5 +15,9 @@
 
     "requiredFieldText": "Required field",
 
-    "inCorrectUrlTextField": "incorrect url"
+    "inCorrectUrlTextField": "Incorrect url",
+
+    "inCorrectLoginTextField": "Incorrect login",
+    
+    "inCorrectPasswordTextField": "Incorrect password"
 }

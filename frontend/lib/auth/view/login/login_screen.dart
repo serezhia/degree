@@ -1,4 +1,5 @@
 import 'package:degree_app/auth/auth.dart';
+import 'package:degree_app/auth/view/login/textfields.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -7,8 +8,11 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<_LoginTextFields>(
-          create: (context) => _LoginTextFields(),
+        ChangeNotifierProvider<LoginController>(
+          create: (context) => LoginController(),
+        ),
+        ChangeNotifierProvider<PasswordController>(
+          create: (context) => PasswordController(),
         ),
         Provider<GlobalKey<FormState>>(
           create: (context) => GlobalKey<FormState>(),
@@ -68,22 +72,22 @@ class DesktopLoginScreen extends StatelessWidget {
                   children: const [
                     SizedBox(
                       width: 300,
-                      child: _LoginTextField(),
+                      child: LoginTextField(),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
                       width: 300,
-                      child: _PasswordTextField(),
+                      child: PasswordTextField(),
                     ),
                     SizedBox(height: 10),
                     SizedBox(
                       width: 300,
-                      child: _SignInButton(),
+                      child: SignInButton(),
                     ),
                     SizedBox(height: 20),
                     SizedBox(
                       width: 300,
-                      child: _SignUpButton(),
+                      child: SignUpButton(),
                     ),
                   ],
                 ),
@@ -142,16 +146,16 @@ class MobileLoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 39),
                           child: Column(
                             children: const [
-                              _LoginTextField(),
-                              _PasswordTextField(),
+                              LoginTextField(),
+                              PasswordTextField(),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const _SignInButton(),
+                    const SignInButton(),
                     const SizedBox(height: 20),
-                    const _SignUpButton(),
+                    const SignUpButton(),
                   ],
                 ),
               ),
@@ -163,77 +167,6 @@ class MobileLoginScreen extends StatelessWidget {
   }
 }
 
-class _LoginTextFields {
-  final TextEditingController loginController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-}
+class PasswordController extends TextEditingController {}
 
-class _LoginTextField extends StatelessWidget {
-  const _LoginTextField();
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFieldDegree(
-      textFieldText: AppLocalizations.of(context).loginText,
-      obscureText: false,
-      maxlines: 1,
-      textEditingController:
-          Provider.of<_LoginTextFields>(context).loginController,
-    );
-  }
-}
-
-class _PasswordTextField extends StatelessWidget {
-  const _PasswordTextField();
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFieldDegree(
-      textFieldText: AppLocalizations.of(context).passwordText,
-      obscureText: true,
-      maxlines: 1,
-      textEditingController:
-          Provider.of<_LoginTextFields>(context).passwordController,
-    );
-  }
-}
-
-class _SignInButton extends StatelessWidget {
-  const _SignInButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButtonDegree(
-      onPressed: () {
-        if (Provider.of<GlobalKey<FormState>>(
-              context,
-              listen: false,
-            ).currentState?.validate() ??
-            false) {
-          context.read<AuthCubit>().signIn(
-                username: Provider.of<_LoginTextFields>(
-                  context,
-                  listen: false,
-                ).loginController.text,
-                password: Provider.of<_LoginTextFields>(
-                  context,
-                  listen: false,
-                ).passwordController.text,
-              );
-        }
-      },
-      buttonText: AppLocalizations.of(context).signInButtonText,
-    );
-  }
-}
-
-class _SignUpButton extends StatelessWidget {
-  const _SignUpButton();
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButtonDegree(
-      onPressed: () {},
-      buttonText: AppLocalizations.of(context).signUpButtonText,
-    );
-  }
-}
+class LoginController extends TextEditingController {}

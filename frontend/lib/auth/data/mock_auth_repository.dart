@@ -1,16 +1,14 @@
 import 'package:degree_app/auth/auth.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {
-  late String name;
-
   @override
   Future<UserEntity> getProfile() {
     return Future.delayed(
       const Duration(seconds: 1),
-      () => UserEntity(
+      () => const UserEntity(
         id: 1,
-        username: name,
-        role: 'admin',
+        username: 'name',
+        role: 'role',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
       ),
@@ -26,8 +24,33 @@ class MockAuthRepository extends Mock implements AuthRepository {
     required String password,
   }) {
     return Future.delayed(const Duration(seconds: 2), () {
-      name = username;
-      return UserEntity(id: 1, role: 'admin', username: username);
+      if (username == 'admin' && password == 'Test#1234') {
+        return UserEntity(
+          id: 1,
+          username: username,
+          role: 'admin',
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+        );
+      } else if (username == 'student' && password == 'Test#1234') {
+        return UserEntity(
+          id: 2,
+          username: username,
+          role: 'student',
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+        );
+      } else if (username == 'teacher' && password == 'Test#1234') {
+        return UserEntity(
+          id: 3,
+          username: username,
+          role: 'teacher',
+          accessToken: 'accessToken',
+          refreshToken: 'refreshToken',
+        );
+      } else {
+        throw Exception('Invalid username or password');
+      }
     });
   }
 

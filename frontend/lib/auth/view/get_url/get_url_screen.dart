@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:degree_app/auth/auth.dart';
 
 class GetUrl extends StatelessWidget {
@@ -65,6 +63,7 @@ class DesktopGetUrlScreen extends StatelessWidget {
                     SizedBox(
                       width: 300,
                       child: TextFieldDegree(
+                        validator: (value) => _validateUrl(value, context),
                         textFieldText:
                             AppLocalizations.of(context).adressHostText,
                         obscureText: false,
@@ -111,23 +110,6 @@ class MobileGetUrlScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? _validateUrl(String? value) {
-      if (value == null || value.isEmpty) {
-        return AppLocalizations.of(context).requiredFieldText;
-      } else if (!RegExp(
-        r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
-      ).hasMatch(
-        Provider.of<TextEditingController>(
-          context,
-          listen: false,
-        ).text,
-      )) {
-        return AppLocalizations.of(context).inCorrectUrlTextField;
-      } else {
-        return null;
-      }
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -166,7 +148,8 @@ class MobileGetUrlScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               TextFieldDegree(
-                                validator: _validateUrl,
+                                validator: (value) =>
+                                    _validateUrl(value, context),
                                 textFieldText:
                                     AppLocalizations.of(context).adressHostText,
                                 obscureText: false,
@@ -218,5 +201,22 @@ class _GetUrlButton extends StatelessWidget {
         }
       },
     );
+  }
+}
+
+String? _validateUrl(String? value, BuildContext context) {
+  if (value == null || value.isEmpty) {
+    return AppLocalizations.of(context).requiredFieldText;
+  } else if (!RegExp(
+    r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
+  ).hasMatch(
+    Provider.of<TextEditingController>(
+      context,
+      listen: false,
+    ).text,
+  )) {
+    return AppLocalizations.of(context).inCorrectUrlTextField;
+  } else {
+    return null;
   }
 }

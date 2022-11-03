@@ -15,5 +15,9 @@
 
     "requiredFieldText": "Обязательное поле",
 
-    "inCorrectUrlTextField": "Неправильный адрес"
+    "inCorrectUrlTextField": "Неправильный адрес",
+
+    "inCorrectLoginTextField": "Некорректный логин",
+    
+    "inCorrectPasswordTextField": "Некорректный пароль"
 }
