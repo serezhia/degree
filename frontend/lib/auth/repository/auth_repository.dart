@@ -1,7 +1,7 @@
 import 'package:degree_app/auth/auth.dart';
 
 abstract class AuthRepository {
-  Future<dynamic> signUp({
+  Future<UserEntity> signUp({
     required String username,
     required String password,
     required String registerCode,
@@ -16,7 +16,7 @@ abstract class AuthRepository {
 
   Future<dynamic> refreshToken({required String refreshToken});
 
-  Future<dynamic> signOut({
+  Future<void> signOut({
     required String refreshToken,
   });
 

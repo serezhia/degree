@@ -1,15 +1,15 @@
-import 'dart:developer';
-
 import 'package:degree_app/auth/auth.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {
+  late String name;
+
   @override
   Future<UserEntity> getProfile() {
     return Future.delayed(
       const Duration(seconds: 1),
-      () => const UserEntity(
+      () => UserEntity(
         id: 1,
-        username: 'test',
+        username: name,
         role: 'admin',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
@@ -26,10 +26,7 @@ class MockAuthRepository extends Mock implements AuthRepository {
   }
 
   @override
-  Future refreshToken({required String refreshToken}) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
-  }
+  Future<void> refreshToken({required String refreshToken}) async {}
 
   @override
   Future<UserEntity> signIn({
@@ -37,13 +34,13 @@ class MockAuthRepository extends Mock implements AuthRepository {
     required String password,
   }) {
     return Future.delayed(const Duration(seconds: 2), () {
+      name = username;
       return UserEntity(id: 1, role: 'admin', username: username);
     });
   }
 
   @override
   Future<void> signOut({required String refreshToken}) async {
-    log('signOut');
     await Future.delayed(
       const Duration(seconds: 2),
       () => refreshToken,
@@ -51,12 +48,11 @@ class MockAuthRepository extends Mock implements AuthRepository {
   }
 
   @override
-  Future signUp({
+  Future<UserEntity> signUp({
     required String username,
     required String password,
     required String registerCode,
-  }) {
-    // TODO: implement signUp
-    throw UnimplementedError();
+  }) async {
+    return UserEntity(id: 1, username: username, role: 'admin');
   }
 }

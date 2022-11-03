@@ -1,0 +1,17 @@
+{
+    "loginText": "Логин",
+
+    "passwordText": "Пароль",
+
+    "nameApp": "Степень",
+
+    "adressHostText": "Сайт учебного учреждения",
+
+    "connectButtonText": "Подключиться",
+
+    "signInButtonText": "Войти",
+
+    "signUpButtonText": "Зарегистрироваться",
+
+    "requiredFieldText": "Обязательное поле"
+}

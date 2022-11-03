@@ -11,17 +11,18 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                context.read<AuthCubit>().logOut();
-              },
-              icon: const Icon(Icons.exit_to_app_rounded))
+            onPressed: () {
+              context.read<AuthCubit>().logOut();
+            },
+            icon: const Icon(Icons.exit_to_app_rounded),
+          )
         ],
         title: const Text('Main'),
       ),
       body: Center(
         child: FutureBuilder(
           future: user,
-          builder: ((context, snapshot) {
+          builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Column(
                 children: [
@@ -32,7 +33,7 @@ class MainScreen extends StatelessWidget {
             } else {
               return const CircularProgressIndicator();
             }
-          }),
+          },
         ),
       ),
     );

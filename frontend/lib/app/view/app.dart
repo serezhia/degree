@@ -29,9 +29,9 @@ class App extends StatelessWidget {
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: AuthBuilder(
-          isGetUri: (context) => GetUrl(),
+          isGetUri: (context) => const GetUrl(),
           isWaiting: (context) => const LoadingScreen(),
-          isUnAuthenticated: (context, value, child) => LoginScreen(),
+          isUnAuthenticated: (context, value, child) => const LoginScreen(),
           isAuthenticated: (context, value, child) => const MainScreen(),
         ),
       ),

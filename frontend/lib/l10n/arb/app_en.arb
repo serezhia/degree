@@ -1,7 +1,17 @@
 {
-    "@@locale": "en",
-    "counterAppBarTitle": "Counter",
-    "@counterAppBarTitle": {
-        "description": "Text shown in the AppBar of the Counter Page"
-    }
+    "loginText": "Login",
+
+    "passwordText": "Password",
+
+    "nameApp": "Degree",
+
+    "adressHostText": "Academic site",
+
+    "connectButtonText": "Connect",
+
+    "signInButtonText": "Sign In",
+
+    "signUpButtonText": "Sign Up",
+
+    "requiredFieldText": "Required field"
 }

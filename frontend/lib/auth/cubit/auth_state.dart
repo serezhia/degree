@@ -43,6 +43,9 @@ class AuthGetUrl extends AuthState {
 }
 
 class AuthError extends AuthState {
+  AuthError(this.error);
+
+  final String error;
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [error];
 }

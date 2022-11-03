@@ -1,3 +1,5 @@
+// ignore_for_file: strict_raw_type
+
 import 'package:degree_app/auth/auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -36,7 +38,7 @@ class AuthBuilder extends StatelessWidget {
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {
         if (state is AuthError) {
-          _showSnackBar(context, 'Error');
+          _showSnackBar(context, state.error);
         }
       },
     );

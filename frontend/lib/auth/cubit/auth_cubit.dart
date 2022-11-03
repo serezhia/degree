@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:degree_app/auth/auth.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -24,6 +22,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       );
       emit(AuthAutorized(user: user, url: url!));
     } catch (e) {
+      emit(AuthError(e.toString()));
       if (url == null) {
         emit(AuthGetUrl());
       } else {
@@ -40,7 +39,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       url = await authRepository.getUrl(url: host);
       emit(AuthNotAutorized(url: url!));
     } catch (e) {
-      emit(AuthError());
+      emit(AuthError(e.toString()));
     }
   }
 
@@ -50,7 +49,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       await authRepository.signOut(refreshToken: '');
       emit(AuthNotAutorized(url: url!));
     } catch (e) {
-      emit(AuthError());
+      emit(AuthError(e.toString()));
     }
   }
 
@@ -59,7 +58,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
       final user = await authRepository.getProfile();
       return user;
     } catch (e) {
-      emit(AuthError());
+      emit(AuthError(e.toString()));
       rethrow;
     }
   }

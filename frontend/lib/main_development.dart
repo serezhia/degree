@@ -15,6 +15,8 @@ void main() async {
         : await getApplicationDocumentsDirectory(),
   );
 
+  await storage.clear();
+
   await bootstrap(
     () => App(
       authRepository: MockAuthRepository(),

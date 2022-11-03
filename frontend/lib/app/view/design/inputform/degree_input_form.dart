@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_redundant_argument_values
 
+import 'package:degree_app/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldDegree extends StatelessWidget {
@@ -9,14 +10,24 @@ class TextFieldDegree extends StatelessWidget {
     required this.obscureText,
     this.textEditingController,
     required this.maxlines,
+    this.validator,
   });
   final String textFieldText;
   final bool obscureText;
   final TextEditingController? textEditingController;
   final int maxlines;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
+    String? _emptyFieldValidator(String? value) {
+      if (value == null || value.isEmpty) {
+        return AppLocalizations.of(context).requiredFieldText;
+      }
+      return null;
+    }
+
     return Column(
       children: [
         Padding(
@@ -31,7 +42,8 @@ class TextFieldDegree extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 15),
-          child: TextField(
+          child: TextFormField(
+            validator: validator ?? _emptyFieldValidator,
             controller: textEditingController,
             cursorColor: Colors.black,
             cursorWidth: 2,
