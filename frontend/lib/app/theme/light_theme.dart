@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_redundant_argument_values
 
-import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:degree_app/app/app.dart';
 
 ThemeData lightTheme = ThemeData(
   progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -10,52 +9,52 @@ ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.white,
   primarySwatch: Colors.grey,
   fontFamily: 'Gilroy',
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     headline4: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 36.sp,
+      fontSize: 36,
       fontWeight: FontWeight.w700,
       color: Colors.black,
     ),
     headline6: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 20.sp,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
       color: Colors.black,
     ),
     headline5: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 18.sp,
+      fontSize: 18,
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     subtitle1: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 14.sp,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: Colors.black,
     ),
     subtitle2: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 10.sp,
+      fontSize: 10,
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     bodyText1: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 16.sp,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
       color: Colors.black,
     ),
     bodyText2: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 14.sp,
+      fontSize: 14,
       fontWeight: FontWeight.w500,
       color: Colors.black,
     ),
     headline1: TextStyle(
       fontFamily: 'Gilroy',
-      fontSize: 16.sp,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),

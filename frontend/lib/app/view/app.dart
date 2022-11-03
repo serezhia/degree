@@ -1,14 +1,5 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 import 'package:degree_app/auth/auth.dart';
-import 'package:degree_app/l10n/l10n.dart';
 import 'package:degree_app/main/main_screen.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class App extends StatelessWidget {
   const App({

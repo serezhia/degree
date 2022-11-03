@@ -20,5 +20,5 @@ abstract class AuthRepository {
     required String refreshToken,
   });
 
-  Future<String> getUrl({required String url});
+  Future<bool> hostIsAlive({required String url});
 }

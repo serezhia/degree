@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:degree_app/app/app.dart';
 
 class OutlinedButtonDegree extends StatelessWidget {
   const OutlinedButtonDegree({

@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'package:degree_app/auth/auth.dart';
 
 class GetUrl extends StatelessWidget {
@@ -42,18 +44,14 @@ class DesktopGetUrlScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset(
                       'assets/logo/logo.svg',
-                      height: 30.h,
+                      height: 250,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
                       AppLocalizations.of(context).nameApp,
-                      style: const TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Gilroy',
-                      ),
+                      style: Theme.of(context).textTheme.headline4,
                     ),
                   ],
                 ),
@@ -113,6 +111,23 @@ class MobileGetUrlScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? _validateUrl(String? value) {
+      if (value == null || value.isEmpty) {
+        return AppLocalizations.of(context).requiredFieldText;
+      } else if (!RegExp(
+        r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
+      ).hasMatch(
+        Provider.of<TextEditingController>(
+          context,
+          listen: false,
+        ).text,
+      )) {
+        return AppLocalizations.of(context).inCorrectUrlTextField;
+      } else {
+        return null;
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -132,18 +147,14 @@ class MobileGetUrlScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             'assets/logo/logo.svg',
-                            height: 30.h,
+                            height: 250,
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           Text(
                             AppLocalizations.of(context).nameApp,
-                            style: const TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Gilroy',
-                            ),
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                         ],
                       ),
@@ -155,6 +166,7 @@ class MobileGetUrlScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               TextFieldDegree(
+                                validator: _validateUrl,
                                 textFieldText:
                                     AppLocalizations.of(context).adressHostText,
                                 obscureText: false,
@@ -167,25 +179,8 @@ class MobileGetUrlScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    ElevatedButtonDegree(
-                      buttonText:
-                          AppLocalizations.of(context).connectButtonText,
-                      onPressed: () {
-                        if (Provider.of<GlobalKey<FormState>>(
-                              context,
-                              listen: false,
-                            ).currentState?.validate() ??
-                            false) {
-                          context.read<AuthCubit>().getUrl(
-                                host: Provider.of<TextEditingController>(
-                                  context,
-                                  listen: false,
-                                ).text,
-                              );
-                        }
-                      },
-                    ),
                     const SizedBox(height: 20),
+                    const _GetUrlButton(),
                   ],
                 ),
               ),
@@ -193,6 +188,35 @@ class MobileGetUrlScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _GetUrlButton extends StatelessWidget {
+  const _GetUrlButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final url = Provider.of<TextEditingController>(
+      context,
+    ).text;
+
+    final currentFormState = Provider.of<GlobalKey<FormState>>(
+      context,
+      listen: false,
+    ).currentState;
+
+    final urlRegEx = RegExp(
+      r'[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)',
+    );
+
+    return ElevatedButtonDegree(
+      buttonText: AppLocalizations.of(context).connectButtonText,
+      onPressed: () {
+        if (urlRegEx.hasMatch(url) & (currentFormState?.validate() ?? false)) {
+          context.read<AuthCubit>().getUrl(host: url);
+        }
+      },
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:degree_app/auth/auth.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_redundant_argument_values
 
-import 'package:degree_app/l10n/l10n.dart';
-import 'package:flutter/material.dart';
+import 'package:degree_app/app/app.dart';
 
 class TextFieldDegree extends StatelessWidget {
   const TextFieldDegree({

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:degree_app/auth/auth.dart';
 
 part 'auth_state.dart';
@@ -34,8 +36,13 @@ class AuthCubit extends HydratedCubit<AuthState> {
   }) async {
     emit(AuthWaiting());
     try {
-      url = await authRepository.getUrl(url: host);
-      emit(AuthNotAutorized(url: url!));
+      if (await authRepository.hostIsAlive(url: host)) {
+        log('Host is alive  ADD l10n');
+        url = host;
+        emit(AuthNotAutorized(url: url!));
+      } else {
+        emit(AuthError('Host is not alive ADD l10n'));
+      }
     } catch (e) {
       emit(AuthError(e.toString()));
     }

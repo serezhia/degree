@@ -13,5 +13,7 @@
 
     "signUpButtonText": "Sign Up",
 
-    "requiredFieldText": "Required field"
+    "requiredFieldText": "Required field",
+
+    "inCorrectUrlTextField": "incorrect url"
 }

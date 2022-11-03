@@ -8,7 +8,7 @@ export 'package:degree_app/auth/repository/auth_repository.dart';
 export 'package:degree_app/auth/repository/auth_repository.dart';
 export 'package:degree_app/auth/repository/auth_repository.dart';
 export 'package:degree_app/auth/view/auth_builder.dart';
-export 'package:degree_app/auth/view/get_url/get_uri_screen.dart';
+export 'package:degree_app/auth/view/get_url/get_url_screen.dart';
 export 'package:degree_app/auth/view/login/login_screen.dart';
 export 'package:degree_app/l10n/l10n.dart';
 

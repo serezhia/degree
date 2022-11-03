@@ -18,14 +18,6 @@ class MockAuthRepository extends Mock implements AuthRepository {
   }
 
   @override
-  Future<String> getUrl({required String url}) {
-    return Future.delayed(
-      const Duration(seconds: 2),
-      () => url,
-    );
-  }
-
-  @override
   Future<void> refreshToken({required String refreshToken}) async {}
 
   @override
@@ -54,5 +46,10 @@ class MockAuthRepository extends Mock implements AuthRepository {
     required String registerCode,
   }) async {
     return UserEntity(id: 1, username: username, role: 'admin');
+  }
+
+  @override
+  Future<bool> hostIsAlive({required String url}) async {
+    return Future.delayed(const Duration(seconds: 2), () => url == 'site.ru');
   }
 }
