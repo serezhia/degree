@@ -219,10 +219,7 @@ class MobileRegisterCodeScreen extends StatelessWidget {
                             child: RegisterCodeInput(),
                           ),
                         ),
-                        const SizedBox(
-                          width: 300,
-                          child: CheckRegistrationCodeButton(),
-                        ),
+                        const CheckRegistrationCodeButton(),
                       ],
                     ),
                   ],
