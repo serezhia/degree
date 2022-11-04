@@ -14,7 +14,10 @@ class LoadingScreen extends StatelessWidget {
           children: const [
             CircularProgressIndicator(),
             SizedBox(height: 20),
-            LoadingText(),
+            Padding(
+              padding: EdgeInsets.all(25),
+              child: Center(child: LoadingText()),
+            ),
           ],
         ),
       ),
@@ -50,6 +53,10 @@ class LoadingText extends StatelessWidget {
       default:
         translatedText = '';
     }
-    return Text(translatedText, style: Theme.of(context).textTheme.headline6);
+    return Text(
+      translatedText,
+      style: Theme.of(context).textTheme.headline6,
+      textAlign: TextAlign.center,
+    );
   }
 }
