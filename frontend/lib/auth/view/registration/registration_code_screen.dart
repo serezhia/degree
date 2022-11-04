@@ -100,7 +100,7 @@ class DesktopRegisterCodeScreen extends StatelessWidget {
                                               .signUnText,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .headline4,
                                         ),
                                       ),
                                     ),

@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member,
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-import 'package:degree_app/app/view/design/buttons/elevated_button.dart';
 import 'package:degree_app/auth/cubit/auth_cubit.dart';
 import 'package:degree_app/auth/view/registration/buttons/sign_up_button.dart';
 import 'package:degree_app/auth/view/registration/textfields.dart';
@@ -103,7 +102,7 @@ class DesktopRegistrationScreen extends StatelessWidget {
                                               .signUnText,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .headline4,
                                         ),
                                       ),
                                     ),

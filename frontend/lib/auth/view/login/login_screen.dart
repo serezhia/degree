@@ -98,7 +98,7 @@ class DesktopLoginScreen extends StatelessWidget {
                                               .signInText,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headline6,
+                                              .headline4,
                                         ),
                                       ),
                                     ),
