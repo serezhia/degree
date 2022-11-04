@@ -29,5 +29,15 @@
 
     "signInText": "Вход",
 
-    "signUnText": "Регистрация"
+    "signUnText": "Регистрация",
+
+    "signUpLoadingText": "Проверяем логин на наличие ._.",
+
+    "signInLoadingText": "Ищем пользователя с таким логном :Ъ",
+
+    "checkingRegistrationCodeLoadingText": "Пытаемся отыскать такой регистрационный код С:",
+
+    "getUrlLoadingText": "Подключаемся к колледжу ==>",
+
+    "logOutLoadingText": "Заходите еще :)"
 }

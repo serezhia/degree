@@ -33,8 +33,14 @@ class AuthAutorized extends AuthState {
 }
 
 class AuthWaiting extends AuthState {
+  AuthWaiting({
+    required this.text,
+  });
+
+  final String text;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [text];
 }
 
 class AuthGetUrl extends AuthState {

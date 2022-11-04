@@ -12,7 +12,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     required String username,
     required String password,
   }) async {
-    emit(AuthWaiting());
+    emit(AuthWaiting(text: 'signIn'));
     try {
       final user = await authRepository.signIn(
         username: username,
@@ -33,7 +33,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
   Future<void> checkRegisterCode({
     required String registerCode,
   }) async {
-    emit(AuthWaiting());
+    emit(AuthWaiting(text: 'checkRegisterCode'));
     try {
       final isCorrect = await authRepository.checkRegisterCode(
         registerCode: registerCode,
@@ -55,7 +55,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     required String password,
     required String registerCode,
   }) async {
-    emit(AuthWaiting());
+    emit(AuthWaiting(text: 'signUp'));
     try {
       final user = await authRepository.signUp(
         username: username,
@@ -73,7 +73,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
   Future<void> getUrl({
     required String host,
   }) async {
-    emit(AuthWaiting());
+    emit(AuthWaiting(text: 'getUrl'));
     try {
       if (await authRepository.hostIsAlive(url: host)) {
         url = host;
@@ -87,7 +87,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
   }
 
   Future<void> logOut() async {
-    emit(AuthWaiting());
+    emit(AuthWaiting(text: 'LogOut'));
     try {
       await authRepository.signOut(refreshToken: '');
       emit(AuthNotAutorized(url: url!));

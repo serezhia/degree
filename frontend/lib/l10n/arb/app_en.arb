@@ -29,6 +29,15 @@
 
     "signInText": "SignIn",
 
-    "signUnText": "SignUn"
+    "signUnText": "SignUn",
+    
+    "signUpLoadingText": "Checking your login and password ._.",
 
+    "signInLoadingText": "Checking your login and password :Ъ",
+
+    "checkingRegistrationCodeLoadingText": "Trying to find your registration code ᵔ.ᵔ",
+
+    "getUrlLoadingText": "Connecting to your college ==>",
+
+    "logOutLoadingText": "Disconnecting from your account"
 }
