@@ -68,7 +68,32 @@ class MockAuthRepository extends Mock implements AuthRepository {
     required String password,
     required String registerCode,
   }) async {
-    return UserEntity(id: 1, username: username, role: 'admin');
+    return Future.delayed(const Duration(seconds: 2), () {
+      if (username == 'admin' && registerCode == '000000000') {
+        return UserEntity(
+          id: 1,
+          username: username,
+          role: 'admin',
+        );
+      } else {
+        throw Exception('Opps idk what happened');
+      }
+    });
+  }
+
+  @override
+  Future<bool> checkRegisterCode({
+    required String registerCode,
+  }) async {
+    return Future.delayed(const Duration(seconds: 2), () {
+      if (registerCode == '000000000') {
+        return true;
+      } else if (registerCode == '111111111') {
+        throw Exception('Opps idk what happened this is backend error');
+      } else {
+        return false;
+      }
+    });
   }
 
   @override

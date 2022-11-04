@@ -30,6 +30,46 @@ class AuthCubit extends HydratedCubit<AuthState> {
     }
   }
 
+  Future<void> checkRegisterCode({
+    required String registerCode,
+  }) async {
+    emit(AuthWaiting());
+    try {
+      final isCorrect = await authRepository.checkRegisterCode(
+        registerCode: registerCode,
+      );
+      if (isCorrect) {
+        emit(AuthSignUp(url: url!, registerCode: registerCode));
+      } else {
+        emit(AuthError('Invalid register code'));
+        emit(AuthGetRegisterCode(url: url!));
+      }
+    } catch (e) {
+      emit(AuthError(e.toString()));
+      emit(AuthGetRegisterCode(url: url!));
+    }
+  }
+
+  Future<void> signUp({
+    required String username,
+    required String password,
+    required String registerCode,
+  }) async {
+    emit(AuthWaiting());
+    try {
+      final user = await authRepository.signUp(
+        username: username,
+        password: password,
+        registerCode: registerCode,
+      );
+
+      emit(AuthAutorized(user: user, url: url!));
+    } catch (e) {
+      emit(AuthError(e.toString()));
+      emit(AuthSignUp(url: url!, registerCode: registerCode));
+    }
+  }
+
   Future<void> getUrl({
     required String host,
   }) async {

@@ -1,12 +1,17 @@
 // ignore_for_file: invalid_use_of_protected_member,
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-import 'package:degree_app/auth/auth.dart';
-import 'package:degree_app/auth/view/login/textfields.dart';
-import 'package:flutter/foundation.dart';
+import 'package:degree_app/app/view/design/buttons/elevated_button.dart';
+import 'package:degree_app/auth/cubit/auth_cubit.dart';
+import 'package:degree_app/auth/view/registration/buttons/sign_up_button.dart';
+import 'package:degree_app/auth/view/registration/textfields.dart';
+import 'package:degree_app/l10n/l10n.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegistrationScreen extends StatelessWidget {
+  const RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +30,9 @@ class LoginScreen extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constaints) {
           if (constaints.maxWidth > 700) {
-            return const DesktopLoginScreen();
+            return const DesktopRegistrationScreen();
           } else {
-            return const MobileLoginScreen();
+            return const MobileRegistrationScreen();
           }
         },
       ),
@@ -35,8 +40,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class DesktopLoginScreen extends StatelessWidget {
-  const DesktopLoginScreen({super.key});
+class DesktopRegistrationScreen extends StatelessWidget {
+  const DesktopRegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -95,25 +100,26 @@ class DesktopLoginScreen extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           AppLocalizations.of(context)
-                                              .signInText,
+                                              .signUnText,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6,
                                         ),
                                       ),
                                     ),
-                                    if (!kIsWeb)
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            context
-                                                .read<AuthCubit>()
-                                                .emit(AuthGetUrl());
-                                          },
-                                          icon: const Icon(Icons.arrow_back),
-                                        ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: IconButton(
+                                        icon: const Icon(Icons.arrow_back),
+                                        onPressed: () {
+                                          final url =
+                                              context.read<AuthCubit>().url;
+                                          context.read<AuthCubit>().emit(
+                                                AuthGetRegisterCode(url: url!),
+                                              );
+                                        },
                                       ),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -125,19 +131,14 @@ class DesktopLoginScreen extends StatelessWidget {
                                     children: const [
                                       SizedBox(
                                         width: 300,
-                                        child: LoginTextField(),
+                                        child: RegistrationLoginTextField(),
                                       ),
                                       SizedBox(height: 10),
                                       SizedBox(
                                         width: 300,
-                                        child: PasswordTextField(),
+                                        child: RegistrationPasswordTextField(),
                                       ),
                                       SizedBox(height: 10),
-                                      SizedBox(
-                                        width: 300,
-                                        child: SignInButton(),
-                                      ),
-                                      SizedBox(height: 20),
                                       SizedBox(
                                         width: 300,
                                         child: SignUpButton(),
@@ -162,8 +163,8 @@ class DesktopLoginScreen extends StatelessWidget {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({super.key});
+class MobileRegistrationScreen extends StatelessWidget {
+  const MobileRegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -172,17 +173,16 @@ class MobileLoginScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         title: Text(
-          AppLocalizations.of(context).signInText,
+          AppLocalizations.of(context).signUnText,
           style: Theme.of(context).textTheme.headline6,
         ),
-        leading: kIsWeb
-            ? null
-            : IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  context.read<AuthCubit>().emit(AuthGetUrl());
-                },
-              ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            final url = context.read<AuthCubit>().url;
+            context.read<AuthCubit>().emit(AuthGetRegisterCode(url: url!));
+          },
+        ),
       ),
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -224,16 +224,14 @@ class MobileLoginScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(vertical: 39),
                           child: Column(
                             children: const [
-                              LoginTextField(),
-                              PasswordTextField(),
+                              RegistrationLoginTextField(),
+                              RegistrationPasswordTextField(),
                             ],
                           ),
                         ),
+                        const SignUpButton(),
                       ],
                     ),
-                    const SignInButton(),
-                    const SizedBox(height: 20),
-                    const SignUpButton(),
                   ],
                 ),
               ),

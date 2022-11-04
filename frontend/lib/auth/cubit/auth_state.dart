@@ -42,6 +42,28 @@ class AuthGetUrl extends AuthState {
   List<Object?> get props => [];
 }
 
+class AuthSignUp extends AuthState {
+  AuthSignUp({
+    required this.url,
+    required this.registerCode,
+  });
+
+  final String registerCode;
+  final String url;
+  @override
+  List<Object?> get props => [url, registerCode];
+}
+
+class AuthGetRegisterCode extends AuthState {
+  AuthGetRegisterCode({
+    required this.url,
+  });
+
+  final String url;
+  @override
+  List<Object?> get props => [url];
+}
+
 class AuthError extends AuthState {
   AuthError(this.error);
 

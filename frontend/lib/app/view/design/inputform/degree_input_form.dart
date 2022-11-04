@@ -11,6 +11,7 @@ class TextFieldDegree extends StatelessWidget {
     required this.maxlines,
     this.validator,
     this.onChanged,
+    this.autofocus,
   });
   final String textFieldText;
   final bool obscureText;
@@ -18,6 +19,7 @@ class TextFieldDegree extends StatelessWidget {
   final int maxlines;
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
+  final bool? autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class TextFieldDegree extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 15),
           child: TextFormField(
+            autofocus: autofocus ?? false,
             onChanged: onChanged,
             validator: validator ?? _emptyFieldValidator,
             controller: textEditingController,

@@ -1,7 +1,9 @@
-//// Auth files
+// Auth dependencies
 export 'package:degree_app/app/app.dart';
+//// Auth files
 export 'package:degree_app/auth/cubit/auth_cubit.dart';
 export 'package:degree_app/auth/cubit/auth_cubit.dart';
+export 'package:degree_app/auth/data/mock_auth_repository.dart';
 export 'package:degree_app/auth/model/user_entity.dart';
 export 'package:degree_app/auth/model/user_entity.dart';
 export 'package:degree_app/auth/repository/auth_repository.dart';

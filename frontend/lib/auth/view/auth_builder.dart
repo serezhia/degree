@@ -10,12 +10,16 @@ class AuthBuilder extends StatelessWidget {
     required this.isWaiting,
     required this.isAuthenticated,
     required this.isGetUri,
+    required this.isSignUp,
+    required this.isGetRegisterCode,
   });
 
   final ValueWidgetBuilder isUnAuthenticated;
   final WidgetBuilder isWaiting;
   final WidgetBuilder isGetUri;
   final ValueWidgetBuilder isAuthenticated;
+  final ValueWidgetBuilder isSignUp;
+  final ValueWidgetBuilder isGetRegisterCode;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +31,10 @@ class AuthBuilder extends StatelessWidget {
           return isAuthenticated(context, state, this);
         } else if (state is AuthNotAutorized) {
           return isUnAuthenticated(context, state, this);
+        } else if (state is AuthGetRegisterCode) {
+          return isGetRegisterCode(context, state, this);
+        } else if (state is AuthSignUp) {
+          return isSignUp(context, state, this);
         } else {
           if (!kIsWeb) {
             return isGetUri(context);

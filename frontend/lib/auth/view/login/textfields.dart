@@ -6,6 +6,7 @@ class LoginTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFieldDegree(
+      autofocus: true,
       validator: (value) => validateLogin(value, context),
       textFieldText: AppLocalizations.of(context).loginText,
       obscureText: false,

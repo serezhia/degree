@@ -1,7 +1,7 @@
 import 'package:degree_app/auth/auth.dart';
 
-class GetUrl extends StatelessWidget {
-  const GetUrl({super.key});
+class GetUrlScreen extends StatelessWidget {
+  const GetUrlScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

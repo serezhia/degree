@@ -19,5 +19,15 @@
 
     "inCorrectLoginTextField": "Некорректный логин",
     
-    "inCorrectPasswordTextField": "Некорректный пароль"
+    "inCorrectPasswordTextField": "Некорректный пароль",
+
+    "registrationCodeText": "Регстрационный код",
+
+    "continueButtonText": "Продолжить",
+
+    "connectedToText": "Подключен к",
+
+    "signInText": "Вход",
+
+    "signUnText": "Регистрация"
 }

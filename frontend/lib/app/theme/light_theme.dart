@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_redundant_argument_values
-
 import 'package:degree_app/app/app.dart';
 
 ThemeData lightTheme = ThemeData(
@@ -80,10 +78,7 @@ ThemeData lightTheme = ThemeData(
         ),
       ),
       side: MaterialStateProperty.all(
-        const BorderSide(
-          color: Colors.black,
-          width: 1,
-        ),
+        const BorderSide(),
       ),
     ),
   ),

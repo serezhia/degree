@@ -19,5 +19,16 @@
 
     "inCorrectLoginTextField": "Incorrect login",
     
-    "inCorrectPasswordTextField": "Incorrect password"
+    "inCorrectPasswordTextField": "Incorrect password",
+
+    "registrationCodeText": "Registration code",
+
+    "continueButtonText": "Continue",
+
+    "connectedToText": "Connected to",
+
+    "signInText": "SignIn",
+
+    "signUnText": "SignUn"
+
 }

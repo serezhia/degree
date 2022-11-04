@@ -1,33 +1,36 @@
-// ignore_for_file: invalid_use_of_protected_member,
 // ignore_for_file: invalid_use_of_visible_for_testing_member
+// ignore_for_file: invalid_use_of_protected_member
 
 import 'package:degree_app/auth/auth.dart';
-import 'package:degree_app/auth/view/login/textfields.dart';
-import 'package:flutter/foundation.dart';
+import 'package:degree_app/auth/view/registration/buttons/check_code_button.dart';
+import 'package:degree_app/auth/view/registration/textfields.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterCodeScreen extends StatelessWidget {
+  const RegisterCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<LoginController>(
-          create: (context) => LoginController(),
+        ChangeNotifierProvider<FirstTextConroller>(
+          create: (context) => FirstTextConroller(),
         ),
-        ChangeNotifierProvider<PasswordController>(
-          create: (context) => PasswordController(),
+        ChangeNotifierProvider<SecondTextConroller>(
+          create: (context) => SecondTextConroller(),
         ),
-        Provider<GlobalKey<FormState>>(
-          create: (context) => GlobalKey<FormState>(),
+        ChangeNotifierProvider<ThirdTextConroller>(
+          create: (context) => ThirdTextConroller(),
         ),
+        ChangeNotifierProvider<IsValid>(
+          create: (context) => IsValid(),
+        )
       ],
       child: LayoutBuilder(
         builder: (context, constaints) {
           if (constaints.maxWidth > 700) {
-            return const DesktopLoginScreen();
+            return const DesktopRegisterCodeScreen();
           } else {
-            return const MobileLoginScreen();
+            return const MobileRegisterCodeScreen();
           }
         },
       ),
@@ -35,14 +38,13 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class DesktopLoginScreen extends StatelessWidget {
-  const DesktopLoginScreen({super.key});
+class DesktopRegisterCodeScreen extends StatelessWidget {
+  const DesktopRegisterCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Form(
-        key: Provider.of<GlobalKey<FormState>>(context),
         child: CustomScrollView(
           slivers: [
             SliverFillRemaining(
@@ -95,25 +97,26 @@ class DesktopLoginScreen extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           AppLocalizations.of(context)
-                                              .signInText,
+                                              .signUnText,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headline6,
                                         ),
                                       ),
                                     ),
-                                    if (!kIsWeb)
-                                      Align(
-                                        alignment: Alignment.topLeft,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            context
-                                                .read<AuthCubit>()
-                                                .emit(AuthGetUrl());
-                                          },
-                                          icon: const Icon(Icons.arrow_back),
-                                        ),
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          final url =
+                                              context.read<AuthCubit>().url;
+                                          context.read<AuthCubit>().emit(
+                                                AuthNotAutorized(url: url!),
+                                              );
+                                        },
+                                        icon: const Icon(Icons.arrow_back),
                                       ),
+                                    ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -122,25 +125,16 @@ class DesktopLoginScreen extends StatelessWidget {
                                 Expanded(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
+                                    children: [
+                                      const SizedBox(height: 10),
                                       SizedBox(
-                                        width: 300,
-                                        child: LoginTextField(),
+                                        width: 301,
+                                        child: RegisterCodeInput(),
                                       ),
-                                      SizedBox(height: 10),
-                                      SizedBox(
+                                      const SizedBox(height: 10),
+                                      const SizedBox(
                                         width: 300,
-                                        child: PasswordTextField(),
-                                      ),
-                                      SizedBox(height: 10),
-                                      SizedBox(
-                                        width: 300,
-                                        child: SignInButton(),
-                                      ),
-                                      SizedBox(height: 20),
-                                      SizedBox(
-                                        width: 300,
-                                        child: SignUpButton(),
+                                        child: CheckRegistrationCodeButton(),
                                       ),
                                     ],
                                   ),
@@ -162,8 +156,8 @@ class DesktopLoginScreen extends StatelessWidget {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({super.key});
+class MobileRegisterCodeScreen extends StatelessWidget {
+  const MobileRegisterCodeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -172,17 +166,16 @@ class MobileLoginScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFFFFFF),
         elevation: 0,
         title: Text(
-          AppLocalizations.of(context).signInText,
+          AppLocalizations.of(context).signUnText,
           style: Theme.of(context).textTheme.headline6,
         ),
-        leading: kIsWeb
-            ? null
-            : IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  context.read<AuthCubit>().emit(AuthGetUrl());
-                },
-              ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            final url = context.read<AuthCubit>().url;
+            context.read<AuthCubit>().emit(AuthNotAutorized(url: url!));
+          },
+        ),
       ),
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -192,7 +185,6 @@ class MobileLoginScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(25),
               child: Form(
-                key: Provider.of<GlobalKey<FormState>>(context),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -222,18 +214,17 @@ class MobileLoginScreen extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 39),
-                          child: Column(
-                            children: const [
-                              LoginTextField(),
-                              PasswordTextField(),
-                            ],
+                          child: SizedBox(
+                            width: 301,
+                            child: RegisterCodeInput(),
                           ),
+                        ),
+                        const SizedBox(
+                          width: 300,
+                          child: CheckRegistrationCodeButton(),
                         ),
                       ],
                     ),
-                    const SignInButton(),
-                    const SizedBox(height: 20),
-                    const SignUpButton(),
                   ],
                 ),
               ),
@@ -245,6 +236,19 @@ class MobileLoginScreen extends StatelessWidget {
   }
 }
 
-class PasswordController extends TextEditingController {}
+class FirstTextConroller extends TextEditingController {}
 
-class LoginController extends TextEditingController {}
+class SecondTextConroller extends TextEditingController {}
+
+class ThirdTextConroller extends TextEditingController {}
+
+class IsValid extends ChangeNotifier {
+  bool _isValid = true;
+
+  bool get isValid => _isValid;
+
+  set isValid(bool value) {
+    _isValid = value;
+    notifyListeners();
+  }
+}

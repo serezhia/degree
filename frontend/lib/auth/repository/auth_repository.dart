@@ -12,6 +12,10 @@ abstract class AuthRepository {
     required String password,
   });
 
+  Future<bool> checkRegisterCode({
+    required String registerCode,
+  });
+
   Future<UserEntity> getProfile();
 
   Future<dynamic> refreshToken({required String refreshToken});
