@@ -1,6 +1,5 @@
-// ignore_for_file: avoid_redundant_argument_values
-
-import 'package:degree_app/app/app.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:degree_app/l10n/l10n.dart';
 
 class TextFieldDegree extends StatelessWidget {
   const TextFieldDegree({
@@ -51,7 +50,6 @@ class TextFieldDegree extends StatelessWidget {
             validator: validator ?? _emptyFieldValidator,
             controller: textEditingController,
             cursorColor: Colors.black,
-            cursorWidth: 2,
             obscureText: obscureText,
             style: Theme.of(context).textTheme.bodyText1,
             textInputAction: TextInputAction.next,

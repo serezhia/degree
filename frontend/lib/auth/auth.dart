@@ -20,6 +20,8 @@ export 'package:degree_app/l10n/l10n.dart';
 // ignore: directives_ordering
 /// Auth libraries
 export 'package:bloc/bloc.dart';
+export 'package:degree_app/degree_ui/degree_ui.dart';
+export 'package:degree_app/l10n/l10n.dart';
 export 'package:equatable/equatable.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/material.dart';

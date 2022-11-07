@@ -1,4 +1,4 @@
-import 'package:degree_app/app/app.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
 
 class ElevatedButtonDegree extends StatelessWidget {
   const ElevatedButtonDegree({

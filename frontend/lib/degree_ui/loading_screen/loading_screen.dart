@@ -1,6 +1,5 @@
-import 'dart:developer';
-
-import 'package:degree_app/auth/auth.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:degree_app/l10n/l10n.dart';
 
 class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
@@ -30,10 +29,11 @@ class LoadingText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final text = context.read<AuthCubit>().state.props[0] as String?;
+    // TODO: remove dependency
+    // final text = context.read<AuthCubit>().state.props[0] as String?;
     final String translatedText;
-    log('text: $text');
-    switch (text) {
+
+    switch ('text') {
       case 'signIn':
         translatedText = AppLocalizations.of(context).signInLoadingText;
         break;

@@ -1,7 +1,7 @@
 import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/auth/view/registration/registration_code_screen.dart';
 import 'package:degree_app/auth/view/registration/registration_screen.dart';
-import 'package:degree_app/main/main_screen.dart';
+import 'package:degree_app/roles/roles.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -28,7 +28,7 @@ class App extends StatelessWidget {
               isGetUri: (context) => const GetUrlScreen(),
               isWaiting: (context) => const LoadingScreen(),
               isUnAuthenticated: (context, value, child) => const LoginScreen(),
-              isAuthenticated: (context, value, child) => const MainScreen(),
+              isAuthenticated: (context, value, child) => const RolesScreen(),
               isSignUp: (context, value, child) => const RegistrationScreen(),
               isGetRegisterCode: (context, value, child) =>
                   const RegisterCodeScreen(),

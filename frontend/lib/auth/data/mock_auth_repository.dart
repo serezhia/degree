@@ -4,11 +4,11 @@ class MockAuthRepository extends Mock implements AuthRepository {
   @override
   Future<UserEntity> getProfile() {
     return Future.delayed(
-      const Duration(seconds: 1),
+      const Duration(seconds: 2),
       () => const UserEntity(
         id: 1,
         username: 'name',
-        role: 'role',
+        role: 'admin',
         accessToken: 'accessToken',
         refreshToken: 'refreshToken',
       ),

@@ -1,9 +1,9 @@
-import 'package:degree_app/app/app.dart';
 import 'package:degree_app/auth/view/registration/registration_code_screen.dart';
 import 'package:degree_app/auth/view/registration/registration_screen.dart';
 import 'package:degree_app/auth/view/registration/validates.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:degree_app/l10n/l10n.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class RegisterCodeInput extends StatelessWidget {
   RegisterCodeInput({super.key});

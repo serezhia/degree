@@ -1,9 +1,7 @@
-import 'dart:developer';
-
-import 'package:degree_app/app/app.dart';
 import 'package:degree_app/auth/cubit/auth_cubit.dart';
 import 'package:degree_app/auth/view/registration/registration_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:degree_app/l10n/l10n.dart';
 
 class SignUpButton extends StatelessWidget {
   const SignUpButton({super.key});
@@ -46,7 +44,7 @@ class SignUpButton extends StatelessWidget {
             (passwordRegEx.hasMatch(password))) {
           final registerCode =
               context.read<AuthCubit>().state.props[1] as String?;
-          log(registerCode ?? 'registerCode is null');
+
           context.read<AuthCubit>().signUp(
                 username: login,
                 password: password,

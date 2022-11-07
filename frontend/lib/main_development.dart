@@ -1,3 +1,4 @@
+import 'package:degree_app/app/view/app.dart';
 import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/bootstrap.dart';
 import 'package:flutter/foundation.dart';
