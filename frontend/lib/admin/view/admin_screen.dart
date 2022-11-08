@@ -2,6 +2,7 @@ import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 import 'package:degree_app/admin/cubit/page_cubit.dart';
 import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
+import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,8 +15,13 @@ class AdminScreenProvider extends StatelessWidget {
           BlocProvider(create: (context) => ActionPanelCubit()),
           BlocProvider(create: (context) => PageCubit()),
         ],
-        child: ChangeNotifierProvider(
-          create: (_) => SideBarState(),
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (_) => SideBarState(),
+            ),
+            ChangeNotifierProvider(create: (_) => UsersState()),
+          ],
           child: const AdminScreen(),
         ),
       );
@@ -63,7 +69,7 @@ class AdminScreen extends StatelessWidget {
           title: context.watch<PageCubit>().state.props[1] as String,
           actions: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: GestureDetector(
                 onTap: () =>
                     context.read<ActionPanelCubit>().toggleNotificationPanel(
@@ -78,9 +84,12 @@ class AdminScreen extends StatelessWidget {
               onTap: () => context.read<ActionPanelCubit>().toggleProfilePanel(
                     context.read<ActionPanelCubit>().state,
                   ),
-              child: const CircleAvatar(
-                backgroundColor: Colors.blueGrey,
-                radius: 30,
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 30, maxWidth: 30),
+                child: const CircleAvatar(
+                  backgroundColor: Colors.blueGrey,
+                  radius: 30,
+                ),
               ),
             )
           ],

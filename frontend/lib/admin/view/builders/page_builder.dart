@@ -5,16 +5,16 @@ import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PageBuilder extends StatelessWidget {
-  const PageBuilder({super.key});
+  const PageBuilder({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => BlocBuilder<PageCubit, PageState>(
         builder: (context, state) {
           if (state is UsersPageState) {
             return const UsersPageProvider();
-          }
-
-          if (state is EntityPageState) {
+          } else if (state is EntityPageState) {
             return const EntityPage();
           } else {
             return Container();

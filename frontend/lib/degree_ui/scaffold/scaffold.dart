@@ -254,10 +254,12 @@ class TabletCustomScreen extends StatelessWidget {
                                 child: body,
                               ),
                             )
-                          : Padding(
-                              key: context.watch<ActionState>().key,
-                              padding: const EdgeInsets.all(25),
-                              child: body,
+                          : ColoredBox(
+                              color: const Color(0xFFFAFAFA),
+                              child: Padding(
+                                padding: const EdgeInsets.all(25),
+                                child: body,
+                              ),
                             ),
                     ),
                   if (actionPanelIsActive == true)
