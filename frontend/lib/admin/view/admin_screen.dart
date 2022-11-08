@@ -1,116 +1,98 @@
+import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
+import 'package:degree_app/admin/cubit/page_cubit.dart';
+import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
+import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class AdminScreenProvider extends StatelessWidget {
+  const AdminScreenProvider({super.key});
+
+  @override
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => ActionPanelCubit()),
+          BlocProvider(create: (context) => PageCubit()),
+        ],
+        child: ChangeNotifierProvider(
+          create: (_) => SideBarState(),
+          child: const AdminScreen(),
+        ),
+      );
+}
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => SideBarState()),
-        ChangeNotifierProvider(create: (_) => ActionPanelState()),
-      ],
-      child: const MainAdminScreen(),
-    );
-  }
-}
-
-class MainAdminScreen extends StatelessWidget {
-  const MainAdminScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScaffoldDegree(
-      sideBar: SideBarDegree(
-        items: const [
-          SideBarItem(
-            icon: Icons.home,
-            title: 'Пользователи',
+  Widget build(BuildContext context) => ScaffoldDegree(
+        actionPanelIsActive:
+            context.read<ActionPanelCubit>().actionPanelIsActive(
+                  context.watch<ActionPanelCubit>().state,
+                ),
+        sideBar: SideBarDegree(
+          items: const [
+            SideBarItem(
+              icon: Icons.group_outlined,
+              title: 'Пользователи',
+            ),
+            SideBarItem(
+              icon: Icons.groups_outlined,
+              title: 'Группы',
+            ),
+            SideBarItem(
+              icon: Icons.task_outlined,
+              title: 'Задачи',
+            ),
+            SideBarItem(
+              icon: Icons.inventory_2_outlined,
+              title: 'Файлы',
+            ),
+          ],
+          currentIndex: context.watch<PageCubit>().state.props[0] as int,
+          onTapItem: (index) => context.read<PageCubit>().togglePage(index),
+          leading: const SideBarLeading(
+            pathLogo: 'assets/logo/logo.svg',
+            title: 'Админ',
           ),
-          SideBarItem(
-            icon: Icons.person,
-            title: 'Пользователи',
-          ),
-          SideBarItem(
-            icon: Icons.settings,
-            title: 'Настройки',
-          ),
-        ],
-        currentIndex: context.watch<SideBarState>().currentIndex,
-        onTapItem: (index) => context.read<SideBarState>().setIndex(index),
-        leading: const SideBarLeading(
-          pathLogo: 'assets/logo/logo.svg',
-          title: 'Админ',
+          onTapLeading: context.read<SideBarState>().toggle,
+          isExpanded: context.watch<SideBarState>().isExpanded,
         ),
-        onTapLeading: context.read<SideBarState>().toggle,
-        isExpanded: context.watch<SideBarState>().isExpanded,
-      ),
-      body: Container(
-        height: 100000,
-        color: Colors.red,
-      ),
-      isScrollableBody: true,
-      actionPanel: context.watch<ActionPanelState>().isExpanded
-          ? ActionPanel(
-              title: 'Test action panel',
-              leading: ActionPanelItem(
-                icon: Icons.arrow_back,
-                onTap: () {
-                  context.read<ActionPanelState>().toggle();
-                },
+        actionPanel: const ActionPanelBuilder(),
+        appBar: AppBarDegree(
+          title: context.watch<PageCubit>().state.props[1] as String,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: GestureDetector(
+                onTap: () =>
+                    context.read<ActionPanelCubit>().toggleNotificationPanel(
+                          context.read<ActionPanelCubit>().state,
+                        ),
+                child: const Icon(
+                  Icons.notifications,
+                ),
               ),
-              body: Container(),
-              actions: [
-                ActionPanelItem(
-                  icon: Icons.add,
-                  onTap: () {},
-                ),
-                ActionPanelItem(
-                  icon: Icons.delete,
-                  onTap: () {},
-                ),
-              ],
+            ),
+            GestureDetector(
+              onTap: () => context.read<ActionPanelCubit>().toggleProfilePanel(
+                    context.read<ActionPanelCubit>().state,
+                  ),
+              child: const CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+                radius: 30,
+              ),
             )
-          : null,
-      appBar: AppBarDegree(
-        title: 'Test',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              context.read<ActionPanelState>().toggle();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ActionPanelState extends ChangeNotifier {
-  bool _isExpanded = false;
-
-  bool get isExpanded => _isExpanded;
-
-  void toggle() {
-    _isExpanded = !_isExpanded;
-    notifyListeners();
-  }
+          ],
+        ),
+        body: const PageBuilder(),
+      );
 }
 
 class SideBarState extends ChangeNotifier {
   bool _isExpanded = false;
 
   bool get isExpanded => _isExpanded;
-
-  int _currentIndex = 0;
-
-  int get currentIndex => _currentIndex;
-
-  void setIndex(int index) {
-    _currentIndex = index;
-    notifyListeners();
-  }
 
   void toggle() {
     _isExpanded = !_isExpanded;

@@ -135,12 +135,12 @@ class AuthCubit extends HydratedCubit<AuthState> {
   @override
   Map<String, dynamic>? toJson(AuthState state) {
     if (state is AuthAutorized) {
-      return {
+      return <String, dynamic>{
         'user': state.props[0],
         'url': state.props[1],
       };
     } else if (state is AuthNotAutorized) {
-      return {
+      return <String, dynamic>{
         'url': state.props[0],
       };
     } else {

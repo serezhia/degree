@@ -3,14 +3,14 @@ import 'package:degree_app/l10n/l10n.dart';
 
 class TextFieldDegree extends StatelessWidget {
   const TextFieldDegree({
-    super.key,
     required this.textFieldText,
     required this.obscureText,
-    this.textEditingController,
     required this.maxlines,
     this.validator,
+    this.textEditingController,
     this.onChanged,
     this.autofocus,
+    super.key,
   });
   final String textFieldText;
   final bool obscureText;

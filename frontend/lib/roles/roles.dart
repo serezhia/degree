@@ -15,7 +15,7 @@ class RolesScreen extends StatelessWidget {
         if (snapshot.hasData) {
           switch (snapshot.data) {
             case 'admin':
-              return const AdminScreen();
+              return const AdminScreenProvider();
             // case 'student':
             //   return const StudentScreen();
             // case 'teacher':

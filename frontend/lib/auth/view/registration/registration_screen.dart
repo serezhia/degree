@@ -13,233 +13,231 @@ class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<LoginController>(
-          create: (context) => LoginController(),
+  Widget build(BuildContext context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider<LoginController>(
+            create: (context) => LoginController(),
+          ),
+          ChangeNotifierProvider<PasswordController>(
+            create: (context) => PasswordController(),
+          ),
+          Provider<GlobalKey<FormState>>(
+            create: (context) => GlobalKey<FormState>(),
+          ),
+        ],
+        child: LayoutBuilder(
+          builder: (context, constaints) {
+            if (constaints.maxWidth > 700) {
+              return const DesktopRegistrationScreen();
+            } else {
+              return const MobileRegistrationScreen();
+            }
+          },
         ),
-        ChangeNotifierProvider<PasswordController>(
-          create: (context) => PasswordController(),
-        ),
-        Provider<GlobalKey<FormState>>(
-          create: (context) => GlobalKey<FormState>(),
-        ),
-      ],
-      child: LayoutBuilder(
-        builder: (context, constaints) {
-          if (constaints.maxWidth > 700) {
-            return const DesktopRegistrationScreen();
-          } else {
-            return const MobileRegistrationScreen();
-          }
-        },
-      ),
-    );
-  }
+      );
 }
 
 class DesktopRegistrationScreen extends StatelessWidget {
   const DesktopRegistrationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: Provider.of<GlobalKey<FormState>>(context),
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/logo/logo.svg',
-                            height: 250,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            AppLocalizations.of(context).nameApp,
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          Text(
-                            '''${AppLocalizations.of(context).connectedToText} ${context.watch<AuthCubit>().url}''',
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
-                        ],
+  Widget build(BuildContext context) => Scaffold(
+        body: Form(
+          key: Provider.of<GlobalKey<FormState>>(context),
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/logo/logo.svg',
+                              height: 250,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              AppLocalizations.of(context).nameApp,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            Text(
+                              '''${AppLocalizations.of(context).connectedToText} ${context.watch<AuthCubit>().url}''',
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 50,
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 50,
+                            ),
+                            width: 2,
+                            color: const Color(0xFFEFEFEF),
                           ),
-                          width: 2,
-                          color: const Color(0xFFEFEFEF),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(50),
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Center(
-                                        child: Text(
-                                          AppLocalizations.of(context)
-                                              .signUnText,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline4,
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(50),
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Center(
+                                          child: Text(
+                                            AppLocalizations.of(context)
+                                                .signUnText,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline4,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: IconButton(
-                                        icon: const Icon(Icons.arrow_back),
-                                        onPressed: () {
-                                          final url =
-                                              context.read<AuthCubit>().url;
-                                          context.read<AuthCubit>().emit(
-                                                AuthGetRegisterCode(url: url!),
-                                              );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      SizedBox(
-                                        width: 300,
-                                        child: RegistrationLoginTextField(),
-                                      ),
-                                      SizedBox(height: 10),
-                                      SizedBox(
-                                        width: 300,
-                                        child: RegistrationPasswordTextField(),
-                                      ),
-                                      SizedBox(height: 10),
-                                      SizedBox(
-                                        width: 300,
-                                        child: SignUpButton(),
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: IconButton(
+                                          icon: const Icon(Icons.arrow_back),
+                                          onPressed: () {
+                                            final url =
+                                                context.read<AuthCubit>().url;
+                                            context.read<AuthCubit>().emit(
+                                                  AuthGetRegisterCode(
+                                                    url: url!,
+                                                  ),
+                                                );
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        SizedBox(
+                                          width: 300,
+                                          child: RegistrationLoginTextField(),
+                                        ),
+                                        SizedBox(height: 10),
+                                        SizedBox(
+                                          width: 300,
+                                          child:
+                                              RegistrationPasswordTextField(),
+                                        ),
+                                        SizedBox(height: 10),
+                                        SizedBox(
+                                          width: 300,
+                                          child: SignUpButton(),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class MobileRegistrationScreen extends StatelessWidget {
   const MobileRegistrationScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFFFFFF),
-        elevation: 0,
-        title: Text(
-          AppLocalizations.of(context).signUnText,
-          style: Theme.of(context).textTheme.headline6,
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFFFFFFF),
+          elevation: 0,
+          title: Text(
+            AppLocalizations.of(context).signUnText,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              final url = context.read<AuthCubit>().url;
+              context.read<AuthCubit>().emit(AuthGetRegisterCode(url: url!));
+            },
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            final url = context.read<AuthCubit>().url;
-            context.read<AuthCubit>().emit(AuthGetRegisterCode(url: url!));
-          },
-        ),
-      ),
-      backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
-            child: Padding(
-              padding: const EdgeInsets.all(25),
-              child: Form(
-                key: Provider.of<GlobalKey<FormState>>(context),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: Colors.white,
+        body: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.all(25),
+                child: Form(
+                  key: Provider.of<GlobalKey<FormState>>(context),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/logo/logo.svg',
+                              height: 250,
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              AppLocalizations.of(context).nameApp,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                            Text(
+                              '''${AppLocalizations.of(context).connectedToText} ${context.watch<AuthCubit>().url}''',
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
                         children: [
-                          SvgPicture.asset(
-                            'assets/logo/logo.svg',
-                            height: 250,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 39),
+                            child: Column(
+                              children: const [
+                                RegistrationLoginTextField(),
+                                RegistrationPasswordTextField(),
+                              ],
+                            ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            AppLocalizations.of(context).nameApp,
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                          Text(
-                            '''${AppLocalizations.of(context).connectedToText} ${context.watch<AuthCubit>().url}''',
-                            style: Theme.of(context).textTheme.headline1,
-                          ),
+                          const SignUpButton(),
                         ],
                       ),
-                    ),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 39),
-                          child: Column(
-                            children: const [
-                              RegistrationLoginTextField(),
-                              RegistrationPasswordTextField(),
-                            ],
-                          ),
-                        ),
-                        const SignUpButton(),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 }
 
 class PasswordController extends TextEditingController {}

@@ -1,19 +1,23 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:logger/logger.dart';
 
 class AppBlocObserver extends BlocObserver {
+  AppBlocObserver(this.logger);
+
+  final Logger logger;
+
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
-    log('onChange(${bloc.runtimeType}, $change)');
+    logger.i('onChange(${bloc.runtimeType}, $change)');
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    log('onError(${bloc.runtimeType}, $error, $stackTrace)');
+    logger.e('onError(${bloc.runtimeType}, $error, $stackTrace)');
     super.onError(bloc, error, stackTrace);
   }
 }
@@ -22,11 +26,12 @@ Future<void> bootstrap(
   FutureOr<Widget> Function() builder,
   HydratedStorage storage,
 ) async {
+  final logger = Logger();
   FlutterError.onError = (details) {
-    log(details.exceptionAsString(), stackTrace: details.stack);
+    logger.e(details.exceptionAsString(), null, details.stack);
   };
 
-  Bloc.observer = AppBlocObserver();
+  Bloc.observer = AppBlocObserver(logger);
 
   await runZonedGuarded(
     () async => HydratedBlocOverrides.runZoned(
@@ -35,6 +40,6 @@ Future<void> bootstrap(
       },
       storage: storage,
     ),
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) => logger.e(error.toString(), null, stackTrace),
   );
 }

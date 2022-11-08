@@ -6,13 +6,11 @@ import 'package:degree_app/auth/auth.dart';
 class SignUpButton extends StatelessWidget {
   const SignUpButton({super.key});
   @override
-  Widget build(BuildContext context) {
-    return OutlinedButtonDegree(
-      buttonText: AppLocalizations.of(context).signUpButtonText,
-      onPressed: () {
-        final url = context.read<AuthCubit>().url;
-        context.read<AuthCubit>().emit(AuthGetRegisterCode(url: url!));
-      },
-    );
-  }
+  Widget build(BuildContext context) => OutlinedButtonDegree(
+        buttonText: AppLocalizations.of(context).signUpButtonText,
+        onPressed: () {
+          final url = context.read<AuthCubit>().url;
+          context.read<AuthCubit>().emit(AuthGetRegisterCode(url: url!));
+        },
+      );
 }

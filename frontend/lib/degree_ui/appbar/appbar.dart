@@ -13,14 +13,13 @@ class AppBarDegree extends StatelessWidget implements PreferredSizeWidget {
     String? title,
     Widget? leading,
     List<Widget>? actions,
-  }) {
-    return AppBarDegree(
-      key: key ?? this.key,
-      title: title ?? this.title,
-      leading: leading ?? this.leading,
-      actions: actions ?? this.actions,
-    );
-  }
+  }) =>
+      AppBarDegree(
+        key: key ?? this.key,
+        title: title ?? this.title,
+        leading: leading ?? this.leading,
+        actions: actions ?? this.actions,
+      );
 
   final String? title;
   final Widget? leading;
@@ -29,40 +28,39 @@ class AppBarDegree extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size(double.infinity, 64);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 64,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: Color(0xFFF4F4F5), width: 2),
+  Widget build(BuildContext context) => Container(
+        height: 64 + MediaQuery.of(context).padding.top,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(color: Color(0xFFF4F4F5), width: 2),
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                if (leading != null) leading!,
-                if (title != null)
-                  Text(
-                    title!,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Gilroy',
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  if (leading != null) leading!,
+                  if (title != null)
+                    Text(
+                      title!,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Gilroy',
+                      ),
                     ),
-                  ),
-              ],
-            ),
-            Row(
-              children: (actions != null) ? actions! : [],
-            ),
-          ],
+                ],
+              ),
+              Row(
+                children: (actions != null) ? actions! : [],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
