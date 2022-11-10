@@ -1,10 +1,11 @@
 import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 import 'package:degree_app/admin/cubit/page_cubit.dart';
+import 'package:degree_app/admin/cubit/pages/user_page_cubit.dart';
 import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
-import 'package:degree_app/degree_ui/degree_ui.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:degree_app/teachers/src/data/mock_teacher_repository.dart';
+import 'package:degree_app/teachers/teachers.dart';
 
 class AdminScreenProvider extends StatelessWidget {
   const AdminScreenProvider({super.key});
@@ -12,8 +13,25 @@ class AdminScreenProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => ActionPanelCubit()),
-          BlocProvider(create: (context) => PageCubit()),
+          BlocProvider(
+            create: (context) => ActionPanelCubit(),
+          ),
+          BlocProvider(
+            create: (context) => PageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => UserPageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => TeacherPanelCubit(
+              MockTeacherRepository(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => TeachersPageCubit(
+              MockTeacherRepository(),
+            ),
+          ),
         ],
         child: MultiProvider(
           providers: [
@@ -44,7 +62,7 @@ class AdminScreen extends StatelessWidget {
             ),
             SideBarItem(
               icon: Icons.groups_outlined,
-              title: 'Группы',
+              title: 'Сущности',
             ),
             SideBarItem(
               icon: Icons.task_outlined,
@@ -53,6 +71,10 @@ class AdminScreen extends StatelessWidget {
             SideBarItem(
               icon: Icons.inventory_2_outlined,
               title: 'Файлы',
+            ),
+            SideBarItem(
+              icon: Icons.schedule_outlined,
+              title: 'Расписание',
             ),
           ],
           currentIndex: context.watch<PageCubit>().state.props[0] as int,
@@ -71,21 +93,21 @@ class AdminScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: GestureDetector(
-                onTap: () =>
-                    context.read<ActionPanelCubit>().toggleNotificationPanel(
-                          context.read<ActionPanelCubit>().state,
-                        ),
+                // onTap: () =>
+                //     context.read<ActionPanelCubit>().openNotificationPanel(
+                //           context.read<ActionPanelCubit>().state,
+                //         ),
                 child: const Icon(
                   Icons.notifications,
                 ),
               ),
             ),
             GestureDetector(
-              onTap: () => context.read<ActionPanelCubit>().toggleProfilePanel(
-                    context.read<ActionPanelCubit>().state,
-                  ),
+              // onTap: () => context.read<ActionPanelCubit>().openProfilePanel(
+              //       context.read<ActionPanelCubit>().state,
+              //     ),
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: 30, maxWidth: 30),
+                constraints: const BoxConstraints(maxHeight: 30, maxWidth: 30),
                 child: const CircleAvatar(
                   backgroundColor: Colors.blueGrey,
                   radius: 30,

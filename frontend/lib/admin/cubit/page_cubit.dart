@@ -20,6 +20,9 @@ class PageCubit extends Cubit<PageState> {
       case 3:
         emit(FilesPageState());
         break;
+      case 4:
+        emit(SchedulePageState());
+        break;
     }
   }
 }

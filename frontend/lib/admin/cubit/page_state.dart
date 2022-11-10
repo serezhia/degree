@@ -38,3 +38,11 @@ class FilesPageState extends PageState {
   @override
   List<Object> get props => [index, title];
 }
+
+class SchedulePageState extends PageState {
+  final index = 4;
+  final title = 'Schedule';
+
+  @override
+  List<Object> get props => [index, title];
+}
