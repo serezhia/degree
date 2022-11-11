@@ -1,7 +1,6 @@
-import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
-import 'package:degree_app/admin/cubit/pages/user_page_cubit.dart';
+import 'package:degree_app/admin/cubit/pages/users/user_page_cubit.dart';
+import 'package:degree_app/admin_teachers/admin_teachers.dart';
 import 'package:degree_app/degree_ui/toggle/toggle.dart';
-import 'package:degree_app/teachers/teachers.dart';
 
 class UsersPage extends StatelessWidget {
   const UsersPage({

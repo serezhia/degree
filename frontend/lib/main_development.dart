@@ -1,10 +1,10 @@
+import 'package:degree_app/admin_teachers/admin_teachers.dart';
 import 'package:degree_app/app/view/app.dart';
 import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/bootstrap.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'teachers/teachers.dart';
 
 void main() async {
   for (var i = 0; i < 1; i++) {

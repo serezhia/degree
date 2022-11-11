@@ -1,4 +1,4 @@
-import 'package:degree_app/teachers/teachers.dart';
+import 'package:degree_app/admin_teachers/admin_teachers.dart';
 
 class TeacherActionPanel extends StatelessWidget {
   const TeacherActionPanel();
