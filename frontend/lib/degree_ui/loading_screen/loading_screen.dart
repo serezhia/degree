@@ -2,19 +2,28 @@ import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:degree_app/l10n/l10n.dart';
 
 class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({super.key});
+  const LoadingScreen({
+    required this.message,
+    super.key,
+  });
+
+  final String message;
 
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              CircularProgressIndicator(),
-              SizedBox(height: 20),
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 20),
               Padding(
-                padding: EdgeInsets.all(25),
-                child: Center(child: LoadingText()),
+                padding: const EdgeInsets.all(25),
+                child: Center(
+                  child: LoadingText(
+                    message: message,
+                  ),
+                ),
               ),
             ],
           ),
@@ -23,15 +32,16 @@ class LoadingScreen extends StatelessWidget {
 }
 
 class LoadingText extends StatelessWidget {
-  const LoadingText({super.key});
-
+  const LoadingText({
+    required this.message,
+    super.key,
+  });
+  final String message;
   @override
   Widget build(BuildContext context) {
-    // TODO: remove dependency
-    // final text = context.read<AuthCubit>().state.props[0] as String?;
     final String translatedText;
 
-    switch ('text') {
+    switch (message) {
       case 'signIn':
         translatedText = AppLocalizations.of(context).signInLoadingText;
         break;

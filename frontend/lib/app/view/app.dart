@@ -24,7 +24,8 @@ class App extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             home: AuthBuilder(
               isGetUri: (context) => const GetUrlScreen(),
-              isWaiting: (context) => const LoadingScreen(),
+              isWaiting: (context, data, widget) =>
+                  LoadingScreen(message: data as String),
               isUnAuthenticated: (context) => const LoginScreen(),
               isAuthenticated: (context) => const RolesScreen(),
               isSignUp: (context) => const RegistrationScreen(),

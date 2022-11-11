@@ -13,7 +13,7 @@ class AuthBuilder extends StatelessWidget {
   });
 
   final WidgetBuilder isUnAuthenticated;
-  final WidgetBuilder isWaiting;
+  final ValueWidgetBuilder isWaiting;
   final WidgetBuilder isGetUri;
   final WidgetBuilder isAuthenticated;
   final WidgetBuilder isSignUp;
@@ -23,7 +23,7 @@ class AuthBuilder extends StatelessWidget {
   Widget build(BuildContext context) => BlocConsumer<AuthCubit, AuthState>(
         builder: (context, state) {
           if (state is AuthWaiting) {
-            return isWaiting(context);
+            return isWaiting(context, state.text, this);
           } else if (state is AuthAutorized) {
             return isAuthenticated(context);
           } else if (state is AuthNotAutorized) {

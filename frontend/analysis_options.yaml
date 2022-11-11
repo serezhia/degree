@@ -21,6 +21,8 @@ analyzer:
     - "build/**"
     # Assets
     - "assets/**"
+    # app
+    - "lib/app/view/app.dart"
 
   strong-mode:
     implicit-casts: false
