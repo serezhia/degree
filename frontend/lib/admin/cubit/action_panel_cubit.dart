@@ -20,6 +20,10 @@ class ActionPanelCubit extends Cubit<ActionPanelState> {
     }
   }
 
+  void openNotificationPanel() {
+    emit(NotificationActionPanelState());
+  }
+
   void openTeacherPanel() {
     emit(TeacherActionPanelState());
   }

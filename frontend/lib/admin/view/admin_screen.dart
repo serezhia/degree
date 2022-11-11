@@ -1,11 +1,10 @@
-import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 import 'package:degree_app/admin/cubit/page_cubit.dart';
-import 'package:degree_app/admin/cubit/pages/user_page_cubit.dart';
+import 'package:degree_app/admin/cubit/pages/users/user_page_cubit.dart';
 import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
-import 'package:degree_app/teachers/src/data/mock_teacher_repository.dart';
-import 'package:degree_app/teachers/teachers.dart';
+import 'package:degree_app/admin_teachers/admin_teachers.dart';
+import 'package:degree_app/notification/notification.dart';
 
 class AdminScreenProvider extends StatelessWidget {
   const AdminScreenProvider({super.key});
@@ -17,15 +16,20 @@ class AdminScreenProvider extends StatelessWidget {
             create: (context) => ActionPanelCubit(),
           ),
           BlocProvider(
-            create: (context) => PageCubit(),
-          ),
-          BlocProvider(
-            create: (context) => UserPageCubit(),
+            create: (context) => NotificationPanelCubit(
+              MockNotificationRepository(),
+            ),
           ),
           BlocProvider(
             create: (context) => TeacherPanelCubit(
               MockTeacherRepository(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => PageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => UserPageCubit(),
           ),
           BlocProvider(
             create: (context) => TeachersPageCubit(
@@ -93,10 +97,10 @@ class AdminScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: GestureDetector(
-                // onTap: () =>
-                //     context.read<ActionPanelCubit>().openNotificationPanel(
-                //           context.read<ActionPanelCubit>().state,
-                //         ),
+                onTap: () {
+                  context.read<ActionPanelCubit>().openNotificationPanel();
+                  context.read<NotificationPanelCubit>().loadNotifications();
+                },
                 child: const Icon(
                   Icons.notifications,
                 ),
