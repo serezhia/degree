@@ -1,7 +1,7 @@
 export 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 export 'package:degree_app/admin/data/users_mock.dart';
-export 'package:degree_app/admin/model/subject_model.dart';
 export 'package:degree_app/admin/model/user_model.dart';
+export 'package:degree_app/admin_subjects/admin_subjects.dart';
 export 'package:degree_app/degree_ui/degree_ui.dart';
 export 'package:equatable/equatable.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';

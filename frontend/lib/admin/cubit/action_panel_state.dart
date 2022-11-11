@@ -11,4 +11,6 @@ class TeacherActionPanelState extends ActionPanelState {}
 
 class NotificationActionPanelState extends ActionPanelState {}
 
+class SubjectActionPanelState extends ActionPanelState {}
+
 class CloseActionPanelState extends ActionPanelState {}

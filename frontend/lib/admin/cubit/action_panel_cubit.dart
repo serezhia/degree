@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'action_panel_state.dart';
 
@@ -26,5 +26,9 @@ class ActionPanelCubit extends Cubit<ActionPanelState> {
 
   void openTeacherPanel() {
     emit(TeacherActionPanelState());
+  }
+
+  void openSubjectPanel() {
+    emit(SubjectActionPanelState());
   }
 }

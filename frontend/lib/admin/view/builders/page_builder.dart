@@ -1,4 +1,5 @@
 import 'package:degree_app/admin/cubit/page_cubit.dart';
+import 'package:degree_app/admin/view/pages/entity_page.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,10 +14,9 @@ class PageBuilder extends StatelessWidget {
         builder: (context, state) {
           if (state is UsersPageState) {
             return const UsersPage();
-          }
-          //  else if (state is EntityPageState) {
-          //   return const EntityPage();}
-          else {
+          } else if (state is EntityPageState) {
+            return const EntityPage();
+          } else {
             return Container();
           }
         },

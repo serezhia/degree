@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < 100; i++) {
     users.add(
       Teacher(
         userId: i,

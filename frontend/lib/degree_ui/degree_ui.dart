@@ -13,3 +13,4 @@ export 'loading_screen/loading_screen.dart';
 export 'scaffold/scaffold.dart';
 export 'sidebar/sidebar.dart';
 export 'theme/light_theme.dart';
+export 'toggle/toggle.dart';

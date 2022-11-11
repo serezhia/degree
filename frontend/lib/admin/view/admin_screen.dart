@@ -1,4 +1,5 @@
 import 'package:degree_app/admin/cubit/page_cubit.dart';
+import 'package:degree_app/admin/cubit/pages/entities/entity_page_cubit.dart';
 import 'package:degree_app/admin/cubit/pages/users/user_page_cubit.dart';
 import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
@@ -26,6 +27,11 @@ class AdminScreenProvider extends StatelessWidget {
             ),
           ),
           BlocProvider(
+            create: (context) => SubjectPanelCubit(
+              MockSubjectRepository(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => PageCubit(),
           ),
           BlocProvider(
@@ -36,6 +42,14 @@ class AdminScreenProvider extends StatelessWidget {
               MockTeacherRepository(),
             ),
           ),
+          BlocProvider(
+            create: (context) => EntityPageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SubjectsPageCubit(
+              MockSubjectRepository(),
+            ),
+          ),
         ],
         child: MultiProvider(
           providers: [
@@ -43,6 +57,7 @@ class AdminScreenProvider extends StatelessWidget {
               create: (_) => SideBarState(),
             ),
             ChangeNotifierProvider(create: (_) => UsersState()),
+            ChangeNotifierProvider(create: (_) => EntitiesState()),
           ],
           child: const AdminScreen(),
         ),

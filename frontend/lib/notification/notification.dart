@@ -7,3 +7,5 @@ export 'src/data/mock_notification_repository.dart';
 export 'src/model/notification_model.dart';
 export 'src/repository/notification_repository.dart';
 export 'src/repository/notification_repository.dart';
+export 'src/view/loaded_notification_panel.dart';
+export 'src/view/loading_notification_panel.dart';
