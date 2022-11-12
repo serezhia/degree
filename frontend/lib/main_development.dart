@@ -27,7 +27,6 @@ void main() async {
         ? HydratedStorage.webStorageDirectory
         : await getApplicationDocumentsDirectory(),
   );
-  await storage.clear();
 
   await bootstrap(
     () => App(

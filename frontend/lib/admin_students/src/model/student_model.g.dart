@@ -7,11 +7,11 @@ part of 'student_model.dart';
 // **************************************************************************
 
 Student _$StudentFromJson(Map<String, dynamic> json) => Student(
+      studentId: json['studentId'] as int,
       firstName: json['firstName'] as String,
       secondName: json['secondName'] as String,
-      studentId: json['studentId'] as int,
-      groupId: json['groupId'] as int,
-      subgroupId: json['subgroupId'] as int,
+      group: Group.fromJson(json['group'] as Map<String, dynamic>),
+      subgroup: Subgroup.fromJson(json['subgroup'] as Map<String, dynamic>),
       userId: json['userId'] as int?,
       middleName: json['middleName'] as String?,
       registrationCode: json['registrationCode'] as int?,
@@ -24,6 +24,6 @@ Map<String, dynamic> _$StudentToJson(Student instance) => <String, dynamic>{
       'middleName': instance.middleName,
       'registrationCode': instance.registrationCode,
       'studentId': instance.studentId,
-      'groupId': instance.groupId,
-      'subgroupId': instance.subgroupId,
+      'group': instance.group,
+      'subgroup': instance.subgroup,
     };

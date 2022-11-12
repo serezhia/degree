@@ -1,98 +1,39 @@
-import 'package:degree_app/admin/cubit/pages/users/user_page_cubit.dart';
+import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
 
-import 'package:degree_app/admin_teachers/admin_teachers.dart';
-
-class UsersPage extends StatelessWidget {
-  const UsersPage({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final currentIndex = context.watch<UserPageCubit>().currentIndex;
-    return Column(
-      children: [
-        Row(
-          children: [
-            ToggleDegree(
-              items: [
-                ToggleItem(lable: 'Учителя'),
-                ToggleItem(lable: 'Студенты'),
-              ],
-              currentIndex: currentIndex,
-              onTap: (value) {
-                context.read<UserPageCubit>().setIndex(value);
-              },
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            GestureDetector(
-              onTap: () {
-                if (currentIndex == 0) {
-                  context.read<ActionPanelCubit>().openTeacherPanel();
-                  context.read<TeacherPanelCubit>().openAddPanel();
-                } else {
-                  context.read<ActionPanelCubit>().openStudentPanel();
-                  context.read<StudentPanelCubit>().openAddPanel();
-                }
-              },
-              child: Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const Icon(Icons.person_add_alt_1_outlined),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        if (currentIndex == 0) const TeacherList(),
-        if (currentIndex == 1) const StudentList(),
-      ],
-    );
-  }
-}
-
-class TeacherList extends StatelessWidget {
-  const TeacherList({super.key});
+class StudentList extends StatelessWidget {
+  const StudentList({super.key});
 
   @override
   Widget build(BuildContext context) =>
-      BlocConsumer<TeachersPageCubit, TeachersPageState>(
+      BlocConsumer<StudentsPageCubit, StudentsPageState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state is InitialTeachersPageState) {
-            context.read<TeachersPageCubit>().getTeachers();
+          if (state is InitialStudentsPageState) {
+            context.read<StudentsPageCubit>().getStudents();
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is LoadingTeachersPageState) {
+          } else if (state is LoadingStudentsPageState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (state is LoadedTeachersPageState) {
-            if (state.teachers.isEmpty) {
+          } else if (state is LoadedStudentsPageState) {
+            if (state.students.isEmpty) {
               return const Expanded(
                 child: ColoredBox(
                   color: Color(0xFFFFFFFF),
                   child: Center(
-                    child: Text('Преподаватели отсутствуют'),
+                    child: Text('Студенты отсутствуют'),
                   ),
                 ),
               );
             } else {
               return Expanded(
                 child: ListView.builder(
-                  key: context.read<UsersState>().listTeachersKey,
+                  key: context.read<UsersState>().listStudentsKey,
                   addAutomaticKeepAlives: false,
-                  itemCount: state.teachers.length,
+                  itemCount: state.students.length,
                   itemBuilder: (context, index) => Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 8,
@@ -102,12 +43,12 @@ class TeacherList extends StatelessWidget {
                       children: [
                         if (index == 0 ||
                             index != 0 &&
-                                state.teachers[index - 1].secondName[0] !=
-                                    state.teachers[index].secondName[0])
+                                state.students[index - 1].secondName[0] !=
+                                    state.students[index].secondName[0])
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
-                              state.teachers[index].secondName[0],
+                              state.students[index].secondName[0],
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w500,
@@ -116,10 +57,10 @@ class TeacherList extends StatelessWidget {
                           ),
                         GestureDetector(
                           onTap: () {
-                            context.read<ActionPanelCubit>().openTeacherPanel();
+                            context.read<ActionPanelCubit>().openStudentPanel();
                             context
-                                .read<TeacherPanelCubit>()
-                                .getTeacher(state.teachers[index].teacherId);
+                                .read<StudentPanelCubit>()
+                                .getStudent(state.students[index].studentId);
                           },
                           child: ColoredBox(
                             color: Colors.white,
@@ -142,7 +83,7 @@ class TeacherList extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Text(
-                                        state.teachers[index].secondName,
+                                        state.students[index].secondName,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           fontSize: 16,
@@ -153,7 +94,7 @@ class TeacherList extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Text(
-                                        state.teachers[index].firstName,
+                                        state.students[index].firstName,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           fontSize: 16,
@@ -164,7 +105,7 @@ class TeacherList extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Text(
-                                        state.teachers[index].middleName ?? '',
+                                        state.students[index].middleName ?? '',
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
                                           fontSize: 16,
@@ -191,21 +132,4 @@ class TeacherList extends StatelessWidget {
           }
         },
       );
-}
-
-class UsersState extends ChangeNotifier {
-  final PageStorageKey<String> listTeachersKey =
-      const PageStorageKey('list_teachers');
-
-  final PageStorageKey<String> listStudentsKey =
-      const PageStorageKey('list_students');
-
-  int _currentIndex = 0;
-
-  int get currentIndex => _currentIndex;
-
-  set currentIndex(int index) {
-    _currentIndex = index;
-    notifyListeners();
-  }
 }

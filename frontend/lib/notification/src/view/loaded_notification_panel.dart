@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:degree_app/notification/notification.dart';
@@ -69,7 +67,7 @@ class LoadedNotificationActionPanel extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${notifications[index].date.day.toString()}.${notifications[index].date.month.toString()}',
+                      '''${notifications[index].date.day.toString()}.${notifications[index].date.month.toString()}''',
                       style: const TextStyle(
                         fontSize: 14,
                       ),
