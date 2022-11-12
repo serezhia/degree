@@ -21,57 +21,61 @@ class LoadedNotificationActionPanel extends StatelessWidget {
         },
       ),
       title: 'Уведомления',
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) => SizedBox(
-          height: 100,
-          child: ColoredBox(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(10),
+      body: ColoredBox(
+        color: Colors.white,
+        child: ListView.builder(
+          itemCount: notifications.length,
+          itemBuilder: (context, index) => SizedBox(
+            height: 100,
+            child: ColoredBox(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child:
+                          const Icon(Icons.notifications, color: Colors.white),
                     ),
-                    child: const Icon(Icons.notifications, color: Colors.white),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            notifications[index].title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          Expanded(
-                            child: Text(
-                              notifications[index].body,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              notifications[index].title,
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 16,
                               ),
                             ),
-                          ),
-                        ],
+                            Expanded(
+                              child: Text(
+                                notifications[index].body,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Text(
-                    '${notifications[index].date.day.toString()}.${notifications[index].date.month.toString()}',
-                    style: const TextStyle(
-                      fontSize: 14,
+                    Text(
+                      '${notifications[index].date.day.toString()}.${notifications[index].date.month.toString()}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
