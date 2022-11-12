@@ -1,4 +1,6 @@
 import 'package:degree_app/admin/cubit/pages/entities/entity_page_cubit.dart';
+import 'package:degree_app/admin_groups/admin_groups.dart';
+import 'package:degree_app/admin_groups/src/view/page/groups_page.dart';
 import 'package:degree_app/admin_subjects/admin_subjects.dart';
 
 class EntityPage extends StatelessWidget {
@@ -28,7 +30,10 @@ class EntityPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                if (context.read<EntitiesState>().currentIndex == 0) {
+                if (currentIndex == 0) {
+                  context.read<ActionPanelCubit>().openGroupPanel();
+                  context.read<GroupPanelCubit>().openAddPanel();
+                } else {
                   context.read<ActionPanelCubit>().openSubjectPanel();
                   context.read<SubjectPanelCubit>().openAddPanel();
                 }
@@ -59,6 +64,9 @@ class EntitiesState extends ChangeNotifier {
   final PageStorageKey<String> listSubjectsKey =
       const PageStorageKey('list_subjects');
 
+  final PageStorageKey<String> listGroupsKey =
+      const PageStorageKey('list_groups');
+
   ScrollController scrollTeacherController = ScrollController();
 
   int _currentIndex = 0;
@@ -69,25 +77,4 @@ class EntitiesState extends ChangeNotifier {
     _currentIndex = index;
     notifyListeners();
   }
-}
-
-class GroupList extends StatelessWidget {
-  const GroupList({super.key});
-
-  @override
-  Widget build(BuildContext context) => const Expanded(
-        child: CustomScrollView(
-          slivers: [
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: ColoredBox(
-                color: Color(0xFFFFFFFF),
-                child: Center(
-                  child: Text('Список групп пуст'),
-                ),
-              ),
-            )
-          ],
-        ),
-      );
 }

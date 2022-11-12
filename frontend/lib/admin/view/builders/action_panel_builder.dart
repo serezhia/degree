@@ -1,4 +1,5 @@
 import 'package:degree_app/admin/cubit/action_panel_cubit.dart';
+import 'package:degree_app/admin/view/action_panels/group_action_panel.dart';
 import 'package:degree_app/admin/view/action_panels/notification_action_panel.dart';
 import 'package:degree_app/admin/view/action_panels/subject_action_panel.dart';
 import 'package:degree_app/admin/view/action_panels/teacher_action_panel.dart';
@@ -18,6 +19,8 @@ class ActionPanelBuilder extends StatelessWidget {
             return const NotificationActionPanel();
           } else if (state is SubjectActionPanelState) {
             return const SubjectActionPanel();
+          } else if (state is GroupActionPanelState) {
+            return const GroupActionPanel();
           } else {
             return const SizedBox();
           }

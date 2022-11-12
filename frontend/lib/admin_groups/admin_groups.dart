@@ -1,0 +1,20 @@
+export 'package:collection/collection.dart';
+export 'package:degree_app/admin/cubit/action_panel_cubit.dart';
+export 'package:degree_app/degree_ui/degree_ui.dart';
+export 'package:equatable/equatable.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:json_annotation/json_annotation.dart';
+
+export 'src/cubit/action_panel/group_panel_cubit.dart';
+export 'src/cubit/page/groups_page_cubit.dart';
+export 'src/data/mock_groups.dart';
+export 'src/data/mock_speciality.dart';
+export 'src/data/mock_subgroups.dart';
+export 'src/model/group_model.dart';
+export 'src/model/speciality_model.dart';
+export 'src/model/subgroup_model.dart';
+export 'src/repository/group_repository.dart';
+export 'src/view/action_panel/add_group_panel.dart';
+export 'src/view/action_panel/edit_group_panel.dart';
+export 'src/view/action_panel/info_group_panel.dart';
+export 'src/view/action_panel/loading_group_panel.dart';
