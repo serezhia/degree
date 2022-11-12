@@ -6,6 +6,7 @@ import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_groups/admin_groups.dart';
 import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
+import 'package:degree_app/admin_students/admin_students.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
 import 'package:degree_app/notification/notification.dart';
 
@@ -29,6 +30,11 @@ class AdminScreenProvider extends StatelessWidget {
             ),
           ),
           BlocProvider(
+            create: (context) => StudentPanelCubit(
+              MockStudentRepository(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => GroupPanelCubit(
               MockGroupRepository(),
             ),
@@ -47,6 +53,11 @@ class AdminScreenProvider extends StatelessWidget {
           BlocProvider(
             create: (context) => TeachersPageCubit(
               MockTeacherRepository(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => StudentsPageCubit(
+              MockStudentRepository(),
             ),
           ),
           BlocProvider(
