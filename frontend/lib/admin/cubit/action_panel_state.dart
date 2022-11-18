@@ -17,4 +17,6 @@ class SubjectActionPanelState extends ActionPanelState {}
 
 class GroupActionPanelState extends ActionPanelState {}
 
+class ScheduleActionPanelState extends ActionPanelState {}
+
 class CloseActionPanelState extends ActionPanelState {}

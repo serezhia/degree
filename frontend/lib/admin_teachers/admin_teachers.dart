@@ -1,7 +1,6 @@
 export 'package:degree_app/admin/cubit/action_panel_cubit.dart';
 export 'package:degree_app/admin/data/users_mock.dart';
 export 'package:degree_app/admin/model/user_model.dart';
-export 'package:degree_app/admin/view/pages/users_page.dart';
 export 'package:degree_app/admin_subjects/admin_subjects.dart';
 export 'package:degree_app/degree_ui/degree_ui.dart';
 export 'package:equatable/equatable.dart';
@@ -17,4 +16,3 @@ export 'src/view/action_panel/add_teacher_panel.dart';
 export 'src/view/action_panel/edit_teacher_panel.dart';
 export 'src/view/action_panel/info_teacher_panel.dart';
 export 'src/view/action_panel/loading_teacher_panel.dart';
-export 'src/view/page/teacher_page.dart';

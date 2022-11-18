@@ -1,11 +1,14 @@
 import 'package:degree_app/admin/cubit/page_cubit.dart';
 import 'package:degree_app/admin/cubit/pages/entities/entity_page_cubit.dart';
+import 'package:degree_app/admin/cubit/pages/schedule/schedule_page_cubit.dart';
 import 'package:degree_app/admin/cubit/pages/users/user_page_cubit.dart';
 import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_groups/admin_groups.dart';
 import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
+import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
+import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
 import 'package:degree_app/notification/notification.dart';
@@ -73,6 +76,14 @@ class AdminScreenProvider extends StatelessWidget {
               MockGroupRepository(),
             ),
           ),
+          BlocProvider(
+            create: (context) => SchedulePageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SchedulesPageCubit(
+              MockLessonRepository(),
+            ),
+          )
         ],
         child: MultiProvider(
           providers: [
