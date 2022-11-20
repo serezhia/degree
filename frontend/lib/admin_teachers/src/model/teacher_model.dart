@@ -8,6 +8,8 @@ class Teacher extends User {
 
   final List<Subject>? subjects;
 
+  String get fullName => '$secondName $firstName $middleName';
+
   Teacher({
     required super.firstName,
     required super.secondName,
