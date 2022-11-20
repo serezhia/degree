@@ -12,6 +12,7 @@ class Student extends User {
 
   final Subgroup subgroup;
 
+  String get fullName => '$secondName $firstName $middleName';
   Student({
     required this.studentId,
     required super.firstName,
