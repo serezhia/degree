@@ -15,19 +15,23 @@ class SubjectPanelCubit extends Cubit<SubjectPanelState> {
     emit(EditSubjectPanelState(subject: subject));
   }
 
-  Future<void> addSubject({
+  Future<Subject?> addSubject({
     required String name,
   }) async {
     emit(LoadingSubjectPanelState());
     try {
+      final subject = subjectRepository.createSubject(name);
+
       emit(
         InfoSubjectPanelState(
-          subject: await subjectRepository.createSubject(name),
+          subject: await subject,
         ),
       );
+      return subject;
     } catch (e) {
       emit(ErrorSubjectPanelState(message: e.toString()));
     }
+    return null;
   }
 
   Future<void> getSubject(int id) async {

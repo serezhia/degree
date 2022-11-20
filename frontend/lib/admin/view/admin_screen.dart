@@ -7,6 +7,7 @@ import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_groups/admin_groups.dart';
 import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
+import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
@@ -45,6 +46,11 @@ class AdminScreenProvider extends StatelessWidget {
           BlocProvider(
             create: (context) => SubjectPanelCubit(
               MockSubjectRepository(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => LessonPanelCubit(
+              MockLessonRepository(),
             ),
           ),
           BlocProvider(

@@ -18,15 +18,15 @@ abstract class LessonRepository {
   Future<Lesson> getLesson(int id);
 
   Future<Lesson> addLesson({
-    required String nameSubject,
-    required Teacher teacher,
+    required int subjectId,
+    required int teacherId,
     required LessonType lessonType,
     required int numberLesson,
     required DateTime date,
     required int cabinetNumber,
-    Group? group,
-    Subgroup? subgroup,
-    Student? student,
+    int? groupId,
+    int? subgroupId,
+    int? studentId,
   });
 
   Future<Lesson> updateLesson(Lesson lesson);

@@ -1,26 +1,41 @@
+import 'dart:developer';
+
 import '../../admin_schedule.dart';
 
 class MockLessonRepository implements LessonRepository {
   @override
   Future<Lesson> addLesson({
-    required String nameSubject,
-    required Teacher teacher,
+    required int subjectId,
+    required int teacherId,
     required LessonType lessonType,
     required int numberLesson,
     required DateTime date,
     required int cabinetNumber,
-    Group? group,
-    Subgroup? subgroup,
-    Student? student,
+    int? groupId,
+    int? subgroupId,
+    int? studentId,
   }) {
     final lesson = Lesson(
       id: lessons.length,
-      subject: subjects.firstWhere((element) => element.name == nameSubject),
-      teacher: teacher,
+      subject: subjects.firstWhere((element) => element.id == subjectId),
+      teacher: users.firstWhere(
+        (element) => element is Teacher && element.teacherId == teacherId,
+      ) as Teacher,
       lessonType: lessonType,
       numberLesson: numberLesson,
       date: date,
       cabinet: cabinetNumber,
+      student: studentId != null
+          ? users.firstWhere(
+              (element) => element is Student && element.studentId == studentId,
+            ) as Student
+          : null,
+      group: groupId != null
+          ? groups.firstWhere((element) => element.id == groupId)
+          : null,
+      subgroup: subgroupId != null
+          ? subgroups.firstWhere((element) => element.id == subgroupId)
+          : null,
     );
     lessons.add(lesson);
     return Future.delayed(const Duration(seconds: 2), () => lesson);
@@ -43,10 +58,24 @@ class MockLessonRepository implements LessonRepository {
       Future.delayed(const Duration(seconds: 2), () => lessons);
 
   @override
-  Future<List<Lesson>> getLessonsByDay(DateTime date) => Future.delayed(
-        const Duration(seconds: 2),
-        () => lessons.where((element) => element.date == date).toList(),
-      );
+  Future<List<Lesson>> getLessonsByDay(DateTime date) {
+    log(
+      lessons
+          .where(
+            (element) =>
+                element.date.day == date.day &&
+                element.date.month == date.month &&
+                element.date.year == date.year,
+          )
+          .toList()
+          .length
+          .toString(),
+    );
+    return Future.delayed(
+      const Duration(seconds: 2),
+      () => lessons.where((element) => element.date.day == date.day).toList(),
+    );
+  }
 
   @override
   Future<List<Lesson>> getLessonsByGroup(int groupId) {

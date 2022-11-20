@@ -20,4 +20,10 @@ List<String> namesSubject = <String>[
   'Дополнительные предметы',
 ];
 
-List<Subject> subjects = <Subject>[];
+List<Subject> subjects = <Subject>[
+  for (int i = 0; i < namesSubject.length; i++)
+    Subject(
+      id: i,
+      name: namesSubject[i],
+    ),
+];

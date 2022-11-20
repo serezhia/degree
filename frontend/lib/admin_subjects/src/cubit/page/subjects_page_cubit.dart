@@ -7,6 +7,9 @@ class SubjectsPageCubit extends Cubit<SubjectsPageState> {
 
   final SubjectRepository subjectRepository;
 
+  Future<List<Subject>> getSubjectsForField() async =>
+      subjectRepository.getSubjectsList();
+
   Future<void> getSubjects() async {
     emit(LoadingSubjectsPageState());
     try {
