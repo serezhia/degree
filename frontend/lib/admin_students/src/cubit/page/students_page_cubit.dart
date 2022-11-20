@@ -7,6 +7,9 @@ class StudentsPageCubit extends Cubit<StudentsPageState> {
 
   final StudentRepository studentRepository;
 
+  Future<List<Student>> getStudentsForField() async =>
+      studentRepository.getStudentsList();
+
   Future<void> getStudents() async {
     emit(LoadingStudentsPageState());
     try {
