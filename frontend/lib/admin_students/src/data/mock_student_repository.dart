@@ -59,14 +59,14 @@ class MockStudentRepository implements StudentRepository {
     required int userId,
     required String firstName,
     required String secondName,
-    required String groupName,
-    required String subgroupName,
+    required int groupId,
+    required int subgroupId,
     String? middleName,
   }) =>
       Future.delayed(const Duration(seconds: 1), () {
-        final group = groups.firstWhere((group) => group.name == groupName);
+        final group = groups.firstWhere((group) => group.id == groupId);
         final subgroup =
-            subgroups.firstWhere((subgroup) => subgroup.name == subgroupName);
+            subgroups.firstWhere((subgroup) => subgroup.id == subgroupId);
         final newStudent = Student(
           userId: userId,
           studentId: studentId,

@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:degree_app/admin_groups/admin_groups.dart';
+import 'package:degree_app/degree_ui/inputform/dropdown_text_field.dart';
+
 import '../../../admin_students.dart';
 
 class EditStudentActionPanel extends StatelessWidget {
@@ -9,9 +14,51 @@ class EditStudentActionPanel extends StatelessWidget {
     final firstName = TextEditingController()..text = student.firstName;
     final secondName = TextEditingController()..text = student.secondName;
     final middleName = TextEditingController()..text = student.middleName ?? '';
-    final groupName = TextEditingController()..text = student.group.name;
-    final subgroupName = TextEditingController()..text = student.subgroup.name;
+    final groupController = TextEditingController()..text = student.group.name;
+    final subgroupController = TextEditingController()
+      ..text = student.subgroup.name;
     final studentsList = context.read<StudentsPageCubit>();
+
+    Future<List<DropDownItemDegree>> getItemsGroup() async {
+      final cubit = context.read<GroupsPageCubit>();
+      final groups = await cubit.getGroupsForField();
+      return groups
+          .map(
+            (e) => DropDownItemDegree(
+              value: e,
+              text: e.name,
+            ),
+          )
+          .toList();
+    }
+
+    DropDownItemDegree? pickedGroup = DropDownItemDegree(
+      value: student.group,
+      text: student.group.name,
+    );
+
+    Future<List<DropDownItemDegree>> getItemsSubgroup() async {
+      log('Обновляем список подгрупп');
+      final cubit = context.read<GroupsPageCubit>();
+      final groups = await cubit.getGroupsForField();
+      final subgroups = <Subgroup>[];
+      for (final group in groups) {
+        final groupSubgroups = group.subgroups;
+        if (groupSubgroups != null) {
+          subgroups.addAll(groupSubgroups);
+        }
+      }
+      return subgroups
+          .map(
+            (e) => DropDownItemDegree(
+              value: e,
+              text: e.name,
+            ),
+          )
+          .toList();
+    }
+
+    DropDownItemDegree? pickedSubgroup;
 
     return ActionPanel(
       leading: ActionPanelItem(
@@ -51,17 +98,33 @@ class EditStudentActionPanel extends StatelessWidget {
                       obscureText: false,
                       maxlines: 1,
                     ),
-                    TextFieldDegree(
-                      textEditingController: groupName,
-                      textFieldText: 'Группа',
-                      obscureText: false,
-                      maxlines: 1,
+                    DropDownTextFieldDegree(
+                      controller: groupController,
+                      nameField: 'Группа',
+                      getItems: getItemsGroup,
+                      onTapItem: (value) {
+                        groupController.text = value.text;
+                        pickedGroup = DropDownItemDegree(
+                          value: value.value,
+                          text: value.text,
+                        );
+                        log('pickedGroup ${pickedGroup?.text}');
+                      },
+                      pickedItem: pickedGroup,
                     ),
-                    TextFieldDegree(
-                      textEditingController: subgroupName,
-                      textFieldText: 'Подгруппа',
-                      obscureText: false,
-                      maxlines: 1,
+                    DropDownTextFieldDegree(
+                      controller: subgroupController,
+                      nameField: 'Подгруппа',
+                      getItems: getItemsSubgroup,
+                      onTapItem: (value) {
+                        subgroupController.text = value.text;
+                        pickedSubgroup = DropDownItemDegree(
+                          value: value.value,
+                          text: value.text,
+                        );
+                        log('pickedSubgroup ${pickedSubgroup?.text}');
+                      },
+                      pickedItem: pickedSubgroup,
                     ),
                   ],
                 ),
@@ -82,8 +145,8 @@ class EditStudentActionPanel extends StatelessWidget {
                   firstName: firstName.text,
                   secondName: secondName.text,
                   middleName: middleName.text,
-                  groupName: groupName.text,
-                  subgroupName: subgroupName.text,
+                  groupId: (pickedGroup!.value as Group).id,
+                  subgroupId: (pickedSubgroup!.value as Subgroup).id,
                 )
                 .then(
                   (value) => studentsList.getStudents(),
