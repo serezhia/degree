@@ -7,6 +7,8 @@ class GroupsPageCubit extends Cubit<GroupsPageState> {
 
   final GroupRepository groupRepository;
 
+  Future<List<Group>> getGroupsForField() async => groupRepository.getGroups();
+
   Future<void> getGroups() async {
     emit(LoadingGroupsPageState());
     try {
