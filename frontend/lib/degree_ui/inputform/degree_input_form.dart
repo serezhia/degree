@@ -1,5 +1,6 @@
 import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:degree_app/l10n/l10n.dart';
+import 'package:flutter/services.dart';
 
 class TextFieldDegree extends StatelessWidget {
   const TextFieldDegree({
@@ -10,6 +11,11 @@ class TextFieldDegree extends StatelessWidget {
     this.textEditingController,
     this.onChanged,
     this.autofocus,
+    this.onTap,
+    this.onEditingComplete,
+    this.focusNode,
+    this.inputFormatters,
+    this.keyboardType,
     super.key,
   });
   final String textFieldText;
@@ -19,6 +25,11 @@ class TextFieldDegree extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String)? onChanged;
   final bool? autofocus;
+  final void Function()? onTap;
+  final void Function()? onEditingComplete;
+  final FocusNode? focusNode;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +56,11 @@ class TextFieldDegree extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 15),
           child: TextFormField(
+            keyboardType: keyboardType,
+            inputFormatters: inputFormatters,
+            focusNode: focusNode,
+            onTap: onTap,
+            onEditingComplete: onEditingComplete,
             autofocus: autofocus ?? false,
             onChanged: onChanged,
             validator: validator ?? _emptyFieldValidator,
