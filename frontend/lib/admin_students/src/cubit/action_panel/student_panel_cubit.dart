@@ -19,8 +19,8 @@ class StudentPanelCubit extends Cubit<StudentPanelState> {
     required String firstName,
     required String secondName,
     required String? middleName,
-    required String groupName,
-    required String subgroupName,
+    required int groupId,
+    required int subgroupId,
   }) async {
     emit(LoadingStudentPanelState());
     try {
@@ -30,8 +30,8 @@ class StudentPanelCubit extends Cubit<StudentPanelState> {
             firstName: firstName,
             secondName: secondName,
             middleName: middleName,
-            groupName: groupName,
-            subgroupName: subgroupName,
+            groupId: groupId,
+            subgroupId: subgroupId,
           ),
         ),
       );

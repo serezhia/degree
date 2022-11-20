@@ -6,8 +6,8 @@ abstract class StudentRepository {
   Future<Student> createStudent({
     required String firstName,
     required String secondName,
-    required String groupName,
-    required String subgroupName,
+    required int groupId,
+    required int subgroupId,
     String? middleName,
   });
 
