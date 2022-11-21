@@ -1,5 +1,4 @@
 import 'package:degree_app/degree_ui/degree_ui.dart';
-import 'package:degree_app/degree_ui/navbar/bottombar.dart';
 
 class ScaffoldDegree extends StatelessWidget {
   const ScaffoldDegree({

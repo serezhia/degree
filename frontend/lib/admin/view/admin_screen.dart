@@ -13,7 +13,6 @@ import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.da
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
-import 'package:degree_app/degree_ui/navbar/bottombar.dart';
 import 'package:degree_app/notification/notification.dart';
 
 class AdminScreenProvider extends StatelessWidget {

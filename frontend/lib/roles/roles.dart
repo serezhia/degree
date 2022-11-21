@@ -1,25 +1,31 @@
+import 'dart:developer';
+
 import 'package:degree_app/admin/view/admin_screen.dart';
 import 'package:degree_app/auth/auth.dart';
+import 'package:degree_app/teacher/teacher.dart';
 
 class RolesScreen extends StatelessWidget {
   const RolesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final role =
-        context.read<AuthCubit>().getProfile().then((user) => user.role);
+    final role = Future.delayed(
+      const Duration(seconds: 2),
+      () => (context.read<AuthCubit>().state as AuthAutorized).user.role,
+    );
 
     return FutureBuilder(
       future: role,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          log(snapshot.data!);
           switch (snapshot.data) {
             case 'admin':
               return const AdminScreenProvider();
             // case 'student':
             //   return const StudentScreen();
-            // case 'teacher':
-            //   return const TeacherScreen();
+            case 'teacher':
+              return const TeacherScreenProvider();
             default:
               return const Scaffold(
                 body: Center(

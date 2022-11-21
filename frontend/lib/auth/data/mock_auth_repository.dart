@@ -1,6 +1,6 @@
 import 'package:degree_app/auth/auth.dart';
 
-class MockAuthRepository extends Mock implements AuthRepository {
+class MockAuthRepository implements AuthRepository {
   @override
   Future<UserEntity> getProfile() => Future.delayed(
         const Duration(seconds: 2),
