@@ -8,7 +8,6 @@ class AddTeacherActionPanel extends StatelessWidget {
     final firstName = TextEditingController();
     final secondName = TextEditingController();
     final middleName = TextEditingController();
-    final subjects = TextEditingController();
     final teachersList = context.read<TeachersPageCubit>();
     return ActionPanel(
       leading: ActionPanelItem(

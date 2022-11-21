@@ -1,4 +1,5 @@
 import 'package:degree_app/degree_ui/degree_ui.dart';
+import 'package:degree_app/degree_ui/navbar/bottombar.dart';
 
 class ScaffoldDegree extends StatelessWidget {
   const ScaffoldDegree({
@@ -6,6 +7,7 @@ class ScaffoldDegree extends StatelessWidget {
     required this.body,
     required this.appBar,
     required this.actionPanelIsActive,
+    required this.bottomBar,
     this.actionPanel,
     this.isScrollableBody = false,
     super.key,
@@ -17,6 +19,7 @@ class ScaffoldDegree extends StatelessWidget {
   final Widget? actionPanel;
   final SideBarDegree sideBar;
   final bool isScrollableBody;
+  final BottomBarDegree bottomBar;
 
   @override
   Widget build(BuildContext context) => MultiProvider(
@@ -63,6 +66,7 @@ class ScaffoldDegree extends StatelessWidget {
                 body: body,
                 actionPanel: actionPanelIsActive ? actionPanel : null,
                 appBar: appBar,
+                bottomBar: bottomBar,
                 isScrollableBody: isScrollableBody,
                 actionPanelIsActive: actionPanelIsActive,
               );
@@ -111,12 +115,20 @@ class DesktopCustomScreen extends StatelessWidget {
                                 ? SingleChildScrollView(
                                     key: context.watch<StateScroll>().key,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(25),
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        top: 25,
+                                      ),
                                       child: body,
                                     ),
                                   )
                                 : Padding(
-                                    padding: const EdgeInsets.all(25),
+                                    padding: const EdgeInsets.only(
+                                      left: 25,
+                                      right: 25,
+                                      top: 25,
+                                    ),
                                     child: body,
                                   ),
                           ),
@@ -183,12 +195,20 @@ class LaptopCustomScreen extends StatelessWidget {
                                 ? SingleChildScrollView(
                                     key: context.watch<StateScroll>().key,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(25),
+                                      padding: const EdgeInsets.only(
+                                        left: 25,
+                                        right: 25,
+                                        top: 25,
+                                      ),
                                       child: body,
                                     ),
                                   )
                                 : Padding(
-                                    padding: const EdgeInsets.all(25),
+                                    padding: const EdgeInsets.only(
+                                      left: 25,
+                                      right: 25,
+                                      top: 25,
+                                    ),
                                     child: body,
                                   ),
                           ),
@@ -250,14 +270,22 @@ class TabletCustomScreen extends StatelessWidget {
                           ? SingleChildScrollView(
                               key: context.watch<StateScroll>().key,
                               child: Padding(
-                                padding: const EdgeInsets.all(25),
+                                padding: const EdgeInsets.only(
+                                  left: 25,
+                                  right: 25,
+                                  top: 25,
+                                ),
                                 child: body,
                               ),
                             )
                           : ColoredBox(
                               color: const Color(0xFFFAFAFA),
                               child: Padding(
-                                padding: const EdgeInsets.all(25),
+                                padding: const EdgeInsets.only(
+                                  left: 25,
+                                  right: 25,
+                                  top: 25,
+                                ),
                                 child: body,
                               ),
                             ),
@@ -284,6 +312,7 @@ class MobileCustomScreen extends StatelessWidget {
     required this.actionPanelIsActive,
     required this.sideBar,
     required this.body,
+    required this.bottomBar,
     this.actionPanel,
     this.appBar,
     super.key,
@@ -295,9 +324,11 @@ class MobileCustomScreen extends StatelessWidget {
   final AppBarDegree? appBar;
   final bool isScrollableBody;
   final bool actionPanelIsActive;
+  final BottomBarDegree bottomBar;
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        bottomNavigationBar: actionPanel == null ? bottomBar : null,
         backgroundColor: const Color(0xFFFAFAFA),
         appBar: actionPanel == null ? appBar : null,
         body: (actionPanelIsActive == false)
@@ -305,12 +336,20 @@ class MobileCustomScreen extends StatelessWidget {
                 ? SingleChildScrollView(
                     key: context.watch<StateScroll>().key,
                     child: Padding(
-                      padding: const EdgeInsets.all(25),
+                      padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 25,
+                        top: 25,
+                      ),
                       child: body,
                     ),
                   )
                 : Padding(
-                    padding: const EdgeInsets.all(25),
+                    padding: const EdgeInsets.only(
+                      left: 25,
+                      right: 25,
+                      top: 25,
+                    ),
                     child: body,
                   )
             : Column(

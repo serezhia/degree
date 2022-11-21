@@ -12,6 +12,7 @@ import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.da
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
+import 'package:degree_app/degree_ui/navbar/bottombar.dart';
 import 'package:degree_app/notification/notification.dart';
 
 class AdminScreenProvider extends StatelessWidget {
@@ -176,6 +177,32 @@ class AdminScreen extends StatelessWidget {
           ],
         ),
         body: const PageBuilder(),
+        bottomBar: BottomBarDegree(
+          items: const [
+            BottomBarItem(
+              icon: Icons.group_outlined,
+              title: 'Пользователи',
+            ),
+            BottomBarItem(
+              icon: Icons.groups_outlined,
+              title: 'Сущности',
+            ),
+            BottomBarItem(
+              icon: Icons.task_outlined,
+              title: 'Задачи',
+            ),
+            BottomBarItem(
+              icon: Icons.inventory_2_outlined,
+              title: 'Файлы',
+            ),
+            BottomBarItem(
+              icon: Icons.schedule_outlined,
+              title: 'Расписание',
+            ),
+          ],
+          currentIndex: context.watch<PageCubit>().state.props[0] as int,
+          onTapItem: (index) => context.read<PageCubit>().togglePage(index),
+        ),
       );
 }
 

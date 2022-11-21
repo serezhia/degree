@@ -1,3 +1,5 @@
+// ignore_for_file: use_string_buffers, parameter_assignments
+
 import 'dart:math';
 
 import 'package:flutter/services.dart';
@@ -22,8 +24,10 @@ class DateTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    var text = _format(newValue.text, '-');
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final text = _format(newValue.text, '-');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
 
@@ -31,7 +35,7 @@ class DateTextFormatter extends TextInputFormatter {
     value = value.replaceAll(seperator, '');
     var newString = '';
 
-    for (int i = 0; i < min(value.length, _maxChars); i++) {
+    for (var i = 0; i < min(value.length, _maxChars); i++) {
       newString += value[i];
       if ((i == 1 || i == 3) && i != value.length - 1) {
         newString += seperator;
@@ -41,7 +45,7 @@ class DateTextFormatter extends TextInputFormatter {
     return newString;
   }
 
-  TextSelection updateCursorPosition(String text) {
-    return TextSelection.fromPosition(TextPosition(offset: text.length));
-  }
+  TextSelection updateCursorPosition(String text) => TextSelection.fromPosition(
+        TextPosition(offset: text.length),
+      );
 }

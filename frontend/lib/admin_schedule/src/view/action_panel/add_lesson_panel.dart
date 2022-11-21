@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:degree_app/admin/cubit/pages/entities/entity_page_cubit.dart';
 import 'package:degree_app/admin/cubit/pages/schedule/schedule_page_cubit.dart';
 import 'package:degree_app/admin_schedule/admin_schedule.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
@@ -111,7 +110,7 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
           (e) => DropDownItemDegree(
             value: e,
             text:
-                '${e.group.name} ${e.secondName} ${e.firstName} ${e.middleName ?? ''} ',
+                '''${e.group.name} ${e.secondName} ${e.firstName} ${e.middleName ?? ''} ''',
           ),
         )
         .toList();

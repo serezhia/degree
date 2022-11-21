@@ -9,7 +9,6 @@ class EditTeacherActionPanel extends StatelessWidget {
     final firstName = TextEditingController()..text = teacher.firstName;
     final secondName = TextEditingController()..text = teacher.secondName;
     final middleName = TextEditingController()..text = teacher.middleName ?? '';
-    final subjects = TextEditingController();
     final teachersList = context.read<TeachersPageCubit>();
 
     return ActionPanel(
