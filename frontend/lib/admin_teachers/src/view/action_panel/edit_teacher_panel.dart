@@ -50,12 +50,6 @@ class EditTeacherActionPanel extends StatelessWidget {
                       obscureText: false,
                       maxlines: 1,
                     ),
-                    TextFieldDegree(
-                      textEditingController: subjects,
-                      textFieldText: 'Предметы',
-                      obscureText: false,
-                      maxlines: 1,
-                    ),
                   ],
                 ),
               ),
