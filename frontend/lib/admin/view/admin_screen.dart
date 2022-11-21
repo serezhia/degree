@@ -7,6 +7,7 @@ import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_groups/admin_groups.dart';
 import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
+import 'package:degree_app/admin_profile/admin_profile.dart';
 import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
@@ -28,6 +29,9 @@ class AdminScreenProvider extends StatelessWidget {
             create: (context) => NotificationPanelCubit(
               MockNotificationRepository(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => ProfilePanelCubit(),
           ),
           BlocProvider(
             create: (context) => TeacherPanelCubit(
@@ -163,9 +167,10 @@ class AdminScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              // onTap: () => context.read<ActionPanelCubit>().openProfilePanel(
-              //       context.read<ActionPanelCubit>().state,
-              //     ),
+              onTap: () {
+                context.read<ActionPanelCubit>().openProfilePanel();
+                context.read<ProfilePanelCubit>().loadProfile();
+              },
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 30, maxWidth: 30),
                 child: const CircleAvatar(

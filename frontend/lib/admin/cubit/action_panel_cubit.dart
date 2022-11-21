@@ -43,4 +43,8 @@ class ActionPanelCubit extends Cubit<ActionPanelState> {
   void openLessonPanel() {
     emit(ScheduleActionPanelState());
   }
+
+  void openProfilePanel() {
+    emit(ProfileActionPanelState());
+  }
 }
