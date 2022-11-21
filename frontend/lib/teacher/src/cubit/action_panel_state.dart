@@ -7,4 +7,6 @@ abstract class ActionPanelState extends Equatable {
   List<Object> get props => [];
 }
 
+class ProfileActionPanelState extends ActionPanelState {}
+
 class CloseActionPanelState extends ActionPanelState {}

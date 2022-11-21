@@ -18,4 +18,8 @@ class ActionPanelCubit extends Cubit<ActionPanelState> {
       return true;
     }
   }
+
+  void openProfilePanel() {
+    emit(ProfileActionPanelState());
+  }
 }

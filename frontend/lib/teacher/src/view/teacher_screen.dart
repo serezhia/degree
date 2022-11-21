@@ -1,5 +1,6 @@
 import 'package:degree_app/notification/notification.dart';
 import 'package:degree_app/teacher/teacher.dart';
+import 'package:degree_app/teacher_profile/teacher_profile.dart';
 
 class TeacherScreenProvider extends StatelessWidget {
   const TeacherScreenProvider({super.key});
@@ -14,6 +15,9 @@ class TeacherScreenProvider extends StatelessWidget {
             create: (context) => NotificationPanelCubit(
               MockNotificationRepository(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => ProfilePanelCubit(),
           ),
           BlocProvider(
             create: (context) => PageCubit(),
@@ -77,7 +81,10 @@ class TeacherScreen extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                context.read<ActionPanelCubit>().openProfilePanel();
+                context.read<ProfilePanelCubit>().loadProfile();
+              },
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxHeight: 30, maxWidth: 30),
                 child: const CircleAvatar(

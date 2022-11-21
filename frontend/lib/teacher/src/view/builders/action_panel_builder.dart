@@ -1,3 +1,5 @@
+import 'package:degree_app/teacher/src/view/action_panels/profile_action_panel.dart';
+
 import '../../../teacher.dart';
 
 class ActionPanelBuilder extends StatelessWidget {
@@ -6,7 +8,12 @@ class ActionPanelBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<ActionPanelCubit, ActionPanelState>(
-          builder: (context, state) {
-        return const SizedBox();
-      });
+        builder: (context, state) {
+          if (state is ProfileActionPanelState) {
+            return const ProfileActionPanel();
+          } else {
+            return const SizedBox();
+          }
+        },
+      );
 }
