@@ -221,24 +221,29 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
                           FilteringTextInputFormatter.digitsOnly,
                         ],
                       ),
-                      ToggleDegree(
-                        items: [
-                          ToggleItem(
-                            lable: 'Группе',
-                          ),
-                          ToggleItem(
-                            lable: 'Подгруппе',
-                          ),
-                          ToggleItem(
-                            lable: 'Студенту',
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ToggleDegree(
+                            items: [
+                              ToggleItem(
+                                lable: 'Группе',
+                              ),
+                              ToggleItem(
+                                lable: 'Подгруппе',
+                              ),
+                              ToggleItem(
+                                lable: 'Студенту',
+                              ),
+                            ],
+                            currentIndex: currentIndex,
+                            onTap: (value) {
+                              currentIndex = value;
+                              log('change index $currentIndex');
+                              setState(() {});
+                            },
                           ),
                         ],
-                        currentIndex: currentIndex,
-                        onTap: (value) {
-                          currentIndex = value;
-                          log('change index $currentIndex');
-                          setState(() {});
-                        },
                       ),
                       if (currentIndex == 0)
                         DropDownTextFieldDegree(
