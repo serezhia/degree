@@ -10,13 +10,13 @@ abstract class SchedulePageState extends Equatable {
 class InitialSchedulePageState extends SchedulePageState {}
 
 class PickedSchedulePageState extends SchedulePageState {
-  final DateTime date;
+  final DateTimeRange week;
 
-  const PickedSchedulePageState({required this.date});
+  const PickedSchedulePageState({required this.week});
 }
 
-class ChangeDaySchedulePageState extends SchedulePageState {
-  final DateTime date;
+class ChangeWeekSchedulePageState extends SchedulePageState {
+  final DateTimeRange week;
 
-  const ChangeDaySchedulePageState({required this.date});
+  const ChangeWeekSchedulePageState({required this.week});
 }

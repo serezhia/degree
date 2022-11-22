@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:degree_app/admin/view/admin_screen.dart';
 import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/teacher/teacher.dart';
@@ -18,7 +16,6 @@ class RolesScreen extends StatelessWidget {
       future: role,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          log(snapshot.data!);
           switch (snapshot.data) {
             case 'admin':
               return const AdminScreenProvider();

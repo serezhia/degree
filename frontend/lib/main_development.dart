@@ -9,6 +9,8 @@ import 'package:degree_app/bootstrap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'teacher/src/data/mock_data.dart' as teacherMock;
+
 void main() async {
   for (var i = 0; i < 100; i++) {
     users.add(
@@ -40,6 +42,7 @@ void main() async {
   }
   users.sort((a, b) => a.secondName.compareTo(b.secondName));
   lessons.addAll(addLessons());
+
   const host = kIsWeb ? 'serezhia.ru' : null;
   WidgetsFlutterBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
