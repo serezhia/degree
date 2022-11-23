@@ -1,4 +1,3 @@
-import 'package:degree_app/teacher_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/teacher_schedule/teacher_schedule.dart';
 
 class InfoLessonActionPanel extends StatelessWidget {
@@ -28,30 +27,6 @@ class InfoLessonActionPanel extends StatelessWidget {
                 padding: const EdgeInsets.all(25),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'LessonID ',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          lesson.id.toString(),
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Divider(
-                        height: 1,
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

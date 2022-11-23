@@ -12,8 +12,8 @@ class SchedulePageCubit extends Cubit<SchedulePageState> {
 
   void previosWeek() {
     currentRange = DateTimeRange(
-      start: currentRange.start.subtract(const Duration(days: 7)),
-      end: currentRange.end.subtract(const Duration(days: 7)),
+      start: currentRange.start.subtract(const Duration(days: 8)),
+      end: currentRange.end.subtract(const Duration(days: 8)),
     );
     emit(ChangeWeekSchedulePageState(week: currentRange));
     emit(PickedSchedulePageState(week: currentRange));
@@ -21,8 +21,8 @@ class SchedulePageCubit extends Cubit<SchedulePageState> {
 
   void nextWeek() {
     currentRange = DateTimeRange(
-      start: currentRange.start.add(const Duration(days: 7)),
-      end: currentRange.end.add(const Duration(days: 7)),
+      start: currentRange.start.add(const Duration(days: 8)),
+      end: currentRange.end.add(const Duration(days: 8)),
     );
     emit(ChangeWeekSchedulePageState(week: currentRange));
     emit(PickedSchedulePageState(week: currentRange));

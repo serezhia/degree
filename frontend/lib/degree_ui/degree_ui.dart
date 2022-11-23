@@ -16,3 +16,4 @@ export 'navbar/sidebar.dart';
 export 'scaffold/scaffold.dart';
 export 'theme/light_theme.dart';
 export 'toggle/toggle.dart';
+export 'week_picker/week_picker.dart';

@@ -1,3 +1,5 @@
+import 'package:degree_app/teacher/src/cubit/pages/schedule/schedule_page_cubit.dart';
+
 import '../../../teacher.dart';
 
 class SchedulePage extends StatelessWidget {
@@ -6,10 +8,22 @@ class SchedulePage extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           Row(
-            children: const [
-              Text('переключался недель'),
-              SizedBox(
-                width: 10,
+            children: [
+              WeekPickerDegree(
+                currentDateTimeRange:
+                    context.watch<SchedulePageCubit>().currentRange,
+                onTapBackDateRange: () {
+                  context.read<SchedulePageCubit>().previosWeek();
+                  context.read<SchedulesPageCubit>().refreshPage(
+                        context.read<SchedulePageCubit>().currentRange,
+                      );
+                },
+                onTapForwardDateRange: () {
+                  context.read<SchedulePageCubit>().nextWeek();
+                  context.read<SchedulesPageCubit>().refreshPage(
+                        context.read<SchedulePageCubit>().currentRange,
+                      );
+                },
               ),
             ],
           ),
