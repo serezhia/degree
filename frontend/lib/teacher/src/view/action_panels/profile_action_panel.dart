@@ -1,4 +1,4 @@
-import 'package:degree_app/teacher_profile/teacher_profile.dart';
+import '../../../teacher.dart';
 
 class ProfileActionPanel extends StatelessWidget {
   const ProfileActionPanel();

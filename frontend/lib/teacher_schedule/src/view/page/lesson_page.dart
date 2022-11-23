@@ -4,6 +4,7 @@ import 'dart:developer' as dev;
 import 'dart:developer';
 import 'package:degree_app/teacher/src/cubit/pages/schedule/schedule_page_cubit.dart';
 import 'package:degree_app/teacher/teacher.dart';
+import 'package:degree_app/teacher_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/teacher_schedule/src/cubit/page/schedules_page_cubit.dart';
 import 'package:intl/intl.dart';
 
@@ -161,60 +162,68 @@ class LessonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 25,
-                  child: Text(
-                    ' ${lesson.numberLesson}',
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                          fontWeight: FontWeight.w600,
+    return GestureDetector(
+      onTap: () {
+        log('a');
+        context.read<ActionPanelCubit>().openLessonPanel();
+        context.read<LessonPanelCubit>().getLesson(lesson.id);
+      },
+      child: SizedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 25,
+                    child: Text(
+                      ' ${lesson.numberLesson}',
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          lesson.group?.name ??
+                              lesson.subgroup?.name ??
+                              '''${lesson.student!.group.name} ${lesson.student!.fullName}''',
+                          style: Theme.of(context).textTheme.headline1,
                         ),
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        lesson.group?.name ??
-                            lesson.subgroup?.name ??
-                            '''${lesson.student!.group.name} ${lesson.student!.fullName}''',
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        lesson.subject.name,
-                        style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                              color: const Color(0xFF808080),
-                            ),
-                        maxLines: 3,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          lesson.subject.name,
+                          style:
+                              Theme.of(context).textTheme.bodyText2!.copyWith(
+                                    color: const Color(0xFF808080),
+                                  ),
+                          maxLines: 3,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          SizedBox(
-            width: 50,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(lesson.cabinet.toString()),
+            const SizedBox(
+              width: 10,
             ),
-          ),
-        ],
+            SizedBox(
+              width: 50,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(lesson.cabinet.toString()),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,10 +1,7 @@
 import 'package:degree_app/notification/notification.dart';
 import 'package:degree_app/teacher/src/cubit/pages/schedule/schedule_page_cubit.dart';
-import 'package:degree_app/teacher/src/data/mock_data.dart';
-import 'package:degree_app/teacher/src/data/mock_main_teacher_repository.dart';
-import 'package:degree_app/teacher/teacher.dart';
-import 'package:degree_app/teacher_profile/teacher_profile.dart';
-import 'package:degree_app/teacher_schedule/src/cubit/page/schedules_page_cubit.dart';
+
+import '../../teacher.dart';
 
 class TeacherScreenProvider extends StatelessWidget {
   const TeacherScreenProvider({super.key});
@@ -22,6 +19,11 @@ class TeacherScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => ProfilePanelCubit(),
+          ),
+          BlocProvider(
+            create: (context) => LessonPanelCubit(
+              MockMainTeacherRepository(),
+            ),
           ),
           BlocProvider(
             create: (context) => PageCubit(),

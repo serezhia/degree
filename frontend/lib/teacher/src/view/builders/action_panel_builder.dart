@@ -1,5 +1,3 @@
-import 'package:degree_app/teacher/src/view/action_panels/profile_action_panel.dart';
-
 import '../../../teacher.dart';
 
 class ActionPanelBuilder extends StatelessWidget {
@@ -11,6 +9,8 @@ class ActionPanelBuilder extends StatelessWidget {
         builder: (context, state) {
           if (state is ProfileActionPanelState) {
             return const ProfileActionPanel();
+          } else if (state is LessonActionPanelState) {
+            return const LessonActionPanel();
           } else {
             return const SizedBox();
           }

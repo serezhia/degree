@@ -1,7 +1,7 @@
-import '../../teacher_profile.dart';
+import 'package:degree_app/degree_ui/degree_ui.dart';
 
-class LoadingProfileActionPanel extends StatelessWidget {
-  const LoadingProfileActionPanel({super.key});
+class LoadingLessonActionPanel extends StatelessWidget {
+  const LoadingLessonActionPanel({super.key});
 
   @override
   Widget build(BuildContext context) => const ColoredBox(

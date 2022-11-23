@@ -1,5 +1,3 @@
-import 'package:degree_app/teacher/src/data/mock_data.dart';
-
 import '../../teacher.dart';
 
 class MockMainTeacherRepository implements MainTeacherRepository {

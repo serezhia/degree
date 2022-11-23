@@ -1,4 +1,4 @@
-import 'package:degree_app/teacher/teacher.dart';
+import '../../teacher.dart';
 
 final mockSubjectList = <Subject>[
   Subject(id: 0, name: 'Математика'),

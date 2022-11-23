@@ -9,8 +9,6 @@ import 'package:degree_app/bootstrap.dart';
 import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'teacher/src/data/mock_data.dart' as teacherMock;
-
 void main() async {
   for (var i = 0; i < 100; i++) {
     users.add(

@@ -1,6 +1,4 @@
-import 'package:bloc/bloc.dart';
-import 'package:degree_app/admin/admin.dart';
-import 'package:equatable/equatable.dart';
+import '../../../../teacher.dart';
 
 part 'task_page_state.dart';
 

@@ -1,5 +1,6 @@
-import 'package:degree_app/degree_ui/degree_ui.dart';
 import 'package:degree_app/notification/notification.dart';
+
+import '../../../teacher.dart';
 
 class NotificationActionPanel extends StatelessWidget {
   const NotificationActionPanel();

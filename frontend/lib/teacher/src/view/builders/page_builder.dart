@@ -1,5 +1,3 @@
-import 'package:degree_app/teacher/src/view/pages/schedule_page.dart';
-
 import '../../../teacher.dart';
 
 class PageBuilder extends StatelessWidget {

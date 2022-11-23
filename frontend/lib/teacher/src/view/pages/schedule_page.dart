@@ -1,5 +1,4 @@
-import 'package:degree_app/teacher_schedule/src/view/page/lesson_page.dart';
-import 'package:degree_app/teacher_schedule/teacher_schedule.dart';
+import '../../../teacher.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({super.key});
@@ -7,9 +6,9 @@ class SchedulePage extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         children: [
           Row(
-            children: [
-              const Text('переключался недель'),
-              const SizedBox(
+            children: const [
+              Text('переключался недель'),
+              SizedBox(
                 width: 10,
               ),
             ],
@@ -17,7 +16,7 @@ class SchedulePage extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          Expanded(child: LessonsList()),
+          const Expanded(child: LessonsList()),
         ],
       );
 }
