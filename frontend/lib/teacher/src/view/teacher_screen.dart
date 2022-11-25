@@ -1,5 +1,9 @@
 import 'package:degree_app/notification/notification.dart';
 import 'package:degree_app/teacher/src/cubit/pages/schedule/schedule_page_cubit.dart';
+import 'package:degree_app/teacher/src/cubit/pages/tasks/task_page_cubit.dart';
+import 'package:degree_app/teacher_task/src/cubit/action_panel/task_panel_cubit.dart';
+import 'package:degree_app/teacher_task/src/cubit/page/tasks_page_cubit.dart';
+import 'package:degree_app/teacher_task/src/data/mock_task_repository.dart';
 
 import '../../teacher.dart';
 
@@ -26,6 +30,11 @@ class TeacherScreenProvider extends StatelessWidget {
             ),
           ),
           BlocProvider(
+            create: (context) => TaskPanelCubit(
+              MockTaskRepository(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => PageCubit(),
           ),
           BlocProvider(
@@ -34,6 +43,14 @@ class TeacherScreenProvider extends StatelessWidget {
           BlocProvider(
             create: (context) => SchedulesPageCubit(
               MockMainTeacherRepository(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => TaskPageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => TasksPageCubit(
+              MockTaskRepository(),
             ),
           ),
         ],

@@ -11,4 +11,6 @@ class ProfileActionPanelState extends ActionPanelState {}
 
 class LessonActionPanelState extends ActionPanelState {}
 
+class TaskActionPanelState extends ActionPanelState {}
+
 class CloseActionPanelState extends ActionPanelState {}

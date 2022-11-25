@@ -15,7 +15,7 @@ class SchedulePageState extends PageState {
   List<Object> get props => [index, title];
 }
 
-class TasksPageState extends PageState {
+class TaskPageState extends PageState {
   final index = 1;
   final title = 'Tasks';
 

@@ -20,6 +20,7 @@ class SchedulePage extends StatelessWidget {
                 },
                 onTapForwardDateRange: () {
                   context.read<SchedulePageCubit>().nextWeek();
+                  
                   context.read<SchedulesPageCubit>().refreshPage(
                         context.read<SchedulePageCubit>().currentRange,
                       );

@@ -11,7 +11,7 @@ class PageCubit extends Cubit<PageState> {
         emit(SchedulePageState());
         break;
       case 1:
-        emit(TasksPageState());
+        emit(TaskPageState());
         break;
       case 2:
         emit(FilesPageState());

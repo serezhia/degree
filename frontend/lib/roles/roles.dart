@@ -1,5 +1,4 @@
 import 'package:degree_app/admin/view/admin_screen.dart';
-import 'package:degree_app/auth/auth.dart';
 import 'package:degree_app/teacher/teacher.dart';
 
 class RolesScreen extends StatelessWidget {
