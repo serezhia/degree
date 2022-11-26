@@ -9,8 +9,6 @@ abstract class TaskRepository {
     required Subject subject,
     required Teacher teacher,
     required String content,
-    required String date,
-    required String time,
     required DeadLineType deadLineType,
     required DateTime? deadLineDate,
     List<TagTask>? tags,

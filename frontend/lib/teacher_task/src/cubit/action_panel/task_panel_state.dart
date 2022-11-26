@@ -20,6 +20,13 @@ class InfoTaskPanelState extends TaskPanelState {
   List<Object> get props => [task];
 }
 
+class AddTaskPanelState extends TaskPanelState {
+  const AddTaskPanelState();
+
+  @override
+  List<Object> get props => [];
+}
+
 class ErrorTaskPanelState extends TaskPanelState {
   final String message;
 

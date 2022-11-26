@@ -32,6 +32,7 @@ class TeacherScreenProvider extends StatelessWidget {
           BlocProvider(
             create: (context) => TaskPanelCubit(
               MockTaskRepository(),
+              MockMainTeacherRepository(),
             ),
           ),
           BlocProvider(

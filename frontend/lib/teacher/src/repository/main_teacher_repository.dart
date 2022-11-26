@@ -9,6 +9,10 @@ abstract class MainTeacherRepository {
 
   Future<Group> getGroup(int id);
 
+  Future<List<Subgroup>> getSubgroups();
+
+  Future<Subgroup> getSubgroup(int id);
+
   Future<Teacher> readTeacher({
     required int teacherId,
   });

@@ -1,4 +1,5 @@
 import 'package:degree_app/teacher/src/cubit/pages/tasks/task_page_cubit.dart';
+import 'package:degree_app/teacher_task/src/cubit/action_panel/task_panel_cubit.dart';
 import 'package:degree_app/teacher_task/src/cubit/page/tasks_page_cubit.dart';
 import 'package:degree_app/teacher_task/src/view/page/task_page.dart';
 
@@ -28,7 +29,10 @@ class TaskPage extends StatelessWidget {
                 width: 10,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.read<ActionPanelCubit>().openTaskPanel();
+                  context.read<TaskPanelCubit>().openAddPanel();
+                },
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,

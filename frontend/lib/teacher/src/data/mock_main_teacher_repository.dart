@@ -20,6 +20,16 @@ class MockMainTeacherRepository implements MainTeacherRepository {
       );
 
   @override
+  Future<List<Subgroup>> getSubgroups() => Future.delayed(
+        const Duration(seconds: 2),
+        () => mockSubgroupList,
+      );
+  @override
+  Future<Subgroup> getSubgroup(int id) => Future.delayed(
+        const Duration(seconds: 2),
+        () => mockSubgroupList.firstWhere((element) => element.id == id),
+      );
+  @override
   Future<List<Lesson>> getLessonsByTeacherOnWeek(
     int teacherId,
     DateTimeRange week,
@@ -51,7 +61,7 @@ class MockMainTeacherRepository implements MainTeacherRepository {
 
   @override
   Future<List<Subject>> getSubjectsList() => Future.delayed(
-        const Duration(seconds: 2),
+        const Duration(milliseconds: 1),
         () => mockSubjectList,
       );
 
