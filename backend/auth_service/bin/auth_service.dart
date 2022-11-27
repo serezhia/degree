@@ -1,4 +1,5 @@
 import 'package:auth_service/auth_service.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
 void main(List<String> arguments) async {
   final dbConection = PostgreSQLConnection(dbHost(), dbPort(), dbName(),
@@ -28,7 +29,10 @@ void main(List<String> arguments) async {
   app.mount('/tokens', TokenRoute(userRepository, tokenRepository).router);
   app.mount('/users', UsersRoute(userRepository, tokenRepository).router);
 
-  final handler = Pipeline().addMiddleware((logRequests())).addHandler(app);
+  final handler = Pipeline()
+      .addMiddleware(logRequests())
+      .addMiddleware(corsHeaders())
+      .addHandler(app);
 
   await serve(handler, serviceHost(), servicePort());
   print('Auth service started on ${serviceHost()}:${servicePort()}');

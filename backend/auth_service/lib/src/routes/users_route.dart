@@ -49,6 +49,18 @@ class UsersRoute {
         'registerCode': user.registerCode,
       }));
     });
+
+    // Is registerCode exists
+    router.get('/codeIsAlive/<registerCode>',
+        (Request req, String registerCode) async {
+      try {
+        await userRepository.getUserByRegisterCode(registerCode);
+        return Response.ok('User exists');
+      } catch (e) {
+        return Response.internalServerError(body: 'User not found');
+      }
+    });
+
     // Update User
     router.post('/<registerCode>', (Request req, String registerCode) async {
       final params = req.url.queryParameters;

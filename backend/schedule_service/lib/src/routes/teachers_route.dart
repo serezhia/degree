@@ -58,6 +58,7 @@ class TeachersRoute {
           'first_name': firstName,
           'second_name': secondName,
           'middle_name': middleName,
+          'register_code': userDecod['registerCode'],
         }
       }));
     });
@@ -104,6 +105,7 @@ class TeachersRoute {
         'message': 'teacher updated',
         'teacher': {
           'id': teacher.id,
+          'user_id': teacher.userId,
           'first_name': firstName,
           'second_name': secondName,
           'middle_name': middleName,
@@ -114,17 +116,23 @@ class TeachersRoute {
     /// GET teacher
 
     router.get('/<id>', (Request req, String id) async {
+      final accessToken = req.context['access_token'];
       if (!await teacherRepository.existsTeacher(idTeacher: int.parse(id))) {
         return Response.badRequest(body: 'Teacher not exists.');
       }
 
       final teacher = await teacherRepository.getTeacher(int.parse(id));
 
+      final user = await dio.Dio().get(
+          'http://${authServiceHost()}:${authServicePort()}/users/${teacher.userId}?access_token=$accessToken');
+      final userDecod = jsonDecode(user.data) as Map<String, dynamic>;
       return Response.ok(jsonEncode({
         'status': 'success',
         'message': 'teacher getted',
         'teacher': {
           'id': teacher.id,
+          'user_id': teacher.userId,
+          'register_code': userDecod['registerCode'],
           'first_name': teacher.firstName,
           'second_name': teacher.secondName,
           'middle_name': teacher.middleName,

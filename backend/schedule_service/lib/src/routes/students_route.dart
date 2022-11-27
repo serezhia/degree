@@ -103,6 +103,7 @@ class StudentRoute {
           'middleName': student.middleName,
           'group_id': student.groupId,
           'subgroup_id': student.subgroupId,
+          'register_code': userDecod['registerCode']
         }
       }));
     });
@@ -141,6 +142,10 @@ class StudentRoute {
           return Response.internalServerError(body: e.toString());
         }
 
+        final user = await dio.Dio().get(
+            'http://${authServiceHost()}:${authServicePort()}/users/${student.userId}?access_token=$accessToken');
+        final userDecod = jsonDecode(user.data) as Map<String, dynamic>;
+
         return Response.ok(jsonEncode({
           'status': 'success',
           'message': 'student found',
@@ -152,6 +157,7 @@ class StudentRoute {
             'middleName': student.middleName,
             'group_id': student.groupId,
             'subgroup_id': student.subgroupId,
+            'register_code': userDecod['registerCode'],
           },
         }));
       } else {
