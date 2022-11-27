@@ -7,12 +7,10 @@ abstract class GroupRepository {
 
   Future<Group> createGroup(
     String name,
-    String specialityName,
+    Speciality speciality,
     int course,
-    int subgroupsCount,
+    List<Subgroup> subgroups,
   );
-
-  Future<Group> editGroup(Group group);
 
   Future<void> deleteGroup(int id);
 }

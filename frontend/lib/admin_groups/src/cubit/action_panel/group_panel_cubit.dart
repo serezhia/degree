@@ -1,11 +1,22 @@
+import 'package:degree_app/admin_groups/src/repository/speciality_repository.dart';
+import 'package:degree_app/admin_groups/src/repository/subgroup_repository.dart';
+
 import '../../../admin_groups.dart';
 
 part 'group_panel_state.dart';
 
 class GroupPanelCubit extends Cubit<GroupPanelState> {
-  GroupPanelCubit(this.groupRepository) : super(EmptyGroupPanelState());
+  GroupPanelCubit(
+    this.groupRepository,
+    this.specialityRepository,
+    this.subgroupRepository,
+  ) : super(EmptyGroupPanelState());
 
   final GroupRepository groupRepository;
+
+  final SpecialityRepository specialityRepository;
+
+  final SubgroupRepository subgroupRepository;
 
   Future<void> openAddPanel() async {
     emit(AddGroupPanelState());
@@ -15,11 +26,28 @@ class GroupPanelCubit extends Cubit<GroupPanelState> {
     emit(EditGroupPanelState(group: group));
   }
 
+  Future<List<Speciality>> getSpecialitiesForField() =>
+      specialityRepository.getSpecialitiesList();
+
+  Future<Speciality> createSpecialityForField(String name) =>
+      specialityRepository.createSpeciality(name);
+
+  Future<void> deleteSpecialityForField(int id) =>
+      specialityRepository.deleteSpeciality(id);
+
+  Future<List<Subgroup>> createSubgroups(String groupName, int count) async {
+    final subgroups = <Subgroup>[
+      ...await subgroupRepository.createSubgroups(groupName, count)
+    ];
+
+    return subgroups;
+  }
+
   Future<void> addGroup({
     required String name,
-    required String specialityName,
+    required Speciality speciality,
     required int course,
-    required int subgroupsCount,
+    required List<Subgroup> subgroups,
   }) async {
     emit(LoadingGroupPanelState());
     try {
@@ -27,9 +55,9 @@ class GroupPanelCubit extends Cubit<GroupPanelState> {
         InfoGroupPanelState(
           group: await groupRepository.createGroup(
             name,
-            specialityName,
+            speciality,
             course,
-            subgroupsCount,
+            subgroups,
           ),
         ),
       );
@@ -44,19 +72,6 @@ class GroupPanelCubit extends Cubit<GroupPanelState> {
       emit(
         InfoGroupPanelState(
           group: await groupRepository.getGroup(id),
-        ),
-      );
-    } catch (e) {
-      emit(ErrorGroupPanelState(message: e.toString()));
-    }
-  }
-
-  Future<void> editGroup(Group group) async {
-    emit(LoadingGroupPanelState());
-    try {
-      emit(
-        InfoGroupPanelState(
-          group: await groupRepository.editGroup(group),
         ),
       );
     } catch (e) {

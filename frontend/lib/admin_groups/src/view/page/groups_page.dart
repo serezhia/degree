@@ -43,12 +43,12 @@ class GroupList extends StatelessWidget {
                       children: [
                         if (index == 0 ||
                             index != 0 &&
-                                state.groups[index - 1].name[0] !=
-                                    state.groups[index].name[0])
+                                state.groups[index - 1].name.split('-').first !=
+                                    state.groups[index].name.split('-').first)
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
-                              state.groups[index].name[0],
+                              state.groups[index].name.split('-').first,
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w500,

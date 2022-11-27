@@ -66,28 +66,28 @@ class EditGroupActionPanel extends StatelessWidget {
         ],
       ),
       actions: [
-        ActionPanelItem(
-          icon: Icons.add,
-          onTap: () {
-            context
-                .read<GroupPanelCubit>()
-                .editGroup(
-                  Group(
-                    id: group.id,
-                    name: nameGroup.text,
-                    speciality: Speciality(
-                      id: group.speciality.id,
-                      name: specialityGroup.text,
-                    ),
-                    course: int.parse(courseGroup.text),
-                    subgroups: group.subgroups,
-                  ),
-                )
-                .then(
-                  (value) => groupsList.getGroups(),
-                );
-          },
-        ),
+        // ActionPanelItem(
+        //   icon: Icons.add,
+        //   onTap: () {
+        //     context
+        //         .read<GroupPanelCubit>()
+        //         .editGroup(
+        //           Group(
+        //             id: group.id,
+        //             name: nameGroup.text,
+        //             speciality: Speciality(
+        //               id: group.speciality.id,
+        //               name: specialityGroup.text,
+        //             ),
+        //             course: int.parse(courseGroup.text),
+        //             subgroups: group.subgroups,
+        //           ),
+        //         )
+        //         .then(
+        //           (value) => groupsList.getGroups(),
+        //         );
+        //   },
+        // ),
       ],
     );
   }

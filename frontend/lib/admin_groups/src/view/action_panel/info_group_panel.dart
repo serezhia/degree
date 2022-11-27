@@ -177,12 +177,12 @@ class InfoGroupActionPanel extends StatelessWidget {
             context.read<GroupsPageCubit>().getGroups();
           },
         ),
-        ActionPanelItem(
-          icon: Icons.edit,
-          onTap: () {
-            context.read<GroupPanelCubit>().openEditPanel(group);
-          },
-        ),
+        // ActionPanelItem(
+        //   icon: Icons.edit,
+        //   onTap: () {
+        //     context.read<GroupPanelCubit>().openEditPanel(group);
+        //   },
+        // ),
       ],
     );
   }

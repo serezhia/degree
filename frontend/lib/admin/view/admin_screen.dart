@@ -6,6 +6,9 @@ import 'package:degree_app/admin/view/builders/action_panel_builder.dart';
 import 'package:degree_app/admin/view/builders/page_builder.dart';
 import 'package:degree_app/admin/view/pages/users_page.dart';
 import 'package:degree_app/admin_groups/admin_groups.dart';
+import 'package:degree_app/admin_groups/src/data/main_group_repository.dart';
+import 'package:degree_app/admin_groups/src/data/main_speciality_repository.dart';
+import 'package:degree_app/admin_groups/src/data/main_subgroup_repository.dart';
 import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
 import 'package:degree_app/admin_profile/admin_profile.dart';
 import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
@@ -46,7 +49,9 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => GroupPanelCubit(
-              MockGroupRepository(),
+              MainGroupRepository(),
+              MainSpecialityRepository(),
+              MainSubgroupRepository(),
             ),
           ),
           BlocProvider(
@@ -85,7 +90,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => GroupsPageCubit(
-              MockGroupRepository(),
+              MainGroupRepository(),
             ),
           ),
           BlocProvider(

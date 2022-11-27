@@ -23,6 +23,11 @@ class EntityPage extends StatelessWidget {
               currentIndex: currentIndex,
               onTap: (value) {
                 context.read<EntityPageCubit>().setIndex(value);
+                if (value == 0) {
+                  context.read<GroupsPageCubit>().getGroups();
+                } else {
+                  context.read<SubjectsPageCubit>().getSubjects();
+                }
               },
             ),
             const SizedBox(
