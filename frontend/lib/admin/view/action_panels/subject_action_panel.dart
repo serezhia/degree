@@ -10,8 +10,6 @@ class SubjectActionPanel extends StatelessWidget {
             return const InfoSubjectActionPanel();
           } else if (state is AddSubjectPanelState) {
             return const AddSubjectActionPanel();
-          } else if (state is EditSubjectPanelState) {
-            return const EditSubjectActionPanel();
           } else {
             return const LoadingSubjectActionPanel();
           }

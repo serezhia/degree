@@ -12,7 +12,7 @@ export 'src/model/subject_model.dart';
 export 'src/model/subject_model.dart';
 export 'src/repository/subject_repository.dart';
 export 'src/view/action_panel/add_subject_panel.dart';
-export 'src/view/action_panel/edit_subject_panel.dart';
+
 export 'src/view/action_panel/info_subject_panel.dart';
 export 'src/view/action_panel/loading_subject_panel.dart';
 export 'src/view/page/subjects_page.dart';

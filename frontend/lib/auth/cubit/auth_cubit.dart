@@ -1,4 +1,5 @@
 import 'package:degree_app/auth/auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 part 'auth_state.dart';
 
@@ -18,6 +19,12 @@ class AuthCubit extends HydratedCubit<AuthState> {
         username: username,
         password: password,
       );
+
+      await const FlutterSecureStorage()
+          .write(key: 'refreshToken', value: user.refreshToken);
+
+      await const FlutterSecureStorage()
+          .write(key: 'accessToken', value: user.accessToken);
 
       emit(AuthAutorized(user: user, url: url!));
     } catch (e) {
@@ -62,6 +69,11 @@ class AuthCubit extends HydratedCubit<AuthState> {
         password: password,
         registerCode: registerCode,
       );
+      await const FlutterSecureStorage()
+          .write(key: 'refreshToken', value: user.refreshToken);
+
+      await const FlutterSecureStorage()
+          .write(key: 'accessToken', value: user.accessToken);
 
       emit(AuthAutorized(user: user, url: url!));
     } catch (e) {
@@ -77,6 +89,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     try {
       if (await authRepository.hostIsAlive(url: host)) {
         url = host;
+        await const FlutterSecureStorage().write(key: 'url', value: url);
         emit(AuthNotAutorized(url: url!));
       } else {
         emit(AuthError('Invalid adress'));
@@ -89,20 +102,16 @@ class AuthCubit extends HydratedCubit<AuthState> {
   Future<void> logOut() async {
     emit(AuthWaiting(text: 'LogOut'));
     try {
-      await authRepository.signOut(refreshToken: '');
+      final refreshToken =
+          await const FlutterSecureStorage().read(key: 'refreshToken');
+      await authRepository.signOut(
+        refreshToken: refreshToken ?? '',
+      );
+      await const FlutterSecureStorage().delete(key: 'refreshToken');
+      await const FlutterSecureStorage().delete(key: 'accessToken');
       emit(AuthNotAutorized(url: url!));
     } catch (e) {
       emit(AuthError(e.toString()));
-    }
-  }
-
-  Future<UserEntity> getProfile() async {
-    try {
-      final user = await authRepository.getProfile();
-      return user;
-    } catch (e) {
-      emit(AuthError(e.toString()));
-      rethrow;
     }
   }
 

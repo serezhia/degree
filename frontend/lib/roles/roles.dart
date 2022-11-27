@@ -7,7 +7,7 @@ class RolesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final role = Future.delayed(
-      const Duration(seconds: 2),
+      const Duration(microseconds: 1),
       () => (context.read<AuthCubit>().state as AuthAutorized).user.role,
     );
 

@@ -22,15 +22,6 @@ class InfoSubjectPanelState extends SubjectPanelState {
   List<Object> get props => [subject];
 }
 
-class EditSubjectPanelState extends SubjectPanelState {
-  final Subject subject;
-
-  const EditSubjectPanelState({required this.subject});
-
-  @override
-  List<Object> get props => [subject];
-}
-
 class ErrorSubjectPanelState extends SubjectPanelState {
   final String message;
 

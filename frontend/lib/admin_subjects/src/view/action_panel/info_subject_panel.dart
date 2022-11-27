@@ -92,12 +92,6 @@ class InfoSubjectActionPanel extends StatelessWidget {
             context.read<SubjectsPageCubit>().getSubjects();
           },
         ),
-        ActionPanelItem(
-          icon: Icons.edit,
-          onTap: () {
-            context.read<SubjectPanelCubit>().openEditPanel(subject);
-          },
-        ),
       ],
     );
   }

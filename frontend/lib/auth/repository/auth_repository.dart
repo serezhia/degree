@@ -16,8 +16,6 @@ abstract class AuthRepository {
     required String registerCode,
   });
 
-  Future<UserEntity> getProfile();
-
   Future<dynamic> refreshToken({required String refreshToken});
 
   Future<void> signOut({

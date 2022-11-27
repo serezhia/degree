@@ -2,18 +2,6 @@ import 'package:degree_app/auth/auth.dart';
 
 class MockAuthRepository implements AuthRepository {
   @override
-  Future<UserEntity> getProfile() => Future.delayed(
-        const Duration(seconds: 2),
-        () => const UserEntity(
-          id: 1,
-          username: 'name',
-          role: 'admin',
-          accessToken: 'accessToken',
-          refreshToken: 'refreshToken',
-        ),
-      );
-
-  @override
   Future<void> refreshToken({required String refreshToken}) async {}
 
   @override

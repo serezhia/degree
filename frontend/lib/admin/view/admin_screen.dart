@@ -12,7 +12,9 @@ import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cu
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
+import 'package:degree_app/admin_subjects/src/data/main_subject_repository.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
+import 'package:degree_app/admin_teachers/src/data/main_teacher_repository.dart';
 import 'package:degree_app/notification/notification.dart';
 
 class AdminScreenProvider extends StatelessWidget {
@@ -34,7 +36,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => TeacherPanelCubit(
-              MockTeacherRepository(),
+              MainTeacherRepository(),
             ),
           ),
           BlocProvider(
@@ -49,7 +51,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SubjectPanelCubit(
-              MockSubjectRepository(),
+              MainSubjectRepository(),
             ),
           ),
           BlocProvider(
@@ -65,7 +67,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => TeachersPageCubit(
-              MockTeacherRepository(),
+              MainTeacherRepository(),
             ),
           ),
           BlocProvider(
@@ -78,7 +80,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SubjectsPageCubit(
-              MockSubjectRepository(),
+              MainSubjectRepository(),
             ),
           ),
           BlocProvider(

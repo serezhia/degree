@@ -7,7 +7,5 @@ abstract class SubjectRepository {
 
   Future<Subject> createSubject(String name);
 
-  Future<Subject> updateSubject(Subject subject);
-
   Future<void> deleteSubject(int id);
 }

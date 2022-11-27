@@ -11,10 +11,6 @@ class SubjectPanelCubit extends Cubit<SubjectPanelState> {
     emit(AddSubjectPanelState());
   }
 
-  Future<void> openEditPanel(Subject subject) async {
-    emit(EditSubjectPanelState(subject: subject));
-  }
-
   Future<Subject?> addSubject({
     required String name,
   }) async {
@@ -40,19 +36,6 @@ class SubjectPanelCubit extends Cubit<SubjectPanelState> {
       emit(
         InfoSubjectPanelState(
           subject: await subjectRepository.getSubject(id),
-        ),
-      );
-    } catch (e) {
-      emit(ErrorSubjectPanelState(message: e.toString()));
-    }
-  }
-
-  Future<void> editSubject(Subject subject) async {
-    emit(LoadingSubjectPanelState());
-    try {
-      emit(
-        InfoSubjectPanelState(
-          subject: await subjectRepository.updateSubject(subject),
         ),
       );
     } catch (e) {
