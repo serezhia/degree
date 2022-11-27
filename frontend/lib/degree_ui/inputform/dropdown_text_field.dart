@@ -10,6 +10,7 @@ class DropDownTextFieldDegree extends StatefulWidget {
     required this.onTapItem,
     required this.pickedItem,
     this.createItem,
+    this.deleteItem,
     super.key,
   });
 
@@ -24,6 +25,8 @@ class DropDownTextFieldDegree extends StatefulWidget {
   final DropDownItemDegree? pickedItem;
 
   final void Function()? createItem;
+
+  final ValueChanged<DropDownItemDegree>? deleteItem;
 
   @override
   _DropDownTextFieldDegreeState createState() =>
@@ -82,6 +85,11 @@ class _DropDownTextFieldDegreeState extends State<DropDownTextFieldDegree> {
         {
           tiles.add(
             DropDownTileWidget(
+              delete: widget.deleteItem != null,
+              onTapDelete: () {
+                widget.deleteItem?.call(localItems[i]);
+                setState(() {});
+              },
               item: localItems[i],
               onTap: () {
                 widget.onTapItem?.call(localItems[i]);
@@ -95,6 +103,7 @@ class _DropDownTextFieldDegreeState extends State<DropDownTextFieldDegree> {
       if (widget.createItem != null) {
         tiles.add(
           DropDownTileWidget(
+            delete: false,
             item: DropDownItemDegree(
               text: 'Добавить "${widget.controller.text}"',
               value: 'add',
@@ -111,6 +120,11 @@ class _DropDownTextFieldDegreeState extends State<DropDownTextFieldDegree> {
       for (var i = 0; i < items.length; i++) {
         tiles.add(
           DropDownTileWidget(
+            delete: widget.deleteItem != null,
+            onTapDelete: () {
+              widget.deleteItem?.call(localItems[i]);
+              setState(() {});
+            },
             item: items[i],
             onTap: () {
               widget.onTapItem?.call(items[i]);
@@ -213,28 +227,58 @@ class DropDownTileWidget extends StatelessWidget {
   const DropDownTileWidget({
     required this.onTap,
     required this.item,
+    required this.delete,
+    this.onTapDelete,
     super.key,
   });
   final VoidCallback onTap;
 
   final DropDownItemDegree item;
 
+  final VoidCallback? onTapDelete;
+
+  final bool delete;
+
   @override
   Widget build(BuildContext context) => GestureDetector(
         onTap: onTap,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               padding: const EdgeInsets.symmetric(
                 horizontal: 10,
                 vertical: 10,
               ),
-              child: Text(
-                item.text,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
+              child: Row(
+                mainAxisAlignment: onTapDelete == null
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: Colors.white,
+                      child: Text(
+                        item.text,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  if (delete)
+                    GestureDetector(
+                      onTap: onTapDelete,
+                      child: Container(
+                        width: 30,
+                        color: Colors.white,
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
             const Padding(
