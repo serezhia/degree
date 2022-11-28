@@ -6,6 +6,8 @@
   <img src="for_readme/logo.svg" />
 </p>
 
+# Test(WEB) https://degree.serezhia.ru
+
 # About Degree.Student, Degree.Admin...
 
 Cross-platform application for schedule view (schedule changes via notifications), creation and tracking of tasks, news
