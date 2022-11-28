@@ -1,4 +1,5 @@
 import 'package:schedule_service/schedule_service.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
 void main(List<String> arguments) async {
   final dbConection = PostgreSQLConnection(dbHost(), dbPort(), dbName(),
@@ -77,6 +78,7 @@ void main(List<String> arguments) async {
 
   final handler = Pipeline()
       .addMiddleware((logRequests()))
+      .addMiddleware(corsHeaders())
       .addMiddleware(handlerAuth())
       .addHandler(app);
 
