@@ -34,14 +34,8 @@ class AddStudentActionPanel extends StatelessWidget {
     Future<List<DropDownItemDegree>> getItemsSubgroup() async {
       log('Обновляем список подгрупп');
       final cubit = context.read<GroupsPageCubit>();
-      final groups = await cubit.getGroupsForField();
-      final subgroups = <Subgroup>[];
-      for (final group in groups) {
-        final groupSubgroups = group.subgroups;
-        if (groupSubgroups != null) {
-          subgroups.addAll(groupSubgroups);
-        }
-      }
+      final subgroups = await cubit.getSubgroupsForField();
+
       return subgroups
           .map(
             (e) => DropDownItemDegree(
@@ -137,8 +131,8 @@ class AddStudentActionPanel extends StatelessWidget {
                   firstName: firstName.text,
                   secondName: secondName.text,
                   middleName: middleName.text,
-                  groupId: (pickedGroup!.value as Group).id,
-                  subgroupId: (pickedSubgroup!.value as Subgroup).id,
+                  group: pickedGroup!.value as Group,
+                  subgroup: pickedSubgroup!.value as Subgroup,
                 )
                 .then(
                   (value) => studentsList.getStudents(),

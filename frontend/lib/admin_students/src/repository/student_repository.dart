@@ -1,3 +1,6 @@
+import 'package:degree_app/admin_groups/admin_groups.dart';
+import 'package:degree_app/admin_groups/src/model/subgroup_model.dart';
+
 import '../../admin_students.dart';
 
 abstract class StudentRepository {
@@ -6,8 +9,8 @@ abstract class StudentRepository {
   Future<Student> createStudent({
     required String firstName,
     required String secondName,
-    required int groupId,
-    required int subgroupId,
+    required Group group,
+    required Subgroup subgroup,
     String? middleName,
   });
 
@@ -15,15 +18,7 @@ abstract class StudentRepository {
     required int studentId,
   });
 
-  Future<Student> updateStudent({
-    required int studentId,
-    required int userId,
-    required String firstName,
-    required String secondName,
-    required int groupId,
-    required int subgroupId,
-    String? middleName,
-  });
+  Future<Student> updateStudent(Student student);
 
   Future<void> deleteStudent({required int studentId});
 }

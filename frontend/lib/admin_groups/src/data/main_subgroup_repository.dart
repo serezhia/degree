@@ -80,6 +80,7 @@ class MainSubgroupRepository implements SubgroupRepository {
           ),
         );
       }
+
       return subgroups;
     } catch (e) {
       throw Exception(e);

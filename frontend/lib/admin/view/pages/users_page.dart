@@ -23,6 +23,11 @@ class UsersPage extends StatelessWidget {
               currentIndex: currentIndex,
               onTap: (value) {
                 context.read<UserPageCubit>().setIndex(value);
+                if (value == 0) {
+                  context.read<TeachersPageCubit>().getTeachers();
+                } else {
+                  context.read<StudentsPageCubit>().getStudents();
+                }
               },
             ),
             const SizedBox(

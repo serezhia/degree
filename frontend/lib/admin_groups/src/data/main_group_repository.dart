@@ -78,22 +78,22 @@ class MainGroupRepository implements GroupRepository {
     }
   }
 
-  @override
-  Future<Group> editGroup(Group group) async {
-    try {
-      await DioSingletone.dioMain.put<dynamic>(
-        'schedule/groups/${group.id}',
-        queryParameters: <String, dynamic>{
-          'name': group.name,
-          'idSpeciality': group.speciality.id,
-          'course': group.course,
-        },
-      );
-      return group;
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  // @override
+  // Future<Group> editGroup(Group group) async {
+  //   try {
+  //     await DioSingletone.dioMain.put<dynamic>(
+  //       'schedule/groups/${group.id}',
+  //       queryParameters: <String, dynamic>{
+  //         'name': group.name,
+  //         'idSpeciality': group.speciality.id,
+  //         'course': group.course,
+  //       },
+  //     );
+  //     return group;
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
 
   @override
   Future<Group> getGroup(int id) async {

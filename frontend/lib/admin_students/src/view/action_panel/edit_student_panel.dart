@@ -140,13 +140,15 @@ class EditStudentActionPanel extends StatelessWidget {
             context
                 .read<StudentPanelCubit>()
                 .updateStudent(
-                  userId: student.userId!,
-                  studentId: student.studentId,
-                  firstName: firstName.text,
-                  secondName: secondName.text,
-                  middleName: middleName.text,
-                  groupId: (pickedGroup!.value as Group).id,
-                  subgroupId: (pickedSubgroup!.value as Subgroup).id,
+                  Student(
+                    userId: student.userId,
+                    studentId: student.studentId,
+                    firstName: firstName.text,
+                    secondName: secondName.text,
+                    middleName: middleName.text,
+                    group: pickedGroup!.value as Group,
+                    subgroup: pickedSubgroup!.value as Subgroup,
+                  ),
                 )
                 .then(
                   (value) => studentsList.getStudents(),

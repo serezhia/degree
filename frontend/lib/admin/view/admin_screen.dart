@@ -9,12 +9,12 @@ import 'package:degree_app/admin_groups/admin_groups.dart';
 import 'package:degree_app/admin_groups/src/data/main_group_repository.dart';
 import 'package:degree_app/admin_groups/src/data/main_speciality_repository.dart';
 import 'package:degree_app/admin_groups/src/data/main_subgroup_repository.dart';
-import 'package:degree_app/admin_groups/src/data/mock_group_repository.dart';
 import 'package:degree_app/admin_profile/admin_profile.dart';
 import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
 import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
+import 'package:degree_app/admin_students/src/data/main_student_repository.dart';
 import 'package:degree_app/admin_subjects/src/data/main_subject_repository.dart';
 import 'package:degree_app/admin_teachers/admin_teachers.dart';
 import 'package:degree_app/admin_teachers/src/data/main_teacher_repository.dart';
@@ -44,7 +44,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => StudentPanelCubit(
-              MockStudentRepository(),
+              MainStudentRepository(),
             ),
           ),
           BlocProvider(
@@ -77,7 +77,10 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => StudentsPageCubit(
-              MockStudentRepository(),
+              studentRepository: MainStudentRepository(),
+              groupRepository: MainGroupRepository(),
+              specialityRepository: MainSpecialityRepository(),
+              subgroupRepository: MainSubgroupRepository(),
             ),
           ),
           BlocProvider(
@@ -91,6 +94,7 @@ class AdminScreenProvider extends StatelessWidget {
           BlocProvider(
             create: (context) => GroupsPageCubit(
               MainGroupRepository(),
+              MainSubgroupRepository(),
             ),
           ),
           BlocProvider(

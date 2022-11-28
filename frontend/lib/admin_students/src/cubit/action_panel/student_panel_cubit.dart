@@ -1,3 +1,6 @@
+import 'package:degree_app/admin_groups/src/model/group_model.dart';
+import 'package:degree_app/admin_groups/src/model/subgroup_model.dart';
+
 import '../../../admin_students.dart';
 
 part 'student_panel_state.dart';
@@ -19,8 +22,8 @@ class StudentPanelCubit extends Cubit<StudentPanelState> {
     required String firstName,
     required String secondName,
     required String? middleName,
-    required int groupId,
-    required int subgroupId,
+    required Group group,
+    required Subgroup subgroup,
   }) async {
     emit(LoadingStudentPanelState());
     try {
@@ -30,8 +33,8 @@ class StudentPanelCubit extends Cubit<StudentPanelState> {
             firstName: firstName,
             secondName: secondName,
             middleName: middleName,
-            groupId: groupId,
-            subgroupId: subgroupId,
+            group: group,
+            subgroup: subgroup,
           ),
         ),
       );
@@ -53,28 +56,12 @@ class StudentPanelCubit extends Cubit<StudentPanelState> {
     }
   }
 
-  Future<void> updateStudent({
-    required int studentId,
-    required int userId,
-    required String firstName,
-    required String secondName,
-    required int groupId,
-    required int subgroupId,
-    String? middleName,
-  }) async {
+  Future<void> updateStudent(Student student) async {
     emit(LoadingStudentPanelState());
     try {
       emit(
         InfoStudentPanelState(
-          student: await teacherRepository.updateStudent(
-            studentId: studentId,
-            userId: userId,
-            firstName: firstName,
-            secondName: secondName,
-            middleName: middleName,
-            groupId: groupId,
-            subgroupId: subgroupId,
-          ),
+          student: await teacherRepository.updateStudent(student),
         ),
       );
     } catch (e) {
