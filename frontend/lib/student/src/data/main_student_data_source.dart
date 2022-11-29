@@ -6,7 +6,7 @@ import 'package:degree_app/dio_singletone.dart';
 import 'package:degree_app/teacher/src/models/cabinet_model.dart';
 import 'package:degree_app/teacher_profile/teacher_profile.dart';
 
-class MainTeacherDataSource implements MainTeacherRepository {
+class MainStudentDataSource implements MainTeacherRepository {
   @override
   Future<Group> getGroup(int id) async {
     try {

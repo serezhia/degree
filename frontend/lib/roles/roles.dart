@@ -1,4 +1,5 @@
 import 'package:degree_app/admin/view/admin_screen.dart';
+import 'package:degree_app/student/student.dart';
 import 'package:degree_app/teacher/teacher.dart';
 
 class RolesScreen extends StatelessWidget {
@@ -18,8 +19,8 @@ class RolesScreen extends StatelessWidget {
           switch (snapshot.data) {
             case 'admin':
               return const AdminScreenProvider();
-            // case 'student':
-            //   return const StudentScreen();
+            case 'student':
+              return const StudentScreenProvider();
             case 'teacher':
               return const TeacherScreenProvider();
             default:
