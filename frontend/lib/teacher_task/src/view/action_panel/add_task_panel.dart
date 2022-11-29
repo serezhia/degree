@@ -49,8 +49,7 @@ class _AddTaskActionPanelState extends State<AddTaskActionPanel> {
         .map(
           (e) => DropDownItemDegree(
             value: e,
-            text:
-                '''${e.group.name} ${e.secondName} ${e.firstName} ${e.middleName ?? ''} ''',
+            text: '''${e.secondName} ${e.firstName} ${e.middleName ?? ''} ''',
           ),
         )
         .toList();

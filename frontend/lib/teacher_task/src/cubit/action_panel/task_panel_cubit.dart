@@ -60,11 +60,6 @@ class TaskPanelCubit extends Cubit<TaskPanelState> {
     try {
       await taskRepository.addTask(
         subject: subject,
-        teacher: Teacher(
-          firstName: 'firstName',
-          secondName: 'secondName',
-          teacherId: 1,
-        ),
         content: content,
         deadLineType: deadLineType,
         deadLineDate: deadLineDate,

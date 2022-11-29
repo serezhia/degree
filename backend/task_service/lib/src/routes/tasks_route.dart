@@ -18,10 +18,41 @@ class TasksRoute {
 
     router.post('/', (Request req) async {
       final role = req.context['role'] as String;
-
+      final userIdString = req.context['user_id'] as String;
+      final accessToken = req.context['access_token'];
       final params = req.url.queryParameters;
+
+      final int? teacherId;
+      if (role == 'teacher') {
+        final userId = int.parse(userIdString);
+        try {
+          teacherId = await taskRepository.getTeacherIdFromUserId(userId);
+        } catch (e) {
+          return Response.badRequest(body: 'Teacher not found in database  $e');
+        }
+      } else if (role == 'admin') {
+        teacherId = params['teacher_id']! as int?;
+      } else {
+        return Response.forbidden('Forbidden');
+      }
+
+      final teacherResponse = await dio.Dio().get(
+        'http://${scheduleServiceHost()}:${scheduleServicePort()}/teachers/$teacherId?access_token=$accessToken',
+      );
+
+      final teacherData =
+          jsonDecode(teacherResponse.data) as Map<String, dynamic>;
+
+      final teacher = <String, dynamic>{
+        'user_id': teacherData['teacher']!['user_id'] as int,
+        'teacher_id': teacherData['teacher']!['id'] as int,
+        'firstName': teacherData['teacher']!['first_name'] as String,
+        'secondName': teacherData['teacher']!['second_name'] as String,
+        if (teacherData['teacher']!['middle_name'] != null)
+          'middleName': teacherData['teacher']!['middle_name'] as String,
+      };
+
       final subjectId = params['subject_id'];
-      final teacherId = params['teacher_id'];
       final studentId = params['student_id'];
       final groupId = params['group_id'];
       final subgroupId = params['subgroup_id'];
@@ -58,7 +89,7 @@ class TasksRoute {
 
       final Task task = Task(
         subjectId: int.parse(subjectId),
-        teacherId: int.parse(teacherId),
+        teacherId: teacherId,
         studentId: studentId != null ? int.parse(studentId) : null,
         groupId: groupId != null ? int.parse(groupId) : null,
         subgroupId: subgroupId != null ? int.parse(subgroupId) : null,
@@ -78,7 +109,7 @@ class TasksRoute {
         'task': {
           'task_id': createdTask.id,
           'subject_id': createdTask.subjectId,
-          'teacher_id': createdTask.teacherId,
+          'teacher': teacher,
           'student_id': createdTask.studentId,
           'group_id': createdTask.groupId,
           'subgroup_id': createdTask.subgroupId,

@@ -10,7 +10,6 @@ class MainTaskDataSource implements TaskRepository {
   @override
   Future<Task> addTask({
     required Subject subject,
-    required Teacher teacher,
     required String content,
     required DeadLineType deadLineType,
     required DateTime? deadLineDate,
@@ -25,7 +24,6 @@ class MainTaskDataSource implements TaskRepository {
         'task/tasks/',
         queryParameters: <String, dynamic>{
           'subject_id': subject.id,
-          'teacher_id': teacher.teacherId,
           'content': content,
           'deadline_type':
               deadLineType == DeadLineType.date ? 'date' : 'nextLesson',
@@ -40,7 +38,11 @@ class MainTaskDataSource implements TaskRepository {
       return Task(
         id: data['task']['task_id'] as int,
         subject: subject,
-        teacher: teacher,
+        teacher: Teacher(
+          firstName: data['task']['teacher']['firstName'] as String,
+          secondName: data['task']['teacher']['secondName'] as String,
+          teacherId: data['task']['teacher']['teacher_id'] as int,
+        ),
         content: content,
         deadLineType: deadLineType,
         deadLineDate: deadLineDate,

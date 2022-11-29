@@ -206,8 +206,9 @@ class InfoTaskActionPanel extends StatelessWidget {
                         height: 1,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text(
                           'Содержание ',
@@ -216,19 +217,12 @@ class InfoTaskActionPanel extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              task.content,
-                              textAlign: TextAlign.right,
-                              maxLines: 2,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
+                        Text(
+                          task.content,
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                          style: const TextStyle(
+                            fontSize: 16,
                           ),
                         ),
                       ],

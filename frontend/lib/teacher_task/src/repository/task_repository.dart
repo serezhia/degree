@@ -7,7 +7,6 @@ abstract class TaskRepository {
 
   Future<Task> addTask({
     required Subject subject,
-    required Teacher teacher,
     required String content,
     required DeadLineType deadLineType,
     required DateTime? deadLineDate,
