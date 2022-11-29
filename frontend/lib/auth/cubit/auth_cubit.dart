@@ -28,7 +28,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
       emit(AuthAutorized(user: user, url: url!));
     } catch (e) {
-      emit(AuthError(e.toString()));
+      emit(AuthError('invalid username or password'));
       if (url == null) {
         emit(AuthGetUrl());
       } else {
