@@ -159,7 +159,8 @@ class LessonWidget extends StatelessWidget {
         context.read<ActionPanelCubit>().openLessonPanel();
         context.read<LessonPanelCubit>().getLesson(lesson.id);
       },
-      child: SizedBox(
+      child: ColoredBox(
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
