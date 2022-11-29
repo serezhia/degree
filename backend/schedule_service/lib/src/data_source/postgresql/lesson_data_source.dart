@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:schedule_service/schedule_service.dart';
 
 class PostgresLessonDataSource implements LessonRepository {
@@ -28,7 +30,7 @@ class PostgresLessonDataSource implements LessonRepository {
               teacherId: e['lessons']!['teacher_id'] as int,
               day: e['lessons']!['day'] as DateTime,
               lessonNumber: e['lessons']!['number_lesson'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
             ))
         .toList();
   }
@@ -47,7 +49,7 @@ class PostgresLessonDataSource implements LessonRepository {
           teacherId: value.first['lessons']!['teacher_id'] as int,
           day: value.first['lessons']!['day'] as DateTime,
           lessonNumber: value.first['lessons']!['number_lesson'] as int,
-          lessonTypeId: value.first['lessons']!['lesson_type_id'] as int,
+          lessonTypeId: value.first['lessons']!['type_lesson_id'] as int,
         ));
   }
 
@@ -64,7 +66,7 @@ class PostgresLessonDataSource implements LessonRepository {
               subjectId: e['lessons']!['subject_id'] as int,
               teacherId: e['lessons']!['teacher_id'] as int,
               cabinetId: e['lessons']!['cabinet_id'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
               lessonNumber: e['lessons']!['number_lesson'] as int,
               day: e['lessons']!['day'] as DateTime,
             ))
@@ -84,7 +86,7 @@ class PostgresLessonDataSource implements LessonRepository {
               subjectId: e['lessons']!['subject_id'] as int,
               teacherId: e['lessons']!['teacher_id'] as int,
               cabinetId: e['lessons']!['cabinet_id'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
               lessonNumber: e['lessons']!['number_lesson'] as int,
               day: e['lessons']!['day'] as DateTime,
             ))
@@ -113,7 +115,7 @@ class PostgresLessonDataSource implements LessonRepository {
               subjectId: e['lessons']!['subject_id'] as int,
               teacherId: e['lessons']!['teacher_id'] as int,
               cabinetId: e['lessons']!['cabinet_id'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
               lessonNumber: e['lessons']!['number_lesson'] as int,
               day: e['lessons']!['day'] as DateTime,
             ))
@@ -131,7 +133,7 @@ class PostgresLessonDataSource implements LessonRepository {
               subjectId: e['lessons']!['subject_id'] as int,
               teacherId: e['lessons']!['teacher_id'] as int,
               cabinetId: e['lessons']!['cabinet_id'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
               lessonNumber: e['lessons']!['number_lesson'] as int,
               day: e['lessons']!['day'] as DateTime,
             ))
@@ -155,7 +157,7 @@ class PostgresLessonDataSource implements LessonRepository {
               teacherId: e['lessons']!['teacher_id'] as int,
               day: e['lessons']!['day'] as DateTime,
               lessonNumber: e['lessons']!['number_lesson'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
             ))
         .toList());
   }
@@ -175,7 +177,7 @@ class PostgresLessonDataSource implements LessonRepository {
               teacherId: e['lessons']!['teacher_id'] as int,
               day: e['lessons']!['day'] as DateTime,
               lessonNumber: e['lessons']!['number_lesson'] as int,
-              lessonTypeId: e['lessons']!['lesson_type_id'] as int,
+              lessonTypeId: e['lessons']!['type_lesson_id'] as int,
             ))
         .toList());
   }
@@ -191,31 +193,59 @@ class PostgresLessonDataSource implements LessonRepository {
       required int lessonNumber,
       required DateTime day}) async {
     return await connection.transaction((ctx) async {
-      return await ctx.mappedResultsQuery(
-        'INSERT INTO lessons (group_id, subgroup_id, subject_id, teacher_id, cabinet_id, lesson_type_id, number_lesson, day) VALUES (@groupId, @subgroupId, @subjectId, @teacherId, @cabinetId, @lessonTypeId, @lessonNumber, @day) RETURNING *',
-        substitutionValues: {
-          'groupId': groupId,
-          'subgroupId': subgroupId,
-          'subjectId': subjectId,
-          'teacherId': teacherId,
-          'cabinetId': cabinetId,
-          'lessonTypeId': lessonTypeId,
-          'lessonNumber': lessonNumber,
-          'day': day,
-        },
-      ).then(
-        (value) => Lesson(
-          lessonId: value.first['lessons']!['lesson_id'] as int,
-          groupId: groupId,
-          subgroupId: subgroupId,
-          subjectId: subjectId,
-          teacherId: teacherId,
-          cabinetId: cabinetId,
-          lessonTypeId: lessonTypeId,
-          lessonNumber: lessonNumber,
-          day: day,
-        ),
-      );
+      if (groupId != null) {
+        log('insert lesson by group');
+        return await ctx.mappedResultsQuery(
+          'INSERT INTO lessons (group_id, subject_id, teacher_id, cabinet_id, type_lesson_id, number_lesson, day) VALUES (@groupId, @subjectId, @teacherId, @cabinetId, @lessonTypeId, @lessonNumber, @day) RETURNING *',
+          substitutionValues: {
+            'groupId': groupId,
+            'subjectId': subjectId,
+            'teacherId': teacherId,
+            'cabinetId': cabinetId,
+            'lessonTypeId': lessonTypeId,
+            'lessonNumber': lessonNumber,
+            'day': day,
+          },
+        ).then((value) {
+          log(value.first['lessons'].toString());
+          return Lesson(
+            lessonId: value.first['lessons']!['lesson_id'] as int,
+            groupId: groupId,
+            subgroupId: subgroupId,
+            subjectId: subjectId,
+            teacherId: teacherId,
+            cabinetId: cabinetId,
+            lessonTypeId: lessonTypeId,
+            lessonNumber: lessonNumber,
+            day: day,
+          );
+        });
+      } else {
+        return await ctx.mappedResultsQuery(
+          'INSERT INTO lessons (subgroup_id, subject_id, teacher_id, cabinet_id, type_lesson_id, number_lesson, day) VALUES (@subgroupId, @subjectId, @teacherId, @cabinetId, @lessonTypeId, @lessonNumber, @day) RETURNING *',
+          substitutionValues: {
+            'subgroupId': subgroupId,
+            'subjectId': subjectId,
+            'teacherId': teacherId,
+            'cabinetId': cabinetId,
+            'lessonTypeId': lessonTypeId,
+            'lessonNumber': lessonNumber,
+            'day': day,
+          },
+        ).then(
+          (value) => Lesson(
+            lessonId: value.first['lessons']!['lesson_id'] as int,
+            groupId: groupId,
+            subgroupId: subgroupId,
+            subjectId: subjectId,
+            teacherId: teacherId,
+            cabinetId: cabinetId,
+            lessonTypeId: lessonTypeId,
+            lessonNumber: lessonNumber,
+            day: day,
+          ),
+        );
+      }
     });
   }
 
@@ -223,7 +253,7 @@ class PostgresLessonDataSource implements LessonRepository {
   Future<Lesson> updateLesson(Lesson lesson) async {
     return await connection.transaction((ctx) async {
       return await ctx.mappedResultsQuery(
-        'UPDATE lessons SET group_id = @groupId, subgroup_id = @subgroupId, subject_id = @subjectId, teacher_id = @teacherId, cabinet_id = @cabinetId, lesson_type_id = @lessonTypeId, number_lesson = @lessonNumber, day = @day WHERE lesson_id = @lessonId RETURNING *',
+        'UPDATE lessons SET group_id = @groupId, subgroup_id = @subgroupId, subject_id = @subjectId, teacher_id = @teacherId, cabinet_id = @cabinetId, type_lesson_id = @lessonTypeId, number_lesson = @lessonNumber, day = @day WHERE lesson_id = @lessonId RETURNING *',
         substitutionValues: {
           'lessonId': lesson.lessonId,
           'groupId': lesson.groupId,
@@ -269,7 +299,7 @@ class PostgresLessonDataSource implements LessonRepository {
     } else {
       if (groupId != null) {
         return connection.mappedResultsQuery(
-          'SELECT * FROM lessons WHERE group_id = @groupId AND subject_id = @subjectId AND teacher_id = @teacherId AND cabinet_id = @cabinetId AND lesson_type_id = @lessonTypeId AND number_lesson = @lessonNumber AND day = @day',
+          'SELECT * FROM lessons WHERE group_id = @groupId AND subject_id = @subjectId AND teacher_id = @teacherId AND cabinet_id = @cabinetId AND type_lesson_id = @lessonTypeId AND number_lesson = @lessonNumber AND day = @day',
           substitutionValues: {
             'groupId': groupId,
             'subjectId': subjectId,
@@ -282,7 +312,7 @@ class PostgresLessonDataSource implements LessonRepository {
         ).then((value) => value.isNotEmpty);
       } else {
         return connection.mappedResultsQuery(
-          'SELECT * FROM lessons WHERE subgroup_id = @subgroupId AND subject_id = @subjectId AND teacher_id = @teacherId AND cabinet_id = @cabinetId AND lesson_type_id = @lessonTypeId AND number_lesson = @lessonNumber AND day = @day',
+          'SELECT * FROM lessons WHERE subgroup_id = @subgroupId AND subject_id = @subjectId AND teacher_id = @teacherId AND cabinet_id = @cabinetId AND type_lesson_id = @lessonTypeId AND number_lesson = @lessonNumber AND day = @day',
           substitutionValues: {
             'subgroupId': subgroupId,
             'subjectId': subjectId,
