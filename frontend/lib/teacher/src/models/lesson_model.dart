@@ -1,3 +1,5 @@
+import 'package:degree_app/teacher/src/models/cabinet_model.dart';
+
 import '../../teacher.dart';
 
 part 'lesson_model.g.dart';
@@ -10,7 +12,7 @@ class Lesson {
   final LessonType lessonType;
   final int numberLesson;
   final DateTime date;
-  final int cabinet;
+  final Cabinet cabinet;
   final Group? group;
   final Subgroup? subgroup;
   final Student? student;

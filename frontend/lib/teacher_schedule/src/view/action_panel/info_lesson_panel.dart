@@ -119,7 +119,7 @@ class InfoLessonActionPanel extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          lesson.cabinet.toString(),
+                          lesson.cabinet.number.toString(),
                           style: const TextStyle(
                             fontSize: 16,
                           ),

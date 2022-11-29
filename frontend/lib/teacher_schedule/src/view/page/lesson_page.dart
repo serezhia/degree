@@ -210,7 +210,7 @@ class LessonWidget extends StatelessWidget {
               width: 50,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(lesson.cabinet.toString()),
+                child: Text(lesson.cabinet.number.toString()),
               ),
             ),
           ],

@@ -14,7 +14,7 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) => Lesson(
           LessonType.fromJson(json['lessonType'] as Map<String, dynamic>),
       numberLesson: json['numberLesson'] as int,
       date: DateTime.parse(json['date'] as String),
-      cabinet: json['cabinet'] as int,
+      cabinet: Cabinet.fromJson(json['cabinet'] as Map<String, dynamic>),
       group: json['group'] == null
           ? null
           : Group.fromJson(json['group'] as Map<String, dynamic>),

@@ -20,7 +20,7 @@ class SchedulesPageCubit extends Cubit<SchedulesPageState> {
     try {
       emit(
         SchedulesPageLoaded(
-          lessons: await repository.getLessonsByTeacherOnWeek(1, week),
+          lessons: await repository.getLessonsByTeacherOnWeek(week),
         ),
       );
     } catch (e) {
@@ -33,7 +33,7 @@ class SchedulesPageCubit extends Cubit<SchedulesPageState> {
     try {
       emit(
         SchedulesPageLoaded(
-          lessons: await repository.getLessonsByTeacherOnWeek(1, week),
+          lessons: await repository.getLessonsByTeacherOnWeek(week),
         ),
       );
     } catch (e) {

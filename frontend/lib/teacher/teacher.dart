@@ -8,8 +8,6 @@ export 'package:json_annotation/json_annotation.dart';
 export 'src/cubit/action_panel_cubit.dart';
 export 'src/cubit/page_cubit.dart';
 
-export 'src/data/mock_data.dart';
-export 'src/data/mock_main_teacher_repository.dart';
 export 'src/models/group_model.dart';
 export 'src/models/lesson_model.dart';
 export 'src/models/lessson_type_model.dart';

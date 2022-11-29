@@ -60,7 +60,11 @@ class TaskPanelCubit extends Cubit<TaskPanelState> {
     try {
       await taskRepository.addTask(
         subject: subject,
-        teacher: mockUserList.firstWhere((user) => user is Teacher) as Teacher,
+        teacher: Teacher(
+          firstName: 'firstName',
+          secondName: 'secondName',
+          teacherId: 1,
+        ),
         content: content,
         deadLineType: deadLineType,
         deadLineDate: deadLineDate,
