@@ -118,11 +118,7 @@ class StudentRoute {
         return Response.notFound('Student not found');
       }
 
-      if (role != 'admin') {
-        return Response.unauthorized("Haven't access");
-      }
       final JWT jwt;
-
       try {
         jwt = JWT.verify(accessToken as String, SecretKey(secretKey()),
             issuer: 'degree_auth');
@@ -130,7 +126,7 @@ class StudentRoute {
         return Response.unauthorized('Invalid access_token');
       }
 
-      if (role == 'admin' || id == jwt.subject) {
+      if (role == 'admin' || id == jwt.subject || role == 'teacher') {
         if (!await studentRepository.existsStudent(idStudent: int.parse(id))) {
           return Response.notFound('Student not found');
         }
@@ -170,32 +166,32 @@ class StudentRoute {
     router.get('/', (Request req) async {
       final role = req.context['role'];
 
-      if (role != 'admin') {
+      if (role == 'admin' || role == 'teacher') {
+        final List<Student> students;
+        try {
+          students = await studentRepository.getAllStudents();
+        } catch (e) {
+          return Response.internalServerError(body: e.toString());
+        }
+
+        return Response.ok(jsonEncode({
+          'status': 'success',
+          'message': 'students found',
+          'students': students
+              .map((student) => {
+                    'id': student.id,
+                    'user_id': student.userId,
+                    'firstName': student.firstName,
+                    'secondName': student.secondName,
+                    'middleName': student.middleName,
+                    'group_id': student.groupId,
+                    'subgroup_id': student.subgroupId,
+                  })
+              .toList(),
+        }));
+      } else {
         return Response.unauthorized("Haven't access");
       }
-
-      final List<Student> students;
-      try {
-        students = await studentRepository.getAllStudents();
-      } catch (e) {
-        return Response.internalServerError(body: e.toString());
-      }
-
-      return Response.ok(jsonEncode({
-        'status': 'success',
-        'message': 'students found',
-        'students': students
-            .map((student) => {
-                  'id': student.id,
-                  'user_id': student.userId,
-                  'firstName': student.firstName,
-                  'secondName': student.secondName,
-                  'middleName': student.middleName,
-                  'group_id': student.groupId,
-                  'subgroup_id': student.subgroupId,
-                })
-            .toList(),
-      }));
     });
 
     // Update student
