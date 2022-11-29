@@ -23,7 +23,7 @@ abstract class MainStudentRepository {
 
   Future<List<Student>> getStudentsList();
 
-  Future<List<Lesson>> getLessonsByTeacherOnWeek(
+  Future<List<Lesson>> getLessonsByStudentOnWeek(
     DateTimeRange week,
   );
 

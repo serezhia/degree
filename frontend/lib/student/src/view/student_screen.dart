@@ -1,9 +1,7 @@
 import 'package:degree_app/notification/notification.dart';
-import 'package:degree_app/teacher/src/data/main_teacher_data_source.dart';
-import 'package:degree_app/teacher_task/src/cubit/action_panel/task_panel_cubit.dart';
-import 'package:degree_app/teacher_task/src/data/main_teacher_task_data_source.dart';
-
-import '../../../student_profile/student_profile.dart';
+import 'package:degree_app/student/src/cubit/pages/schedule/schedule_page_cubit.dart';
+import 'package:degree_app/student/src/data/main_student_data_source.dart';
+import 'package:degree_app/student_profile/student_profile.dart';
 
 class StudentScreenProvider extends StatelessWidget {
   const StudentScreenProvider({super.key});
@@ -20,16 +18,23 @@ class StudentScreenProvider extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => ProfilePanelCubit(),
-          ),
-          BlocProvider(
-            create: (context) => TaskPanelCubit(
-              MainTaskDataSource(),
-              MainTeacherDataSource(),
+            create: (context) => LessonPanelCubit(
+              MainStudentDataSource(),
             ),
           ),
           BlocProvider(
+            create: (context) => ProfilePanelCubit(),
+          ),
+          BlocProvider(
             create: (context) => PageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => SchedulesPageCubit(
+              MainStudentDataSource(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SchedulePageCubit(),
           ),
         ],
         child: MultiProvider(
@@ -38,13 +43,13 @@ class StudentScreenProvider extends StatelessWidget {
               create: (_) => SideBarState(),
             ),
           ],
-          child: const TeacherScreen(),
+          child: const StudentScreen(),
         ),
       );
 }
 
-class TeacherScreen extends StatelessWidget {
-  const TeacherScreen({super.key});
+class StudentScreen extends StatelessWidget {
+  const StudentScreen({super.key});
 
   @override
   Widget build(BuildContext context) => ScaffoldDegree(

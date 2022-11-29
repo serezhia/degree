@@ -1,5 +1,3 @@
-import 'package:degree_app/teacher/src/models/cabinet_model.dart';
-
 import '../../student.dart';
 
 part 'lesson_model.g.dart';

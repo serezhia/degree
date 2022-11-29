@@ -9,4 +9,6 @@ abstract class ActionPanelState extends Equatable {
 
 class ProfileActionPanelState extends ActionPanelState {}
 
+class LessonActionPanelState extends ActionPanelState {}
+
 class CloseActionPanelState extends ActionPanelState {}

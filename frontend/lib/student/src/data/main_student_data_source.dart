@@ -3,10 +3,10 @@
 import 'dart:convert';
 
 import 'package:degree_app/dio_singletone.dart';
-import 'package:degree_app/teacher/src/models/cabinet_model.dart';
-import 'package:degree_app/teacher_profile/teacher_profile.dart';
 
-class MainStudentDataSource implements MainTeacherRepository {
+import '../../student.dart';
+
+class MainStudentDataSource implements MainStudentRepository {
   @override
   Future<Group> getGroup(int id) async {
     try {
@@ -158,7 +158,7 @@ class MainStudentDataSource implements MainTeacherRepository {
   }
 
   @override
-  Future<List<Lesson>> getLessonsByTeacherOnWeek(
+  Future<List<Lesson>> getLessonsByStudentOnWeek(
     DateTimeRange week,
   ) async {
     int month(DateTime date) {
