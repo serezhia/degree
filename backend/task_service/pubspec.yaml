@@ -17,6 +17,7 @@ dependencies:
   mime: ^1.0.2
   http_parser: ^4.0.2
   crypto: ^3.0.2
+  shelf_cors_headers: ^0.1.4
   translit: ^2.0.0
 
 dev_dependencies:

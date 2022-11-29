@@ -1,3 +1,4 @@
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 import 'package:task_service/src/data_source/postgresql/task_data_source.dart';
 import 'package:task_service/src/routes/tasks_route.dart';
 import 'package:task_service/task_service.dart';
@@ -60,6 +61,7 @@ void main(List<String> arguments) async {
 
   final handler = Pipeline()
       .addMiddleware((logRequests()))
+      .addMiddleware((corsHeaders()))
       .addMiddleware(handlerAuth())
       .addHandler(app);
 
