@@ -178,4 +178,21 @@ class PostgreStudentDataSource extends StudentRepository {
           );
         }).toList());
   }
+
+  @override
+  Future<Student> getStudentByUserId(int userId) async {
+    return await connection.query('''
+    SELECT * FROM students WHERE user_id = @id;
+  ''', substitutionValues: {
+      'id': userId,
+    }).then((value) => Student(
+          id: value.first[0] as int,
+          userId: value.first[1] as int,
+          firstName: value.first[2] as String,
+          secondName: value.first[3] as String,
+          middleName: value.first[4] as String?,
+          groupId: value.first[5] as int,
+          subgroupId: value.first[6] as int,
+        ));
+  }
 }

@@ -22,4 +22,6 @@ abstract class StudentRepository {
   Future<List<Student>> getAllStudentsByGroup(int idGroup);
 
   Future<List<Student>> getAllStudentsBySubgroup(int idSubgroup);
+
+  Future<Student> getStudentByUserId(int userId);
 }

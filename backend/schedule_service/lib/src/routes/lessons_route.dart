@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:schedule_service/schedule_service.dart';
 
@@ -679,7 +677,61 @@ class LessonsRoute {
             lessons.add(lesson);
           }
         }
-      } else {
+      } else if (role == 'student') {
+        final student =
+            await studentRepository.getStudentByUserId(int.parse(userId));
+        for (var e in data) {
+          if (e.groupId == student.groupId ||
+              e.subgroupId == student.subgroupId) {
+            final lesson = {
+              'lesson_id': e.lessonId,
+              if (e.groupId != null)
+                'group': {
+                  'id': e.groupId,
+                  'name': (await groupRepository.getGroup(e.groupId!)).name,
+                },
+              if (e.subgroupId != null)
+                'subgroup': {
+                  'id': e.subgroupId,
+                  'name': (await subgroupRepository.getSubgroup(e.subgroupId!))
+                      .name,
+                },
+              'subject': {
+                'id': e.subjectId,
+                'name': (await subjectRepository.getSubject(e.subjectId)).name,
+              },
+              'teacher': {
+                'userId':
+                    (await teacherRepository.getTeacher(e.teacherId)).userId,
+                'teacherId': e.teacherId,
+                'firstName':
+                    (await teacherRepository.getTeacher(e.teacherId)).firstName,
+                'secondName': (await teacherRepository.getTeacher(e.teacherId))
+                    .secondName,
+                if ((await teacherRepository.getTeacher(e.teacherId))
+                        .middleName !=
+                    null)
+                  'middleName':
+                      (await teacherRepository.getTeacher(e.teacherId))
+                          .middleName,
+              },
+              'cabinet': {
+                'id': e.cabinetId,
+                'number':
+                    (await cabinetRepository.getCabinet(e.cabinetId)).number,
+              },
+              'lessonType': {
+                'id': e.lessonTypeId,
+                'name':
+                    (await lessonRepository.getLessonType(e.lessonTypeId)).name,
+              },
+              'lessonNumber': e.lessonNumber,
+              'day': e.day.toIso8601String(),
+            };
+            lessons.add(lesson);
+          }
+        }
+      } else if (role == 'admin') {
         for (var e in data) {
           final lesson = {
             'lesson_id': e.lessonId,
