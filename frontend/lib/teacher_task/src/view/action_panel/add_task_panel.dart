@@ -60,14 +60,8 @@ class _AddTaskActionPanelState extends State<AddTaskActionPanel> {
 
   Future<List<DropDownItemDegree>> getItemsSubgroup() async {
     final cubit = context.read<TaskPanelCubit>();
-    final groups = await cubit.getGroupsForField();
-    final subgroups = <Subgroup>[];
-    for (final group in groups) {
-      final groupSubgroups = group.subgroups;
-      if (groupSubgroups != null) {
-        subgroups.addAll(groupSubgroups);
-      }
-    }
+    final subgroups = await cubit.getSubgroupsForField();
+
     return subgroups
         .map(
           (e) => DropDownItemDegree(
@@ -107,176 +101,184 @@ class _AddTaskActionPanelState extends State<AddTaskActionPanel> {
         },
       ),
       title: 'Добавить задание',
-      body: ColoredBox(
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropDownTextFieldDegree(
-                controller: subjectController,
-                nameField: 'Предмет',
-                getItems: getItemsSubject,
-                onTapItem: (value) {
-                  subjectController.text = value.text;
-                  pickedSubject = DropDownItemDegree(
-                    value: value.value,
-                    text: value.text,
-                  );
-                },
-                pickedItem: pickedSubject,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ToggleDegree(
-                    items: [
-                      ToggleItem(
-                        lable: 'Группе',
-                      ),
-                      ToggleItem(
-                        lable: 'Подгруппе',
-                      ),
-                      ToggleItem(
-                        lable: 'Студенту',
-                      ),
-                    ],
-                    currentIndex: currentIndex,
-                    onTap: (value) {
-                      currentIndex = value;
-
-                      setState(() {});
-                    },
-                  ),
-                ],
-              ),
-              if (currentIndex == 0)
-                DropDownTextFieldDegree(
-                  controller: groupController,
-                  nameField: 'Группа',
-                  getItems: getItemsGroup,
-                  onTapItem: (value) {
-                    groupController.text = value.text;
-                    pickedGroup = DropDownItemDegree(
-                      value: value.value,
-                      text: value.text,
-                    );
-
-                    pickedStudent = null;
-                    studentController.text = '';
-                    pickedSubgroup = null;
-                    subgroupController.text = '';
-                  },
-                  pickedItem: pickedGroup,
-                ),
-              if (currentIndex == 1)
-                DropDownTextFieldDegree(
-                  controller: subgroupController,
-                  nameField: 'Подгруппа',
-                  getItems: getItemsSubgroup,
-                  onTapItem: (value) {
-                    subgroupController.text = value.text;
-                    pickedSubgroup = DropDownItemDegree(
-                      value: value.value,
-                      text: value.text,
-                    );
-
-                    pickedGroup = null;
-                    groupController.text = '';
-                    pickedStudent = null;
-                    studentController.text = '';
-                  },
-                  pickedItem: pickedSubgroup,
-                ),
-              if (currentIndex == 2)
-                DropDownTextFieldDegree(
-                  controller: studentController,
-                  nameField: 'Студент',
-                  getItems: getItemsStudent,
-                  onTapItem: (value) {
-                    studentController.text = value.text;
-                    pickedStudent = DropDownItemDegree(
-                      value: value.value,
-                      text: value.text,
-                    );
-
-                    pickedGroup = null;
-                    groupController.text = '';
-                    pickedSubgroup = null;
-                    subgroupController.text = '';
-                  },
-                  pickedItem: pickedStudent,
-                ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ToggleDegree(
-                    items: [
-                      ToggleItem(
-                        lable: 'Следующий урок',
-                      ),
-                      ToggleItem(
-                        lable: 'По дате',
-                      ),
-                    ],
-                    currentIndex: currentIndexDeadline,
-                    onTap: (value) {
-                      currentIndexDeadline = value;
-
-                      setState(() {});
-                    },
-                  ),
-                ],
-              ),
-              if (currentIndexDeadline == 1)
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Дата',
-                        style: Theme.of(context).textTheme.headline1,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      TextButton(
-                        onPressed: () async {
-                          final date = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime.now(),
-                            lastDate: DateTime.now().add(
-                              const Duration(days: 365),
+      body: CustomScrollView(
+        slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: ColoredBox(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(25),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    DropDownTextFieldDegree(
+                      controller: subjectController,
+                      nameField: 'Предмет',
+                      getItems: getItemsSubject,
+                      onTapItem: (value) {
+                        subjectController.text = value.text;
+                        pickedSubject = DropDownItemDegree(
+                          value: value.value,
+                          text: value.text,
+                        );
+                      },
+                      pickedItem: pickedSubject,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ToggleDegree(
+                          items: [
+                            ToggleItem(
+                              lable: 'Группе',
                             ),
+                            ToggleItem(
+                              lable: 'Подгруппе',
+                            ),
+                            ToggleItem(
+                              lable: 'Студенту',
+                            ),
+                          ],
+                          currentIndex: currentIndex,
+                          onTap: (value) {
+                            currentIndex = value;
+
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    if (currentIndex == 0)
+                      DropDownTextFieldDegree(
+                        controller: groupController,
+                        nameField: 'Группа',
+                        getItems: getItemsGroup,
+                        onTapItem: (value) {
+                          groupController.text = value.text;
+                          pickedGroup = DropDownItemDegree(
+                            value: value.value,
+                            text: value.text,
                           );
-                          if (date != null) {
-                            setState(() {
-                              pickedDate = date;
-                            });
-                          }
+
+                          pickedStudent = null;
+                          studentController.text = '';
+                          pickedSubgroup = null;
+                          subgroupController.text = '';
                         },
-                        child: Text(
-                          pickedDate != null
-                              ? DateFormat('dd.MM.yyyy').format(pickedDate!)
-                              : 'Выбрать',
-                          style: Theme.of(context).textTheme.headline1,
+                        pickedItem: pickedGroup,
+                      ),
+                    if (currentIndex == 1)
+                      DropDownTextFieldDegree(
+                        controller: subgroupController,
+                        nameField: 'Подгруппа',
+                        getItems: getItemsSubgroup,
+                        onTapItem: (value) {
+                          subgroupController.text = value.text;
+                          pickedSubgroup = DropDownItemDegree(
+                            value: value.value,
+                            text: value.text,
+                          );
+
+                          pickedGroup = null;
+                          groupController.text = '';
+                          pickedStudent = null;
+                          studentController.text = '';
+                        },
+                        pickedItem: pickedSubgroup,
+                      ),
+                    if (currentIndex == 2)
+                      DropDownTextFieldDegree(
+                        controller: studentController,
+                        nameField: 'Студент',
+                        getItems: getItemsStudent,
+                        onTapItem: (value) {
+                          studentController.text = value.text;
+                          pickedStudent = DropDownItemDegree(
+                            value: value.value,
+                            text: value.text,
+                          );
+
+                          pickedGroup = null;
+                          groupController.text = '';
+                          pickedSubgroup = null;
+                          subgroupController.text = '';
+                        },
+                        pickedItem: pickedStudent,
+                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ToggleDegree(
+                          items: [
+                            ToggleItem(
+                              lable: 'Следующий урок',
+                            ),
+                            ToggleItem(
+                              lable: 'По дате',
+                            ),
+                          ],
+                          currentIndex: currentIndexDeadline,
+                          onTap: (value) {
+                            currentIndexDeadline = value;
+
+                            setState(() {});
+                          },
+                        ),
+                      ],
+                    ),
+                    if (currentIndexDeadline == 1)
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Дата',
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                final date = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now().add(
+                                    const Duration(days: 365),
+                                  ),
+                                );
+                                if (date != null) {
+                                  setState(() {
+                                    pickedDate = date;
+                                  });
+                                }
+                              },
+                              child: Text(
+                                pickedDate != null
+                                    ? DateFormat('dd.MM.yyyy')
+                                        .format(pickedDate!)
+                                    : 'Выбрать',
+                                style: Theme.of(context).textTheme.headline1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    TextFieldDegree(
+                      textEditingController: contentController,
+                      textFieldText: 'Содержание',
+                      obscureText: false,
+                      maxlines: 12,
+                    ),
+                  ],
                 ),
-              TextFieldDegree(
-                textEditingController: contentController,
-                textFieldText: 'Содержание',
-                obscureText: false,
-                maxlines: 12,
               ),
-            ],
-          ),
-        ),
+            ),
+          )
+        ],
       ),
       actions: [
         ActionPanelItem(

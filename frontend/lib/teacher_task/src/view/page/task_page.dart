@@ -67,8 +67,7 @@ class TaskCard extends StatelessWidget {
                 Text(
                   task.group?.name ??
                       task.subgroup?.name ??
-                      task.student?.fullName ??
-                      'Неизвестно',
+                      '${task.student?.fullName}',
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
