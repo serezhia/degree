@@ -13,7 +13,7 @@ abstract class TaskRepository {
 
   Future<void> deleteTask(int id);
 
-  Future<List<Task>> getTasksByTeacherId(int teacherId);
+  Future<List<Task>> getTasksDayByTeacher(DateTime day, int teacherId);
 
   Future<List<Task>> getTasksByStudent(
       int studentId, int groupId, int subgroupId);

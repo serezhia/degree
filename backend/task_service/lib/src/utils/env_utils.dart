@@ -108,3 +108,19 @@ String scheduleDbPassword() {
     return env['SCHEDULE_DATABASE_PASSWORD']!;
   }
 }
+
+int scheduleServicePort() {
+  if (env['SCHEDULE_SERVICE_PORT'] == null) {
+    return int.parse(Platform.environment['SCHEDULE_SERVICE_PORT'] ?? '2010');
+  } else {
+    return int.parse(env['SCHEDULE_SERVICE_PORT']!);
+  }
+}
+
+String scheduleServiceHost() {
+  if (env['SCHEDULE_SERVICE_HOST'] == null) {
+    return Platform.environment['SCHEDULE_SERVICE_HOST'] ?? '0.0.0.0';
+  } else {
+    return env['SCHEDULE_SERVICE_HOST']!;
+  }
+}

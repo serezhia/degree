@@ -265,9 +265,13 @@ class PostgresTaskDataSource implements TaskRepository {
   }
 
   @override
-  Future<List<Task>> getTasksByTeacherId(int teacherId) async {
+  Future<List<Task>> getTasksDayByTeacher(DateTime day, int teacherId) async {
     final tasks = await conection.mappedResultsQuery(
-      'SELECT * FROM tasks WHERE teacher_id = @id',
+      'SELECT * FROM tasks WHERE teacher_id = @id AND deadline = @day',
+      substitutionValues: {
+        'id': teacherId,
+        'day': day,
+      },
     );
 
     for (var element in tasks) {

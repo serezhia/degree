@@ -1,3 +1,6 @@
+import 'dart:developer' as developer;
+
+import 'package:dio/dio.dart' as dio;
 import 'package:task_service/task_service.dart';
 
 class TasksRoute {
@@ -103,41 +106,103 @@ class TasksRoute {
     });
 
     router.get('/<id>', (Request req, String taskId) async {
+      final accessToken = req.context['access_token'];
       if (!await taskRepository.existsTask(int.parse(taskId))) {
         return Response.notFound('Task not found');
       }
 
       final task = await taskRepository.getTask(int.parse(taskId));
 
+      late final Map<String, dynamic> subject;
+      try {
+        final subjectResponse = await dio.Dio().get(
+            'http://${scheduleServiceHost()}:${scheduleServicePort()}/subjects/${task.subjectId}?access_token=$accessToken');
+        final subjectData =
+            jsonDecode(subjectResponse.data) as Map<String, dynamic>;
+        subject = <String, dynamic>{
+          'id': subjectData['subject']!['id'] as int,
+          'name': subjectData['subject']!['name'] as String,
+        };
+      } catch (e) {
+        developer.log('Error while getting subject from schedule service',
+            error: e);
+      }
+
+      final teacherResponse = await dio.Dio().get(
+          'http://${scheduleServiceHost()}:${scheduleServicePort()}/teachers/${task.teacherId}?access_token=$accessToken');
+
+      final teacherData =
+          jsonDecode(teacherResponse.data) as Map<String, dynamic>;
+
+      final teacher = <String, dynamic>{
+        'user_id': teacherData['teacher']!['user_id'] as int,
+        'teacher_id': teacherData['teacher']!['id'] as int,
+        'firstName': teacherData['teacher']!['first_name'] as String,
+        'secondName': teacherData['teacher']!['second_name'] as String,
+        if (teacherData['teacher']!['middle_name'] != null)
+          'middleName': teacherData['teacher']!['middle_name'] as String,
+      };
+
+      late final Map<String, dynamic> group;
+      if (task.groupId != null) {
+        final groupResponse = await dio.Dio().get(
+            'http://${scheduleServiceHost()}:${scheduleServicePort()}/groups/${task.groupId}?access_token=$accessToken');
+
+        final groupData =
+            jsonDecode(groupResponse.data) as Map<String, dynamic>;
+
+        group = <String, dynamic>{
+          'id': groupData['Group']!['id'] as int,
+          'name': groupData['Group']!['name'] as String,
+        };
+      }
+
+      late final Map<String, dynamic> subgroup;
+      if (task.subgroupId != null) {
+        final subgroupResponse = await dio.Dio().get(
+            'http://${scheduleServiceHost()}:${scheduleServicePort()}/subgroups/${task.subgroupId}?access_token=$accessToken');
+
+        final subgroupData =
+            jsonDecode(subgroupResponse.data) as Map<String, dynamic>;
+
+        subgroup = <String, dynamic>{
+          'id': subgroupData['subgroup']!['id'] as int,
+          'name': subgroupData['subgroup']!['name'] as String,
+        };
+      }
+
+      late final Map<String, dynamic> student;
+
+      if (task.studentId != null) {
+        final studentResponse = await dio.Dio().get(
+            'http://${scheduleServiceHost()}:${scheduleServicePort()}/students/${task.studentId}?access_token=$accessToken');
+
+        final studentData =
+            jsonDecode(studentResponse.data) as Map<String, dynamic>;
+
+        student = <String, dynamic>{
+          'user_id': studentData['student']!['user_id'] as int,
+          'id': studentData['student']!['id'] as int,
+          'firstName': studentData['student']!['firstName'] as String,
+          'secondName': studentData['student']!['secondName'] as String,
+          if (studentData['student']!['middleName'] != null)
+            'middleName': studentData['student']!['middleName'] as String,
+        };
+      }
+
       return Response.ok(jsonEncode({
         'status': 'success',
         'message': 'Task found',
         'task': {
           'task_id': task.id,
-          'subject_id': task.subjectId,
-          'teacher_id': task.teacherId,
-          'student_id': task.studentId,
-          'group_id': task.groupId,
-          'subgroup_id': task.subgroupId,
+          'subject': subject,
+          'teacher': teacher,
+          if (task.studentId != null) 'student': student,
+          if (task.groupId != null) 'group': group,
+          if (task.subgroupId != null) 'subgroup': subgroup,
           'content': task.content,
           'deadline_type': task.deadlineType.toString().split('.').last,
           'deadline': task.deadline?.toIso8601String(),
-          'tags': task.tags
-              ?.map((e) => {
-                    'tag_id': e.id,
-                    'name': e.name,
-                  })
-              .toList(),
-          'files': task.files
-              ?.map((e) => {
-                    'file_id': e.id,
-                    'user_id': e.userId,
-                    'name': e.name,
-                    'file_url': e.url,
-                    'size': e.size,
-                    'created_at': e.createdAt.toIso8601String(),
-                  })
-              .toList(),
         },
       }));
     });
@@ -350,11 +415,11 @@ class TasksRoute {
 
     /// GET TEACHER TASKS
 
-    router.get('/teacher/', (Request req) async {
+    router.get('/teacher/<day>', (Request req, String day) async {
       final userIdString = req.context['user_id'] as String;
 
       final userId = int.parse(userIdString);
-
+      final accessToken = req.context['access_token'];
       final int teacherId;
       try {
         teacherId = await taskRepository.getTeacherIdFromUserId(userId);
@@ -362,40 +427,108 @@ class TasksRoute {
         return Response.badRequest(body: 'Teacher not found in database  $e');
       }
 
-      final tasks = await taskRepository.getTasksByTeacherId(teacherId);
+      final tasksData = await taskRepository.getTasksDayByTeacher(
+        DateTime.parse(day),
+        teacherId,
+      );
+
+      final tasks = [];
+
+      for (var task in tasksData) {
+        late final Map<String, dynamic> subject;
+        try {
+          final subjectResponse = await dio.Dio().get(
+              'http://${scheduleServiceHost()}:${scheduleServicePort()}/subjects/${task.subjectId}?access_token=$accessToken');
+          final subjectData =
+              jsonDecode(subjectResponse.data) as Map<String, dynamic>;
+          subject = <String, dynamic>{
+            'id': subjectData['subject']!['id'] as int,
+            'name': subjectData['subject']!['name'] as String,
+          };
+        } catch (e) {
+          developer.log('Error while getting subject from schedule service',
+              error: e);
+        }
+
+        final teacherResponse = await dio.Dio().get(
+            'http://${scheduleServiceHost()}:${scheduleServicePort()}/teachers/${teacherId}?access_token=$accessToken');
+
+        final teacherData =
+            jsonDecode(teacherResponse.data) as Map<String, dynamic>;
+
+        final teacher = <String, dynamic>{
+          'user_id': teacherData['teacher']!['user_id'] as int,
+          'teacher_id': teacherData['teacher']!['id'] as int,
+          'firstName': teacherData['teacher']!['first_name'] as String,
+          'secondName': teacherData['teacher']!['second_name'] as String,
+          if (teacherData['teacher']!['middle_name'] != null)
+            'middleName': teacherData['teacher']!['middle_name'] as String,
+        };
+
+        late final Map<String, dynamic> group;
+        if (task.groupId != null) {
+          final groupResponse = await dio.Dio().get(
+              'http://${scheduleServiceHost()}:${scheduleServicePort()}/groups/${task.groupId}?access_token=$accessToken');
+
+          final groupData =
+              jsonDecode(groupResponse.data) as Map<String, dynamic>;
+
+          group = <String, dynamic>{
+            'id': groupData['Group']!['id'] as int,
+            'name': groupData['Group']!['name'] as String,
+          };
+        }
+
+        late final Map<String, dynamic> subgroup;
+        if (task.subgroupId != null) {
+          final subgroupResponse = await dio.Dio().get(
+              'http://${scheduleServiceHost()}:${scheduleServicePort()}/subgroups/${task.subgroupId}?access_token=$accessToken');
+
+          final subgroupData =
+              jsonDecode(subgroupResponse.data) as Map<String, dynamic>;
+
+          subgroup = <String, dynamic>{
+            'id': subgroupData['subgroup']!['id'] as int,
+            'name': subgroupData['subgroup']!['name'] as String,
+          };
+        }
+
+        late final Map<String, dynamic> student;
+
+        if (task.studentId != null) {
+          final studentResponse = await dio.Dio().get(
+              'http://${scheduleServiceHost()}:${scheduleServicePort()}/students/${task.studentId}?access_token=$accessToken');
+
+          final studentData =
+              jsonDecode(studentResponse.data) as Map<String, dynamic>;
+
+          student = <String, dynamic>{
+            'user_id': studentData['student']!['user_id'] as int,
+            'id': studentData['student']!['id'] as int,
+            'firstName': studentData['student']!['firstName'] as String,
+            'secondName': studentData['student']!['secondName'] as String,
+            if (studentData['student']!['middleName'] != null)
+              'middleName': studentData['student']!['middleName'] as String,
+          };
+        }
+
+        tasks.add({
+          'task_id': task.id,
+          'subject': subject,
+          'teacher': teacher,
+          if (task.groupId != null) 'group': group,
+          if (task.subgroupId != null) 'subgroup': subgroup,
+          if (task.studentId != null) 'student': student,
+          'content': task.content,
+          'deadline_type': task.deadlineType.toString().split('.').last,
+          'deadline': task.deadline?.toIso8601String(),
+        });
+      }
 
       return Response.ok(jsonEncode({
         'status': 'success',
         'message': 'Task found',
-        'tasks': tasks
-            .map((e) => {
-                  'task_id': e.id,
-                  'subject_id': e.subjectId,
-                  'teacher_id': e.teacherId,
-                  'student_id': e.studentId,
-                  'group_id': e.groupId,
-                  'subgroup_id': e.subgroupId,
-                  'content': e.content,
-                  'deadline_type': e.deadlineType.toString().split('.').last,
-                  'deadline': e.deadline?.toIso8601String(),
-                  'tags': e.tags
-                      ?.map((e) => {
-                            'tag_id': e.id,
-                            'name': e.name,
-                          })
-                      .toList(),
-                  'files': e.files
-                      ?.map((e) => {
-                            'file_id': e.id,
-                            'user_id': e.userId,
-                            'name': e.name,
-                            'file_url': e.url,
-                            'size': e.size,
-                            'created_at': e.createdAt.toIso8601String(),
-                          })
-                      .toList(),
-                })
-            .toList(),
+        'tasks': tasks,
       }));
     });
 
