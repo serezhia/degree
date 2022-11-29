@@ -17,7 +17,7 @@ class LessonPanelCubit extends Cubit<LessonPanelState> {
   final CabinetRepository cabinetRepository;
 
   Future<List<LessonType>> getLessonTypesForField() async =>
-      lessonTypes = await lessonTypeRepository.getLessonTypes();
+      lessonTypeRepository.getLessonTypes();
 
   Future<LessonType> addLessonType(String name) async {
     final lessonType = await lessonTypeRepository.addLessonType(name);

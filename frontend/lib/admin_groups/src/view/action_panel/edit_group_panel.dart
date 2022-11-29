@@ -13,7 +13,6 @@ class EditGroupActionPanel extends StatelessWidget {
     final numberSubgroupGroup = TextEditingController()
       ..text = group.subgroups!.length.toString(); // Исправить нулл
 
-    final groupsList = context.read<GroupsPageCubit>();
     return ActionPanel(
       leading: ActionPanelItem(
         icon: Icons.arrow_back,
@@ -65,7 +64,7 @@ class EditGroupActionPanel extends StatelessWidget {
           )
         ],
       ),
-      actions: [
+      actions: const [
         // ActionPanelItem(
         //   icon: Icons.add,
         //   onTap: () {

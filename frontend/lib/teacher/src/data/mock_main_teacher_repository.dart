@@ -80,23 +80,4 @@ class MockMainTeacherRepository implements MainTeacherRepository {
             .whereType<Teacher>()
             .firstWhere((element) => element.teacherId == teacherId),
       );
-
-  @override
-  Future<List<Lesson>> getLessonsByTeacherOnDay(
-    int teacherId,
-    DateTime date,
-  ) =>
-      Future.delayed(const Duration(seconds: 2), () {
-        final lessons = <Lesson>[];
-        for (final lesson in mockLessonList) {
-          if (lesson.teacher.teacherId == teacherId &&
-              lesson.date.day == date.day &&
-              lesson.date.month == date.month &&
-              lesson.date.year == date.year) {
-            lessons.add(lesson);
-          }
-        }
-        lessons.sort((a, b) => a.numberLesson.compareTo(b.numberLesson));
-        return lessons;
-      });
 }

@@ -27,10 +27,6 @@ abstract class MainTeacherRepository {
     int teacherId,
     DateTimeRange week,
   );
-  Future<List<Lesson>> getLessonsByTeacherOnDay(
-    int teacherId,
-    DateTime day,
-  );
 
   Future<Lesson> getLesson(int id);
 }

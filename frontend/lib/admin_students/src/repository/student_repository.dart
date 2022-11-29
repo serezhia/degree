@@ -1,5 +1,4 @@
 import 'package:degree_app/admin_groups/admin_groups.dart';
-import 'package:degree_app/admin_groups/src/model/subgroup_model.dart';
 
 import '../../admin_students.dart';
 

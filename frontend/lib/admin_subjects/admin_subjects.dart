@@ -6,8 +6,6 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 
 export 'src/cubit/action_panel/subject_panel_cubit.dart';
 export 'src/cubit/page/subjects_page_cubit.dart';
-export 'src/data/mock_subject_repository.dart';
-export 'src/data/mock_subjects.dart';
 export 'src/model/subject_model.dart';
 export 'src/model/subject_model.dart';
 export 'src/repository/subject_repository.dart';

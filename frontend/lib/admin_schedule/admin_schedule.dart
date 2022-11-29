@@ -6,7 +6,6 @@ export 'package:degree_app/admin_teachers/admin_teachers.dart';
 export 'package:degree_app/admin_teachers/admin_teachers.dart';
 export 'package:json_annotation/json_annotation.dart';
 
-export 'src/data/mock_lesson_types.dart';
 export 'src/data/mock_lessons.dart';
 export 'src/model/lesson_model.dart';
 export 'src/model/lesson_model.dart';
