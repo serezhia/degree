@@ -184,4 +184,19 @@ class PostgreTeacherDataSource extends TeacherRepository {
             ))
         .toList());
   }
+
+  @override
+  Future<Teacher> getTeacherByUserId(int userId) async {
+    return await connection.query('''
+    SELECT * FROM teachers WHERE user_id = @id;
+  ''', substitutionValues: {
+      'id': userId,
+    }).then((value) => Teacher(
+          id: value.first[0] as int,
+          userId: value.first[1] as int,
+          firstName: value.first[2] as String,
+          secondName: value.first[3] as String,
+          middleName: value.first[4] as String?,
+        ));
+  }
 }

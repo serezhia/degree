@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:schedule_service/schedule_service.dart';
 
 class LessonsRoute {
@@ -619,51 +620,113 @@ class LessonsRoute {
       }));
     });
     router.get('/day/<day>', (Request req, String day) async {
-      final data = await lessonRepository.getLessonsByDay(DateTime.parse(day));
+      final role = req.context['role'];
+      final accessToken = req.context['access_token'] as String;
+      final userId = JwtDecoder.decode(accessToken)['sub'] as String;
 
+      final data = await lessonRepository.getLessonsByDay(DateTime.parse(day));
       var lessons = <Map<String, Object>>[];
-      for (var e in data) {
-        final lesson = {
-          'lesson_id': e.lessonId,
-          if (e.groupId != null)
-            'group': {
-              'id': e.groupId,
-              'name': (await groupRepository.getGroup(e.groupId!)).name,
+      if (role == 'teacher') {
+        final teacher =
+            await teacherRepository.getTeacherByUserId(int.parse(userId));
+        for (var e in data) {
+          if (e.teacherId == teacher.id) {
+            final lesson = {
+              'lesson_id': e.lessonId,
+              if (e.groupId != null)
+                'group': {
+                  'id': e.groupId,
+                  'name': (await groupRepository.getGroup(e.groupId!)).name,
+                },
+              if (e.subgroupId != null)
+                'subgroup': {
+                  'id': e.subgroupId,
+                  'name': (await subgroupRepository.getSubgroup(e.subgroupId!))
+                      .name,
+                },
+              'subject': {
+                'id': e.subjectId,
+                'name': (await subjectRepository.getSubject(e.subjectId)).name,
+              },
+              'teacher': {
+                'userId':
+                    (await teacherRepository.getTeacher(e.teacherId)).userId,
+                'teacherId': e.teacherId,
+                'firstName':
+                    (await teacherRepository.getTeacher(e.teacherId)).firstName,
+                'secondName': (await teacherRepository.getTeacher(e.teacherId))
+                    .secondName,
+                if ((await teacherRepository.getTeacher(e.teacherId))
+                        .middleName !=
+                    null)
+                  'middleName':
+                      (await teacherRepository.getTeacher(e.teacherId))
+                          .middleName,
+              },
+              'cabinet': {
+                'id': e.cabinetId,
+                'number':
+                    (await cabinetRepository.getCabinet(e.cabinetId)).number,
+              },
+              'lessonType': {
+                'id': e.lessonTypeId,
+                'name':
+                    (await lessonRepository.getLessonType(e.lessonTypeId)).name,
+              },
+              'lessonNumber': e.lessonNumber,
+              'day': e.day.toIso8601String(),
+            };
+            lessons.add(lesson);
+          }
+        }
+      } else {
+        for (var e in data) {
+          final lesson = {
+            'lesson_id': e.lessonId,
+            if (e.groupId != null)
+              'group': {
+                'id': e.groupId,
+                'name': (await groupRepository.getGroup(e.groupId!)).name,
+              },
+            if (e.subgroupId != null)
+              'subgroup': {
+                'id': e.subgroupId,
+                'name':
+                    (await subgroupRepository.getSubgroup(e.subgroupId!)).name,
+              },
+            'subject': {
+              'id': e.subjectId,
+              'name': (await subjectRepository.getSubject(e.subjectId)).name,
             },
-          if (e.subgroupId != null)
-            'subgroup': {
-              'id': e.subgroupId,
+            'teacher': {
+              'userId':
+                  (await teacherRepository.getTeacher(e.teacherId)).userId,
+              'teacherId': e.teacherId,
+              'firstName':
+                  (await teacherRepository.getTeacher(e.teacherId)).firstName,
+              'secondName':
+                  (await teacherRepository.getTeacher(e.teacherId)).secondName,
+              if ((await teacherRepository.getTeacher(e.teacherId))
+                      .middleName !=
+                  null)
+                'middleName': (await teacherRepository.getTeacher(e.teacherId))
+                    .middleName,
+            },
+            'cabinet': {
+              'id': e.cabinetId,
+              'number':
+                  (await cabinetRepository.getCabinet(e.cabinetId)).number,
+            },
+            'lessonType': {
+              'id': e.lessonTypeId,
               'name':
-                  (await subgroupRepository.getSubgroup(e.subgroupId!)).name,
+                  (await lessonRepository.getLessonType(e.lessonTypeId)).name,
             },
-          'subject': {
-            'id': e.subjectId,
-            'name': (await subjectRepository.getSubject(e.subjectId)).name,
-          },
-          'teacher': {
-            'userId': (await teacherRepository.getTeacher(e.teacherId)).userId,
-            'teacherId': e.teacherId,
-            'firstName':
-                (await teacherRepository.getTeacher(e.teacherId)).firstName,
-            'secondName':
-                (await teacherRepository.getTeacher(e.teacherId)).secondName,
-            if ((await teacherRepository.getTeacher(e.teacherId)).middleName !=
-                null)
-              'middleName':
-                  (await teacherRepository.getTeacher(e.teacherId)).middleName,
-          },
-          'cabinet': {
-            'id': e.cabinetId,
-            'number': (await cabinetRepository.getCabinet(e.cabinetId)).number,
-          },
-          'lessonType': {
-            'id': e.lessonTypeId,
-            'name': (await lessonRepository.getLessonType(e.lessonTypeId)).name,
-          },
-          'lessonNumber': e.lessonNumber,
-          'day': e.day.toIso8601String(),
-        };
-        lessons.add(lesson);
+            'lessonNumber': e.lessonNumber,
+            'day': e.day.toIso8601String(),
+          };
+          lessons.add(lesson);
+        }
       }
 
       return Response.ok(jsonEncode({

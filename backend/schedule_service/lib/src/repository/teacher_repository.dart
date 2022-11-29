@@ -16,6 +16,8 @@ abstract class TeacherRepository {
 
   Future<List<Teacher>> getAllTeachers();
 
+  Future<Teacher> getTeacherByUserId(int userId);
+
   Future<void> deleteTeacher(int idTeacher);
 
   Future<List<Teacher>> getTeachersBySubject(int idSubject);
