@@ -14,16 +14,13 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) => Lesson(
           LessonType.fromJson(json['lessonType'] as Map<String, dynamic>),
       numberLesson: json['numberLesson'] as int,
       date: DateTime.parse(json['date'] as String),
-      cabinet: json['cabinet'] as int,
+      cabinet: Cabinet.fromJson(json['cabinet'] as Map<String, dynamic>),
       group: json['group'] == null
           ? null
           : Group.fromJson(json['group'] as Map<String, dynamic>),
       subgroup: json['subgroup'] == null
           ? null
           : Subgroup.fromJson(json['subgroup'] as Map<String, dynamic>),
-      student: json['student'] == null
-          ? null
-          : Student.fromJson(json['student'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LessonToJson(Lesson instance) => <String, dynamic>{
@@ -36,5 +33,4 @@ Map<String, dynamic> _$LessonToJson(Lesson instance) => <String, dynamic>{
       'cabinet': instance.cabinet,
       'group': instance.group,
       'subgroup': instance.subgroup,
-      'student': instance.student,
     };

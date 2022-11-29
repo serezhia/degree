@@ -1,3 +1,5 @@
+import 'package:degree_app/admin_schedule/src/model/cabinet_model.dart';
+
 import '../../admin_schedule.dart';
 
 part 'lesson_model.g.dart';
@@ -10,10 +12,9 @@ class Lesson {
   final LessonType lessonType;
   final int numberLesson;
   final DateTime date;
-  final int cabinet;
+  final Cabinet cabinet;
   final Group? group;
   final Subgroup? subgroup;
-  final Student? student;
 
   Lesson({
     required this.id,
@@ -25,7 +26,6 @@ class Lesson {
     required this.cabinet,
     this.group,
     this.subgroup,
-    this.student,
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);

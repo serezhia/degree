@@ -53,7 +53,7 @@ class ScheduleList extends StatelessWidget {
                         onTap: () {
                           context.read<ActionPanelCubit>().openLessonPanel();
                           context.read<LessonPanelCubit>().getLesson(
-                                index,
+                                state.lessons[index].id,
                               );
                         },
                         child: Container(
@@ -107,16 +107,6 @@ class ScheduleList extends StatelessWidget {
                                           null)
                                         Text(
                                           '${state.lessons[index].subgroup?.name}',
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      if (state.lessons[index].student
-                                              ?.firstName !=
-                                          null)
-                                        Text(
-                                          '''${state.lessons[index].student?.secondName} ${state.lessons[index].student?.firstName} ${state.lessons[index].student?.middleName}''',
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,

@@ -1,3 +1,6 @@
+import 'package:degree_app/admin_schedule/src/model/cabinet_model.dart';
+import 'package:degree_app/admin_schedule/src/repository/cabinet_repository.dart';
+
 import '../../../admin_schedule.dart';
 
 part 'lesson_panel_state.dart';
@@ -5,9 +8,29 @@ part 'lesson_panel_state.dart';
 class LessonPanelCubit extends Cubit<LessonPanelState> {
   LessonPanelCubit(
     this.lessonRepository,
+    this.lessonTypeRepository,
+    this.cabinetRepository,
   ) : super(EmptyLessonPanelState());
 
   final LessonRepository lessonRepository;
+  final LessonTypeRepository lessonTypeRepository;
+  final CabinetRepository cabinetRepository;
+
+  Future<List<LessonType>> getLessonTypesForField() async =>
+      lessonTypes = await lessonTypeRepository.getLessonTypes();
+
+  Future<LessonType> addLessonType(String name) async {
+    final lessonType = await lessonTypeRepository.addLessonType(name);
+    return lessonType;
+  }
+
+  Future<List<Cabinet>> getCabinetsForField() async =>
+      cabinetRepository.getCabinets();
+
+  Future<Cabinet> addCabinet(int number) async {
+    final cabinet = await cabinetRepository.addCabinet(number);
+    return cabinet;
+  }
 
   Future<void> openAddPanel() async {
     emit(AddLessonPanelState());
@@ -18,30 +41,28 @@ class LessonPanelCubit extends Cubit<LessonPanelState> {
   }
 
   Future<void> addLesson({
-    required int subjectId,
+    required Subject subject,
     required int numberLesson,
     required DateTime date,
     required LessonType lessonType,
-    required int cabinetNumberm,
-    required int teacherId,
-    int? groupId,
-    int? studentId,
-    int? subgroupId,
+    required Cabinet cabinet,
+    required Teacher teacher,
+    Group? group,
+    Subgroup? subgroup,
   }) async {
     emit(LoadingLessonPanelState());
     try {
       emit(
         InfoLessonPanelState(
           lesson: await lessonRepository.addLesson(
-            subjectId: subjectId,
-            teacherId: teacherId,
+            subject: subject,
+            teacher: teacher,
             lessonType: lessonType,
             numberLesson: numberLesson,
             date: date,
-            cabinetNumber: cabinetNumberm,
-            groupId: groupId,
-            studentId: studentId,
-            subgroupId: subgroupId,
+            cabinet: cabinet,
+            group: group,
+            subgroup: subgroup,
           ),
         ),
       );

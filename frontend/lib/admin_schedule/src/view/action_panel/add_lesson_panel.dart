@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:degree_app/admin/cubit/pages/schedule/schedule_page_cubit.dart';
 import 'package:degree_app/admin_schedule/admin_schedule.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
+import 'package:degree_app/admin_schedule/src/model/cabinet_model.dart';
 import 'package:degree_app/degree_ui/inputform/dropdown_text_field.dart';
 import 'package:degree_app/degree_ui/utils/datetime_utils/date_time_utils.dart';
 import 'package:flutter/services.dart';
@@ -22,13 +23,28 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
   final subjectController = TextEditingController();
   final lessonNumberController = TextEditingController();
   final lessonTypeController = TextEditingController();
-  final lessonRoomController = TextEditingController();
+  final cabinetController = TextEditingController();
   final lessonDateController = TextEditingController();
   final lessonGroupController = TextEditingController();
   final lessonSubgroupController = TextEditingController();
   final lessonStudentController = TextEditingController();
 
   int currentIndex = 0;
+  Future<List<DropDownItemDegree>> getItemsLessonTypes() async {
+    log('Обновляем список типов урока ');
+    final cubit = context.read<LessonPanelCubit>();
+    final lessonTypes = await cubit.getLessonTypesForField();
+    return lessonTypes
+        .map(
+          (e) => DropDownItemDegree(
+            value: e,
+            text: e.name,
+          ),
+        )
+        .toList();
+  }
+
+  DropDownItemDegree? pickedLessonType;
 
   Future<List<DropDownItemDegree>> getItemsSubject() async {
     log('Обновляем списокпредметов ');
@@ -78,17 +94,27 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
 
   DropDownItemDegree? pickedGroup;
 
+  Future<List<DropDownItemDegree>> getItemsCabinet() async {
+    log('Обновляем список кабинетов');
+    final cubit = context.read<LessonPanelCubit>();
+    final cabintes = await cubit.getCabinetsForField();
+    return cabintes
+        .map(
+          (e) => DropDownItemDegree(
+            value: e,
+            text: e.number.toString(),
+          ),
+        )
+        .toList();
+  }
+
+  DropDownItemDegree? pickedCabinet;
+
   Future<List<DropDownItemDegree>> getItemsSubgroup() async {
     log('Обновляем список подгрупп');
     final cubit = context.read<GroupsPageCubit>();
-    final groups = await cubit.getGroupsForField();
-    final subgroups = <Subgroup>[];
-    for (final group in groups) {
-      final groupSubgroups = group.subgroups;
-      if (groupSubgroups != null) {
-        subgroups.addAll(groupSubgroups);
-      }
-    }
+    final subgroups = await cubit.getSubgroupsForField();
+
     return subgroups
         .map(
           (e) => DropDownItemDegree(
@@ -206,20 +232,57 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
                           DateTextFormatter(),
                         ],
                       ),
-                      TextFieldDegree(
-                        textEditingController: lessonTypeController,
-                        textFieldText: 'Тип урока',
-                        obscureText: false,
-                        maxlines: 1,
+                      DropDownTextFieldDegree(
+                        controller: lessonTypeController,
+                        nameField: 'Тип урока',
+                        getItems: getItemsLessonTypes,
+                        createItem: () {
+                          log('Сработало добавить тип урока');
+                          context
+                              .read<LessonPanelCubit>()
+                              .addLessonType(lessonTypeController.text)
+                              .then((value) {
+                            pickedLessonType = DropDownItemDegree(
+                              value: value,
+                              text: value.name,
+                            );
+                          });
+                        },
+                        onTapItem: (value) {
+                          lessonTypeController.text = value.text;
+                          pickedLessonType = DropDownItemDegree(
+                            value: value.value,
+                            text: value.text,
+                          );
+                          log('pickedLessonType ${pickedLessonType?.text}');
+                        },
+                        pickedItem: pickedLessonType,
                       ),
-                      TextFieldDegree(
-                        textEditingController: lessonRoomController,
-                        textFieldText: 'Кабинет',
-                        obscureText: false,
-                        maxlines: 1,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
+                      DropDownTextFieldDegree(
+                        controller: cabinetController,
+                        nameField: 'Кабинет',
+                        getItems: getItemsCabinet,
+                        createItem: () {
+                          log('Сработало добавить кабинет');
+                          context
+                              .read<LessonPanelCubit>()
+                              .addCabinet(int.parse(cabinetController.text))
+                              .then((value) {
+                            pickedCabinet = DropDownItemDegree(
+                              value: value,
+                              text: value.number.toString(),
+                            );
+                          });
+                        },
+                        onTapItem: (value) {
+                          cabinetController.text = value.text;
+                          pickedCabinet = DropDownItemDegree(
+                            value: value.value,
+                            text: value.text,
+                          );
+                          log('pickedCabinet ${pickedCabinet?.text}');
+                        },
+                        pickedItem: pickedCabinet,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -231,9 +294,6 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
                               ),
                               ToggleItem(
                                 lable: 'Подгруппе',
-                              ),
-                              ToggleItem(
-                                lable: 'Студенту',
                               ),
                             ],
                             currentIndex: currentIndex,
@@ -283,25 +343,6 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
                           },
                           pickedItem: pickedSubgroup,
                         ),
-                      if (currentIndex == 2)
-                        DropDownTextFieldDegree(
-                          controller: lessonStudentController,
-                          nameField: 'Студент',
-                          getItems: getItemsStudent,
-                          onTapItem: (value) {
-                            lessonStudentController.text = value.text;
-                            pickedStudent = DropDownItemDegree(
-                              value: value.value,
-                              text: value.text,
-                            );
-                            log('pickedStudent ${pickedStudent?.text}');
-                            pickedGroup = null;
-                            lessonGroupController.text = '';
-                            pickedSubgroup = null;
-                            lessonSubgroupController.text = '';
-                          },
-                          pickedItem: pickedStudent,
-                        ),
                     ],
                   ),
                 ),
@@ -315,15 +356,14 @@ class _AddLessonActionPanelState extends State<AddLessonActionPanel> {
             onTap: () {
               final date = DateFormat('d-M-y').parse(lessonDateController.text);
               context.read<LessonPanelCubit>().addLesson(
-                    subjectId: (pickedSubject!.value as Subject).id,
+                    subject: pickedSubject!.value as Subject,
                     numberLesson: int.parse(lessonNumberController.text),
                     date: date,
-                    lessonType: LessonType(id: 0, name: 'Лекция'),
-                    cabinetNumberm: int.parse(lessonRoomController.text),
-                    teacherId: (pickedTeacher!.value as Teacher).teacherId,
-                    groupId: (pickedGroup?.value as Group?)?.id,
-                    subgroupId: (pickedSubgroup?.value as Subgroup?)?.id,
-                    studentId: (pickedStudent?.value as Student?)?.studentId,
+                    lessonType: pickedLessonType!.value as LessonType,
+                    cabinet: pickedCabinet!.value as Cabinet,
+                    teacher: pickedTeacher!.value as Teacher,
+                    group: pickedGroup?.value as Group?,
+                    subgroup: pickedSubgroup?.value as Subgroup?,
                   );
               context
                   .read<SchedulesPageCubit>()

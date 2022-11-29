@@ -1,6 +1,6 @@
 import '../../teacher.dart';
 
-part './group_model.g.dart';
+part 'group_model.g.dart';
 
 @JsonSerializable()
 class Group {

@@ -12,7 +12,9 @@ import 'package:degree_app/admin_groups/src/data/main_subgroup_repository.dart';
 import 'package:degree_app/admin_profile/admin_profile.dart';
 import 'package:degree_app/admin_schedule/src/cubit/action_panel/lesson_panel_cubit.dart';
 import 'package:degree_app/admin_schedule/src/cubit/page/schedules_page_cubit.dart';
-import 'package:degree_app/admin_schedule/src/data/mock_lessons_repository.dart';
+import 'package:degree_app/admin_schedule/src/data/main_cabinet_repository.dart';
+import 'package:degree_app/admin_schedule/src/data/main_lesson_repository.dart';
+import 'package:degree_app/admin_schedule/src/data/main_lesson_type_repository.dart';
 import 'package:degree_app/admin_students/admin_students.dart';
 import 'package:degree_app/admin_students/src/data/main_student_repository.dart';
 import 'package:degree_app/admin_subjects/src/data/main_subject_repository.dart';
@@ -61,7 +63,9 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => LessonPanelCubit(
-              MockLessonRepository(),
+              MainLessonRepository(),
+              MainLessonTypeRepository(),
+              MainCabinetRepository(),
             ),
           ),
           BlocProvider(
@@ -102,7 +106,7 @@ class AdminScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SchedulesPageCubit(
-              MockLessonRepository(),
+              MainLessonRepository(),
             ),
           )
         ],
