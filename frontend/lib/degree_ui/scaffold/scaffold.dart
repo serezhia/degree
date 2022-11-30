@@ -9,6 +9,7 @@ class ScaffoldDegree extends StatelessWidget {
     required this.bottomBar,
     this.actionPanel,
     this.isScrollableBody = false,
+    this.disablePaddingInBodyMobile = false,
     super.key,
   });
 
@@ -19,6 +20,7 @@ class ScaffoldDegree extends StatelessWidget {
   final SideBarDegree sideBar;
   final bool isScrollableBody;
   final BottomBarDegree bottomBar;
+  final bool disablePaddingInBodyMobile;
 
   @override
   Widget build(BuildContext context) => MultiProvider(
@@ -68,6 +70,7 @@ class ScaffoldDegree extends StatelessWidget {
                 bottomBar: bottomBar,
                 isScrollableBody: isScrollableBody,
                 actionPanelIsActive: actionPanelIsActive,
+                disablePaddingInBodyMobile: disablePaddingInBodyMobile,
               );
             }
           },
@@ -312,6 +315,7 @@ class MobileCustomScreen extends StatelessWidget {
     required this.sideBar,
     required this.body,
     required this.bottomBar,
+    this.disablePaddingInBodyMobile = false,
     this.actionPanel,
     this.appBar,
     super.key,
@@ -324,7 +328,7 @@ class MobileCustomScreen extends StatelessWidget {
   final bool isScrollableBody;
   final bool actionPanelIsActive;
   final BottomBarDegree bottomBar;
-
+  final bool disablePaddingInBodyMobile;
   @override
   Widget build(BuildContext context) => Scaffold(
         bottomNavigationBar: actionPanel == null ? bottomBar : null,
@@ -344,11 +348,13 @@ class MobileCustomScreen extends StatelessWidget {
                     ),
                   )
                 : Padding(
-                    padding: const EdgeInsets.only(
-                      left: 25,
-                      right: 25,
-                      top: 25,
-                    ),
+                    padding: disablePaddingInBodyMobile
+                        ? EdgeInsets.zero
+                        : const EdgeInsets.only(
+                            left: 25,
+                            right: 25,
+                            top: 25,
+                          ),
                     child: body,
                   )
             : Column(

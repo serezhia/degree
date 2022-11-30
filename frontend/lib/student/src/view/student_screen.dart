@@ -1,7 +1,10 @@
 import 'package:degree_app/notification/notification.dart';
 import 'package:degree_app/student/src/cubit/pages/schedule/schedule_page_cubit.dart';
+import 'package:degree_app/student/src/cubit/pages/task/task_page_cubit.dart';
 import 'package:degree_app/student/src/data/main_student_data_source.dart';
 import 'package:degree_app/student_profile/student_profile.dart';
+import 'package:degree_app/student_task/src/data/main_student_task_data_source.dart';
+import 'package:degree_app/student_task/student_task.dart';
 
 class StudentScreenProvider extends StatelessWidget {
   const StudentScreenProvider({super.key});
@@ -26,6 +29,11 @@ class StudentScreenProvider extends StatelessWidget {
             create: (context) => ProfilePanelCubit(),
           ),
           BlocProvider(
+            create: (context) => TaskPanelCubit(
+              MainTaskDataSource(),
+            ),
+          ),
+          BlocProvider(
             create: (context) => PageCubit(),
           ),
           BlocProvider(
@@ -35,6 +43,14 @@ class StudentScreenProvider extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SchedulePageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => TaskPageCubit(),
+          ),
+          BlocProvider(
+            create: (context) => TasksPageCubit(
+              MainTaskDataSource(),
+            ),
           ),
         ],
         child: MultiProvider(
