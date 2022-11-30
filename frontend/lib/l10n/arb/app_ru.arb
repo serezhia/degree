@@ -39,5 +39,47 @@
 
     "getUrlLoadingText": "Подключаемся к колледжу ==>",
 
-    "logOutLoadingText": "Заходите еще :)"
+    "logOutLoadingText": "Заходите еще :)",
+
+    "leadingTitleStudent": "Студент",
+
+    "sideBarTitleSchedule": "Расписание",
+
+    "sideBarTitleTasks": "Задачи",
+
+    "toggleTitleCurrent": "Текущие",
+
+    "toggleTitleCompleted": "Выполненные",
+
+    "errorText": "Ошибка",
+
+    "slidableActionCompletedText": "Выполнено",
+
+    "taskListEmpty": "Список задач пуст",
+
+    "infoActionPanelText": "Информация о задании",
+
+    "infoActionPanelDeadlineText": "День сдачи ",
+
+    "infoActionPanelSubjectText": "Предмет ",
+
+    "infoActionPanelTeacherText": "Преподаватель ",
+
+    "infoActionPanelGroupText": "Группа ",
+
+    "infoActionPanelSubgroupText": "Подгруппа ",
+
+    "infoActionPanelStudentText": "Студент ",
+
+    "infoActionPanelContentText": "Содержание ",
+
+    "profileActionPanelTitle": "Профиль",
+
+    "profileActionPanelPasswordText": "Пароль",
+
+    "profileActionPanelLoginText": "Логин",
+
+    "profileActionPanelSettingsText": "Настройки",
+
+    "profileActionPanelChangeText": "Изменить"
 }

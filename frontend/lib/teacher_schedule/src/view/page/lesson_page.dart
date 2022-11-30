@@ -23,7 +23,7 @@ class LessonsList extends StatelessWidget {
         } else if (state is SchedulesPageLoaded) {
           List<Widget> generateLessonsDay(BoxConstraints constraints) {
             final lessonsDay = <Widget>[];
-            for (var i = 0; i < state.lessons.length; i++) {
+            for (var i = 0; i < 7; i++) {
               final lessons = state.lessons
                   .where(
                     (element) =>

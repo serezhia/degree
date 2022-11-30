@@ -39,5 +39,47 @@
 
     "getUrlLoadingText": "Connecting to your college ==>",
 
-    "logOutLoadingText": "Disconnecting from your account"
+    "logOutLoadingText": "Disconnecting from your account",
+
+    "leadingTitleStudent": "Student",
+
+    "sideBarTitleSchedule": "Schedule",
+
+    "sideBarTitleTasks": "Tasks",
+
+    "toggleTitleCurrent": "Current",
+
+    "toggleTitleCompleted": "Completed",
+
+    "errorText": "Error",
+
+    "slidableActionCompletedText": "Completed",
+
+    "taskListEmpty": "Task list is empty",
+
+    "infoActionPanelText": "Task infomation",
+
+    "infoActionPanelDeadlineText": "Deadline day ",
+
+    "infoActionPanelSubjectText": "Subject ",
+
+    "infoActionPanelTeacherText": "Teacher ",
+
+    "infoActionPanelGroupText": "Group ",
+
+    "infoActionPanelSubgroupText": "Subgroup ",
+
+    "infoActionPanelStudentText": "Student ",
+
+    "infoActionPanelContentText": "Content ",
+
+    "profileActionPanelTitle": "Profile",
+
+    "profileActionPanelPasswordText": "Password",
+
+    "profileActionPanelLoginText": "Login",
+
+    "profileActionPanelSettingsText": "Settings",
+
+    "profileActionPanelChangeText": "Change"
 }

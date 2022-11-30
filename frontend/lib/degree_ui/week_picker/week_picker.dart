@@ -20,6 +20,7 @@ class WeekPickerDegree extends StatefulWidget {
 class _WeekPickerDegreeState extends State<WeekPickerDegree> {
   @override
   Widget build(BuildContext context) {
+    final tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
     if (MediaQuery.of(context).size.width < 700) {
       return Expanded(
         child: Container(
@@ -43,7 +44,7 @@ class _WeekPickerDegreeState extends State<WeekPickerDegree> {
               ),
               Expanded(
                 child: Text(
-                  '''${DateFormat.d().format(widget.currentDateTimeRange.start)} ${DateFormat.MMMM().format(widget.currentDateTimeRange.start)} - ${DateFormat.d().format(widget.currentDateTimeRange.end)} ${DateFormat.MMMM().format(widget.currentDateTimeRange.end)}''',
+                  '''${DateFormat.d(tag).format(widget.currentDateTimeRange.start)} ${DateFormat.MMMM(tag).format(widget.currentDateTimeRange.start)} - ${DateFormat.d(tag).format(widget.currentDateTimeRange.end)} ${DateFormat.MMMM(tag).format(widget.currentDateTimeRange.end)}''',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
@@ -95,7 +96,7 @@ class _WeekPickerDegreeState extends State<WeekPickerDegree> {
             ),
             Expanded(
               child: Text(
-                '''${DateFormat.d().format(widget.currentDateTimeRange.start)} ${DateFormat.MMMM().format(widget.currentDateTimeRange.start)} - ${DateFormat.d().format(widget.currentDateTimeRange.end)} ${DateFormat.MMMM().format(widget.currentDateTimeRange.end)}''',
+                '''${DateFormat.d(tag).format(widget.currentDateTimeRange.start)} ${DateFormat.MMMM(tag).format(widget.currentDateTimeRange.start)} - ${DateFormat.d(tag).format(widget.currentDateTimeRange.end)} ${DateFormat.MMMM(tag).format(widget.currentDateTimeRange.end)}''',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 16,

@@ -1,6 +1,7 @@
+import 'package:degree_app/l10n/l10n.dart';
 import 'package:degree_app/student/src/cubit/pages/task/task_page_cubit.dart';
-import 'package:degree_app/student_task/src/view/page/task_page.dart';
 import 'package:degree_app/student_task/src/cubit/page/tasks_page_cubit.dart';
+import 'package:degree_app/student_task/src/view/page/task_page.dart';
 
 import '../../../student.dart';
 
@@ -13,8 +14,12 @@ class TaskPage extends StatelessWidget {
             children: [
               ToggleDegree(
                 items: [
-                  ToggleItem(lable: 'Текущие'),
-                  ToggleItem(lable: 'Выполненные'),
+                  ToggleItem(
+                    lable: AppLocalizations.of(context).toggleTitleCurrent,
+                  ),
+                  ToggleItem(
+                    lable: AppLocalizations.of(context).toggleTitleCompleted,
+                  ),
                 ],
                 currentIndex: context.watch<TaskPageCubit>().currentIndex,
                 onTap: (index) {

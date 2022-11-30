@@ -22,7 +22,7 @@ class StudentList extends StatelessWidget {
         } else if (state is SchedulesPageLoaded) {
           List<Widget> generateLessonsDay(BoxConstraints constraints) {
             final lessonsDay = <Widget>[];
-            for (var i = 0; i < state.lessons.length; i++) {
+            for (var i = 0; i < 7; i++) {
               final lessons = state.lessons
                   .where(
                     (element) =>
@@ -103,6 +103,7 @@ class LessonsDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
     lessons.sort((a, b) => a.numberLesson.compareTo(b.numberLesson));
     return Container(
       padding: const EdgeInsets.all(20),
@@ -115,7 +116,7 @@ class LessonsDay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '''${DateFormat.E().format(lessons.first.date)}, ${DateFormat.d().format(lessons.first.date)} ${DateFormat.MMM().format(lessons.first.date)}''',
+            '''${DateFormat.E(tag).format(lessons.first.date)}, ${DateFormat.d(tag).format(lessons.first.date)} ${DateFormat.MMM(tag).format(lessons.first.date)}''',
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,

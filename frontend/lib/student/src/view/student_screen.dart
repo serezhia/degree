@@ -1,3 +1,4 @@
+import 'package:degree_app/l10n/l10n.dart';
 import 'package:degree_app/notification/notification.dart';
 import 'package:degree_app/student/src/cubit/pages/schedule/schedule_page_cubit.dart';
 import 'package:degree_app/student/src/cubit/pages/task/task_page_cubit.dart';
@@ -74,28 +75,31 @@ class StudentScreen extends StatelessWidget {
                   context.watch<ActionPanelCubit>().state,
                 ),
         sideBar: SideBarDegree(
-          items: const [
+          items: [
             SideBarItem(
               icon: Icons.schedule_outlined,
-              title: 'Расписание',
+              title: AppLocalizations.of(context).sideBarTitleSchedule,
             ),
             SideBarItem(
               icon: Icons.task_outlined,
-              title: 'Задачи',
+              title: AppLocalizations.of(context).sideBarTitleTasks,
             ),
           ],
           currentIndex: context.watch<PageCubit>().state.props[0] as int,
           onTapItem: (index) => context.read<PageCubit>().togglePage(index),
-          leading: const SideBarLeading(
+          leading: SideBarLeading(
             pathLogo: 'assets/logo/logo.svg',
-            title: 'Студент',
+            title: AppLocalizations.of(context).leadingTitleStudent,
           ),
           onTapLeading: context.read<SideBarState>().toggle,
           isExpanded: context.watch<SideBarState>().isExpanded,
         ),
         actionPanel: const ActionPanelBuilder(),
         appBar: AppBarDegree(
-          title: context.watch<PageCubit>().state.props[1] as String,
+          title:
+              context.watch<PageCubit>().state.props[1] as String == 'Schedule'
+                  ? AppLocalizations.of(context).sideBarTitleSchedule
+                  : AppLocalizations.of(context).sideBarTitleTasks,
           actions: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -123,14 +127,14 @@ class StudentScreen extends StatelessWidget {
         ),
         body: const PageBuilder(),
         bottomBar: BottomBarDegree(
-          items: const [
+          items: [
             BottomBarItem(
               icon: Icons.schedule_outlined,
-              title: 'Расписание',
+              title: AppLocalizations.of(context).sideBarTitleSchedule,
             ),
             BottomBarItem(
               icon: Icons.task_outlined,
-              title: 'Задачи',
+              title: AppLocalizations.of(context).sideBarTitleTasks,
             ),
           ],
           currentIndex: context.watch<PageCubit>().state.props[0] as int,

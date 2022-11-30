@@ -1,3 +1,5 @@
+import 'package:degree_app/l10n/l10n.dart';
+
 import '../../../student_task.dart';
 
 class InfoTaskActionPanel extends StatelessWidget {
@@ -16,7 +18,7 @@ class InfoTaskActionPanel extends StatelessWidget {
               );
         },
       ),
-      title: 'Информация о задании',
+      title: AppLocalizations.of(context).infoActionPanelText,
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -30,9 +32,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'День ',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)
+                              .infoActionPanelDeadlineText,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -54,9 +57,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Предмет ',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)
+                              .infoActionPanelSubjectText,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -78,9 +82,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Преподаватель ',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)
+                              .infoActionPanelTeacherText,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -114,9 +119,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Группа ',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)
+                                    .infoActionPanelGroupText,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -143,9 +149,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Подгруппа ',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)
+                                    .infoActionPanelSubgroupText,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -172,9 +179,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'Студент ',
-                                style: TextStyle(
+                              Text(
+                                AppLocalizations.of(context)
+                                    .infoActionPanelStudentText,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -208,9 +216,10 @@ class InfoTaskActionPanel extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text(
-                          'Содержание ',
-                          style: TextStyle(
+                        Text(
+                          AppLocalizations.of(context)
+                              .infoActionPanelContentText,
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),

@@ -1,6 +1,4 @@
-import 'dart:developer' as dev;
-import 'dart:math';
-
+import 'package:degree_app/l10n/l10n.dart';
 import 'package:degree_app/student/src/cubit/pages/task/task_page_cubit.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -18,8 +16,9 @@ class TaskList extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else {
+              context.read<TasksPageCubit>().getCompletedTasks();
               return const Center(
-                child: Text('Нет выполненных заданий'),
+                child: CircularProgressIndicator(),
               );
             }
           } else if (state is TasksPageLoading) {
@@ -27,7 +26,6 @@ class TaskList extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           } else if (state is TasksPageLoaded) {
-            dev.log(state.tasks.toString());
             return Expanded(
               child: state.tasks.isNotEmpty
                   ? LayoutBuilder(
@@ -104,13 +102,13 @@ class TaskList extends StatelessWidget {
                         }
                       },
                     )
-                  : const Center(
-                      child: Text('Нет заданий'),
+                  : Center(
+                      child: Text(AppLocalizations.of(context).taskListEmpty),
                     ),
             );
           } else {
-            return const Center(
-              child: Text('Ошибка'),
+            return Center(
+              child: Text(AppLocalizations.of(context).errorText),
             );
           }
         },
@@ -145,7 +143,8 @@ class TaskCard extends StatelessWidget {
                     backgroundColor: const Color(0xFF000000),
                     foregroundColor: Colors.white,
                     icon: Icons.task,
-                    label: 'Выполнено',
+                    label: AppLocalizations.of(context)
+                        .slidableActionCompletedText,
                   ),
                 ],
               )

@@ -1,3 +1,5 @@
+import 'package:degree_app/l10n/l10n.dart';
+
 import '../../student_profile.dart';
 
 class LoadedProfileActionPanel extends StatelessWidget {
@@ -21,7 +23,7 @@ class LoadedProfileActionPanel extends StatelessWidget {
           },
         ),
       ],
-      title: 'Профиль',
+      title: AppLocalizations.of(context).profileActionPanelTitle,
       body: ColoredBox(
         color: Colors.white,
         child: Padding(
@@ -75,7 +77,7 @@ class ProfileActions extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Логин',
+                    AppLocalizations.of(context).profileActionPanelLoginText,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
@@ -111,7 +113,7 @@ class ProfileActions extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Пароль',
+                    AppLocalizations.of(context).profileActionPanelPasswordText,
                     style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
@@ -126,7 +128,8 @@ class ProfileActions extends StatelessWidget {
                     child: Container(
                       color: Colors.white,
                       child: Text(
-                        'Изменить',
+                        AppLocalizations.of(context)
+                            .profileActionPanelChangeText,
                         style: Theme.of(context).textTheme.headline1,
                         textAlign: TextAlign.right,
                       ),
@@ -154,7 +157,8 @@ class ProfileActions extends StatelessWidget {
                     child: Container(
                       color: Colors.white,
                       child: Text(
-                        'Настройки',
+                        AppLocalizations.of(context)
+                            .profileActionPanelSettingsText,
                         style: Theme.of(context).textTheme.headline1,
                         textAlign: TextAlign.left,
                       ),
