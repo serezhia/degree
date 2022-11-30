@@ -129,7 +129,7 @@ class UsersRoute {
 
       final role = jwt.payload['role'].toString().split('.').last;
 
-      if (role == 'admin' || role == 'teacher' || id == jwt.subject) {
+      if (role == 'admin' || role == 'teacher' || role == 'student') {
         final int userId = int.parse(id);
         final User user;
         try {
