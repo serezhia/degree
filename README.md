@@ -14,9 +14,7 @@ Cross-platform application for schedule view (schedule changes via notifications
 
 # Stack
 
-Flutter/Dart - cross-platform frontend 
-
-Hive - frontend kv db
+Flutter/Dart, Bloc(cubit) - cross-platform frontend 
 
 Shelf/Dart - webservers
 
